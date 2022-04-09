@@ -17,7 +17,7 @@ public class Tree {
 
     public Tree(){
         /**
-         * Tree log sprite and textures
+         * Tree log sprite and texturess
          */
         //TODO: make sprites for logs and leaves
         log = new Texture("Hole.png");
