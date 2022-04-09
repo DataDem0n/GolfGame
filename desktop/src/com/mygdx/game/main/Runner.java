@@ -29,6 +29,7 @@ public class Runner extends Thread
     public static double getStringValueGame(String s)
     {
       String sub;
+
       String value;
       for(int i=0; i < s.length(); i++)
       {
@@ -40,7 +41,6 @@ public class Runner extends Thread
                 if(s.substring(j,j+1).equals(" ") || s.substring(j,j+1).equals("") || j==s.length()-1)
                 {
                     value = s.substring(i+2, j+1);
-
                     return  Double.parseDouble(value);
                 }
 

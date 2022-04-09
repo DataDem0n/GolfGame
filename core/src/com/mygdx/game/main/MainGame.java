@@ -7,16 +7,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 public class MainGame extends ApplicationAdapter {
-
 	float stepX;
 	float stepY;
 	ArrayList<Float> coordsX;
 	ArrayList<Float> coordsY;
-
 
 	SpriteBatch batch;
 	ShapeRenderer s;
@@ -24,7 +23,7 @@ public class MainGame extends ApplicationAdapter {
 	ScreenViewport viewport;
 	Hole myHole;
 
-	public static float PPM =10f;
+	public static final float PPM =10f;
 
 	float holeX= (float) DataField.targetRXY[1];
 	float holeY= (float) DataField.targetRXY[2];
@@ -48,6 +47,7 @@ public class MainGame extends ApplicationAdapter {
 	 * @param val: this is the height of the terrain
 	 * @return: the color based on the height
 	 */
+
 	public Color getColorHeight(double val) {
 
 		if(val <-10||val>10){
@@ -104,6 +104,10 @@ public class MainGame extends ApplicationAdapter {
 				s.setColor(getColorHeight(t));//bad implementation should be stored and called from elsewhere.
 				s.setColor(getColorHeight(t));
 
+				if(coordsX.get(i)*2.5f>3&&coordsX.get(i)*2.5f<5&&coordsY.get(j)*2.5f>0&&coordsY.get(j)*2.5f<3){
+					s.setColor(Color.YELLOW);
+				}
+
 				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
 					s.rectLine(new Vector2(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f),new Vector2(coordsX.get(i+1)*2.5f,coordsY.get(j)*2.5f),2f);
 
@@ -125,37 +129,21 @@ public class MainGame extends ApplicationAdapter {
 
 	}
 
+
 	/**
 	 * The pointGenerator method creates all the points on which the tiles are drawn.
 	 */
 	public void pointGenerator(){
+
 		coordsX = new ArrayList<Float>();
 		coordsY = new ArrayList<Float>();
-		stepX = Gdx.graphics.getWidth()/PPM;
-		stepY = Gdx.graphics.getHeight()/PPM;
+
 		for (float i = -(25); i <= (25); i= i+.18f) {//TODO fix zoom offset on non reoccurring formula. based on .25
 			//this for loop dertermines which points are painted on the screen, the use above starts from -(pointAmount)/2f
 			// and then loops through the whole array which isnt ideal. we need to make the array smaller with out losing definition.
 				coordsX.add(i);//generates coords from -pointA/2 to +pointA/2(eg screen size =10 its results in [-5...+5])
 				coordsY.add(i);
 		}
-		System.out.println("here"+coordsY.size());
-
-//		int lower = Math.round(coordsX.size()/4f); Compression attempt...
-//		int upper = Math.round((coordsX.size()/4f)*3);
-//		for (int i = 0; i < coordsX.size(); i++) {
-//			if(i<lower&&!(i>upper)||i>upper&&!(i<lower)) {
-//				coordsX.remove(i);
-//				coordsY.remove(i);
-//			}
-//		}
-
-		//this method is pointless instead just loop through -25 to +25 then use those to paint lines
-		//alternativly creat a linked list of (x,y,heightVal) tuples. and loop through that...
-
-		System.out.println(coordsX);
-		System.out.println(coordsY);
-
 
 	}
 
