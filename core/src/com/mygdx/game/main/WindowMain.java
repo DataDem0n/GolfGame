@@ -64,11 +64,9 @@ public class WindowMain{
             counter.setText("Storkes: " + c);
             System.out.println("No. of strokes: " + c);
 
-
-
             //receive velocities
             ArrayList<Double> xc = new ArrayList<Double>();
-            xc.add(Double.parseDouble(velocityY.getText()));
+            xc.add(Double.parseDouble(velocityX.getText()));
             DataField.velocityX = xc;
             ArrayList<Double> yc = new ArrayList<Double>();
             yc.add(Double.parseDouble(velocityY.getText()));

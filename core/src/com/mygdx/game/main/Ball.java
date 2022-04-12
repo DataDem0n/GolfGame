@@ -3,17 +3,21 @@ package com.mygdx.game.main;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-public class Ball {
+import com.badlogic.gdx.graphics.g2d.Sprite;
+public class Ball extends Sprite {
     Sprite sMain;
     Texture tex;
     float x;
     float y;
+    Rectangle ballHitBox;
 
     public Ball(){
         tex = new Texture("Ball.png");
         sMain = new Sprite(tex);
-        //sMain.setCenter(sMain.getHeight()/2f,sMain.getWidth()/2f);
+        ballHitBox = new Rectangle();
+        sMain.setCenter(sMain.getHeight()/2,sMain.getWidth()/2);
     }
 
 
@@ -26,7 +30,8 @@ public class Ball {
     public void setPos(float x,float y,float PPM) {
         this.x = x;
         this.y = y;
-        sMain.setPosition(x+(0.125f), y+(0.125f));//0.125 comes from having 50 points per axis s
+        sMain.setPosition(x+(0.125f), y+(0.125f));//0.125 comes from having 50 points per axis
+        ballHitBox.set(x,y,1,1);
     }
 
     /**

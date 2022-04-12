@@ -3,7 +3,7 @@ package com.mygdx.game.main;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.Rectangle;
 public class Tree {
     Sprite spriteLog;
     Texture log;
@@ -13,18 +13,18 @@ public class Tree {
     float y;
     float treeradius = 1;
     float size = 250;
-
+    Rectangle treeHitBox;
 
     public Tree(){
         /**
          * Tree log sprite and textures
          */
         //TODO: make sprites for logs and leaves
-        log = new Texture("Hole.png");
+        log = new Texture("Log.png");
         spriteLog = new Sprite(log);
-
-        leaves = new Texture("Hole.png");
-        spriteLeaves = new Sprite(log);
+        treeHitBox = new Rectangle();
+        leaves = new Texture("Leaves.png");
+        spriteLeaves = new Sprite(leaves);
     }
 
     /**
@@ -36,8 +36,17 @@ public class Tree {
     public void setTreePos(float x,float y, float PPM) {
         this.x = x;
         this.y = y;
+        spriteLog.setPosition(x,y);
+        spriteLeaves.setPosition(x,y);
 
+        treeHitBox.set(x,y+3.6f,8,5.8f);
         //spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));
+    }
+
+    public void setOpac(boolean s){
+        if(s){
+            spriteLeaves.setAlpha(0.25f);
+        }else{spriteLeaves.setAlpha(1);}
     }
 
 
@@ -61,11 +70,13 @@ public class Tree {
      * This method draws the hole on the screen.
      * @return the center y-coordinate of the ball
      */
-    public void drawLog(SpriteBatch Bat){
+    public void draw(SpriteBatch Bat){
         spriteLog.setSize((log.getWidth()/size)*(2*treeradius),(log.getHeight()/size)*(2*treeradius));
         spriteLog.draw(Bat);
-
+    }
+    public void drawLeaves(SpriteBatch Bat){
         spriteLeaves.setSize((leaves.getWidth()/size)*(2*treeradius),(leaves.getHeight()/size)*(2*treeradius));
         spriteLeaves.draw(Bat);
     }
+
 }

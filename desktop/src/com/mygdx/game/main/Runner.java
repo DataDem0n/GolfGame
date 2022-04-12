@@ -257,7 +257,8 @@ public class Runner extends Thread
         DataField.terrain = new BiFunction<Double, Double, Double>() {
             @Override
             public Double apply(Double x, Double y) {
-                return 0.05*((x*x)+(y*y));
+                return 1.0;
+//                return 0.05*((x*x)+(y*y));
             }
         };
 
@@ -269,7 +270,7 @@ public class Runner extends Thread
             DataField.velocityX = velx;
             DataField.velocityY = vely;
             DataField.GUI = false;
-            DataField.usingGui = false;
+            DataField.usingGui = false;//TODO 2d array for trees
         }
 
         //starts the GUI and Physics thread

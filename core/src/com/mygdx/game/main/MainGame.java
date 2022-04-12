@@ -22,6 +22,7 @@ public class MainGame extends ApplicationAdapter {
 	Ball gBall;
 	ScreenViewport viewport;
 	Hole myHole;
+	Tree tree;
 
 	public static final float PPM =10f;
 
@@ -37,6 +38,9 @@ public class MainGame extends ApplicationAdapter {
 		myHole = new Hole();
 		batch = new SpriteBatch();
 		gBall= new Ball();
+		//TODO implement trees for each tree: draw tree.
+		tree = new Tree();
+		tree.setTreePos(4,4,PPM);
 		s = new ShapeRenderer();
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
 		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
@@ -82,9 +86,9 @@ public class MainGame extends ApplicationAdapter {
 //		return 0.1*x + 1;
 //		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
-		return 0.05*((x*x)+(y*y));
+//		return 0.05*((x*x)+(y*y));
 //		return Math.cos(x+(y*y)); //testing
-
+		return  1;
 	}
 
 	/**
@@ -94,6 +98,7 @@ public class MainGame extends ApplicationAdapter {
 	public void render (){
 		s.setProjectionMatrix(viewport.getCamera().combined);
 		s.begin(ShapeRenderer.ShapeType.Filled);
+
 
 		gBall.setPos((DataField.x)*1.8f,(DataField.y)*1.8f,PPM);
 		//draws lines based on the height at the coord that the line is drawn at
@@ -119,12 +124,27 @@ public class MainGame extends ApplicationAdapter {
 
 			}
 		}
+
+//		s.rect(tree.treeHitBox.x, tree.treeHitBox.y,8,5.8f ); hitboxes
+//		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
 		s.end();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
+
+		if (gBall.ballHitBox.overlaps(tree.treeHitBox)){
+			tree.setOpac(true);
+		}
+		else{
+			tree.setOpac(false);
+		}
+
+
 		myHole.draw(batch);
+
 		gBall.draw(batch);
+		tree.draw(batch);
+		tree.drawLeaves(batch);
 		batch.end();
 
 	}

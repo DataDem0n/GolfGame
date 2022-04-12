@@ -10,7 +10,7 @@ import java.util.function.BiFunction;
 public class EulerSolver extends Physics {
 
     private double counter = 0;
-    private int fps = 30;
+    private int fps = 60;
     private BiFunction<Double, Double, Double> terrain;
     private double kFriction;
     private double sFriction;
@@ -66,16 +66,22 @@ public class EulerSolver extends Physics {
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            counter+= step;
+//            counter+= step;
+//
+//            if(counter>=1/fps) {
+//                try {
+//                    Thread.sleep(16);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                counter = 0.0;
+//            }
 
-            if(counter>=1/fps) {
-                try {
-                    Thread.sleep(33);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                counter = 0.0;
-            }
+//            try {
+////                Thread.sleep(0,1);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             DataField.x = (float)coordinatesAndVelocity[0];
             DataField.y = (float)coordinatesAndVelocity[1];
