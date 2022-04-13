@@ -43,26 +43,26 @@ public class WindowMain{
     // Push Button
     JButton pushButton = new JButton("PUTT!");
 
-//
-//        pushButton.addActionListener(e -> {
-//        counter.setText("Storkes: " + c);
-//        System.out.println("No. of strokes: " + c);
-//        c++;
-//        });
-
     WindowMain(){
         initC = new JButton("Set initial coords");
-        initC.addActionListener(e -> {
-            //receive origin coords
-            DataField.x = Float.parseFloat(originX.getText());
-            DataField.y = Float.parseFloat(originY.getText());
-        });
+//        initC.addActionListener(e -> {
+//            //receive origin coords
+//            DataField.x = Float.parseFloat(originX.getText());
+//            DataField.y = Float.parseFloat(originY.getText());
+//        });
 
         pushButton.addActionListener (e -> {
             //counter updater
             c=c+1;
             counter.setText("Storkes: " + c);
             System.out.println("No. of strokes: " + c);
+
+            //receive origin coords
+            if(c == 1){
+                DataField.x = Float.parseFloat(originX.getText());
+                DataField.y = Float.parseFloat(originY.getText());
+            }
+
 
             //receive velocities
             ArrayList<Double> xc = new ArrayList<Double>();
