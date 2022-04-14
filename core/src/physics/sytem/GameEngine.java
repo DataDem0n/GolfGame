@@ -85,7 +85,5 @@ public class GameEngine extends EulerSolver{
         }
     }
 
-
-
 }
 

@@ -42,14 +42,13 @@ public class WindowMain{
     JButton initC;
     // Push Button
     JButton pushButton = new JButton("PUTT!");
+    BotBasic Charley = new BotBasic();
 
     WindowMain(){
-        initC = new JButton("Set initial coords");
-//        initC.addActionListener(e -> {
-//            //receive origin coords
-//            DataField.x = Float.parseFloat(originX.getText());
-//            DataField.y = Float.parseFloat(originY.getText());
-//        });
+        initC = new JButton("Start Bot");
+        initC.addActionListener(e -> {
+            Charley.start();
+        });
 
         pushButton.addActionListener (e -> {
             //counter updater

@@ -109,7 +109,7 @@ public class MainGame extends ApplicationAdapter {
 				s.setColor(getColorHeight(t));//bad implementation should be stored and called from elsewhere.
 				s.setColor(getColorHeight(t));
 
-				if(coordsX.get(i)*2.5f>3&&coordsX.get(i)*2.5f<5&&coordsY.get(j)*2.5f>0&&coordsY.get(j)*2.5f<3){
+				if(coordsX.get(i)>DataField.sandPit[0]&&coordsX.get(i)<DataField.sandPit[1]&&coordsY.get(j)>DataField.sandPit[2]&&coordsY.get(j)<DataField.sandPit[3]){
 					s.setColor(Color.YELLOW);
 				}
 

@@ -14,6 +14,7 @@ public class DataField
     public static double kFriction;
     public static double[] targetRXY;
     public static double[] coordinatesandVelocity;
+    public static double[] sandPit = {3.0,5.0,0,3.0};
     public static float x;
     public static float y;
 }
