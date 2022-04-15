@@ -10,13 +10,16 @@ import java.util.function.BiFunction;
 public class EulerSolver extends Physics {
 
     private double counter = 0;
-    private int fps = 60;
+    private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
     private double kFriction;
     private double sFriction;
     double[] targetRXY;
-    double[] tempCoordinates = new double [2];
+    public double[] tempCoordinates = new double [2];
     private double[] coordinatesAndVelocity;
+    private Wall wall = new Wall(25,25);
+    private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
     // [1] - coordinateY
@@ -34,8 +37,8 @@ public class EulerSolver extends Physics {
     public EulerSolver(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         this.terrain = terrain;
         this.coordinatesAndVelocity = coordinatesAndVelocity;
-        this.kFriction = kFriction;
-        this.sFriction = sFriction;
+        DataField.kFriction = kFriction;
+        DataField.sFriction = sFriction;
         this.targetRXY = targetRXY;
     }
 
@@ -54,33 +57,27 @@ public class EulerSolver extends Physics {
         while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, kFriction)); //Y-Velocity = YVelocity + step*acc
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
             }
             else{
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX(coordinatesAndVelocity, terrain, kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY(coordinatesAndVelocity, terrain, kFriction)); //Y-Velocity = YVelocity + step*acc
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
             }
 
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-//            counter+= step;
-//
+            counter+= step;
+
 //            if(counter>=1/fps) {
 //                try {
-//                    Thread.sleep(16);
+//                    Thread.sleep(0,2);
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
 //                counter = 0.0;
-//            }
-
-//            try {
-////                Thread.sleep(0,1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
 //            }
 
             DataField.x = (float)coordinatesAndVelocity[0];
@@ -91,20 +88,15 @@ public class EulerSolver extends Physics {
                 System.out.println("YOU'RE IN THE WATER!!");
                 coordinatesAndVelocity[0] = tempCoordinates[0];
                 coordinatesAndVelocity[1] = tempCoordinates[1];
-                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
                 return coordinatesAndVelocity;
             }
-            if(coordinatesAndVelocity[0]>25||coordinatesAndVelocity[0]<-25||coordinatesAndVelocity[1]>25||coordinatesAndVelocity[1]<-25){
-                System.out.println("OUT OF THE SCREEN!! \n TRY AGAIN");
-                coordinatesAndVelocity[0] = tempCoordinates[0];
-                coordinatesAndVelocity[1] = tempCoordinates[1];
-                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+            wall.collide(coordinatesAndVelocity);
+            sandPits.change(coordinatesAndVelocity);
 
-                return coordinatesAndVelocity;
-            }
        }
-        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
         return coordinatesAndVelocity;
     }
@@ -120,14 +112,14 @@ public class EulerSolver extends Physics {
     public void setkFriction(double kFriction){
         if(kFriction > 0.1){
             System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-            this.kFriction = 0.1;
+            DataField.kFriction = 0.1;
         }
         else if(kFriction < 0.05){
             System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-            this.kFriction = 0.05;
+            DataField.kFriction = 0.05;
         }
         else{
-            this.kFriction = kFriction;
+            DataField.kFriction = kFriction;
         }
     };
 
@@ -138,14 +130,14 @@ public class EulerSolver extends Physics {
     public void setsFriction(double sFriction){
         if(sFriction > 0.2){
             System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-            this.sFriction = 0.2;
+            DataField.sFriction = 0.2;
         }
         else if(sFriction < 0.1){
             System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-            this.sFriction = 0.1;
+            DataField.sFriction = 0.1;
         }
         else{
-            this.sFriction = sFriction;
+            DataField.sFriction = sFriction;
         }
     }
 

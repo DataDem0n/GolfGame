@@ -39,14 +39,18 @@ public class Tree {
         spriteLog.setPosition(x,y);
         spriteLeaves.setPosition(x,y);
 
-        treeHitBox.set(x,y+3.6f,8,5.8f);
+        treeHitBox.set(x,y+1.6f,8,5.8f);
         //spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));
     }
 
     public void setOpac(boolean s){
         if(s){
             spriteLeaves.setAlpha(0.25f);
-        }else{spriteLeaves.setAlpha(1);}
+            spriteLog.setAlpha(0.25f);
+        }else{
+            spriteLeaves.setAlpha(1);
+            spriteLog.setAlpha(1);
+        }
     }
 
 

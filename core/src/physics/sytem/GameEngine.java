@@ -23,7 +23,6 @@ public class GameEngine extends EulerSolver{
     /**
      * A method that manages the game
      */
-
     public void game() throws InterruptedException {
 
         while(DataField.GUI){
@@ -84,6 +83,5 @@ public class GameEngine extends EulerSolver{
             e.printStackTrace();
         }
     }
-
 }
 

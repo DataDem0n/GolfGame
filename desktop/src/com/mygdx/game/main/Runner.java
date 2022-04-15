@@ -106,22 +106,19 @@ public class Runner extends Thread
                                  {
                                    if(s.substring(k,k+1).equals(" ") || k==s.length()-1)
                                    {
-                                    value = Double.parseDouble(s.substring(p+2, k));
-                                    radius[2] = value;
-                                    return radius;
+                                        value = Double.parseDouble(s.substring(p+2, k));
+                                        radius[2] = value;
+                                        return radius;
                                    }
                                 }
                             }
                         }
                     }
                 }
-
             }
-
-    }
+        }
     return radius;
 }
-
 
     //gets the height profile in string form
     public static String get_function(){
@@ -192,7 +189,6 @@ public class Runner extends Thread
         vely.add(getStringValueGame(scan3.nextLine()));
     }
 
-
         String heightProfile = get_function();
 
         //this sets terrain to the heightprofile given in the read.txt
@@ -258,7 +254,7 @@ public class Runner extends Thread
             @Override
             public Double apply(Double x, Double y) {
                 return 1.0;
-//                return 0.05*((x*x)+(y*y));
+//              return 0.05*((x*x)+(y*y));
             }
         };
 

@@ -4,19 +4,27 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class BotBasic {
+    double radius;
     double[] holeLocation= new double[2];
     double[] myLocation = new double[2];
     ArrayList<WeightedVector> wVectors;
 
     BotBasic(){
+        radius = DataField.targetRXY[0];
         holeLocation[0] = DataField.targetRXY[1];
         holeLocation[1] = DataField.targetRXY[2];
         myLocation[0] = DataField.x;
         myLocation[1] = DataField.y;
         wVectors = new ArrayList<>();
     }
-    int index;
+
     public boolean start(){
+        
+//        if(holeLocation[0]-myLocation[0]<radius&&holeLocation[1]-myLocation[1]<radius){
+//            System.out.println("target");
+//            return false;
+//        }
+
         myLocation[0] = DataField.x;
         myLocation[1] = DataField.y;
         ArrayList<Double> xc = new ArrayList<>();
@@ -28,6 +36,8 @@ public class BotBasic {
         DataField.velocityX = xc;
         yc.add(temp.y);
         DataField.velocityY = yc;
+
+
 
         DataField.GUI = false;
 

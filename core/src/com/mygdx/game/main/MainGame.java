@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 public class MainGame extends ApplicationAdapter {
-	float stepX;
-	float stepY;
 	ArrayList<Float> coordsX;
 	ArrayList<Float> coordsY;
 

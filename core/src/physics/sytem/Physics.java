@@ -1,5 +1,7 @@
 package physics.sytem;
 
+import com.mygdx.game.main.DataField;
+
 import java.util.function.BiFunction;
 
 public class Physics extends Thread{
@@ -27,6 +29,7 @@ public class Physics extends Thread{
      * @param friction the kinetic friction acting upon a ball
      * @return the acceleration in the Y direction
      */
+
     //acceleration in the Y-direction
     public double accelerationY(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction){
         double acc;
@@ -108,20 +111,21 @@ public class Physics extends Thread{
     {
         double scalingSlope = 0.0008;
 
-        if(Math.abs(coordinatesAndVelocity[2]) < step &&
-                Math.abs(coordinatesAndVelocity[3]) < step
+        if(Math.abs(coordinatesAndVelocity[2]) < step* Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))&&
+                Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
                 && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
                 && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
-        { return true; }
+        {
+            return true; }
 
-        else if(Math.abs(coordinatesAndVelocity[2]) < step
-                && Math.abs(coordinatesAndVelocity[3]) < step
+        else if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+                && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
                 && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope)
                 || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope))))
         {
             if(staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+
                     Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)))
-            { return true; }
+            {  return true; }
             else
             { return false; }
         }
