@@ -41,21 +41,14 @@ public class WindowMain{
     JLabel inputOriginY;
     JButton initC;
     // Push Button
-    JButton pushButton = new JButton("PUTT!");
 
-//
-//        pushButton.addActionListener(e -> {
-//        counter.setText("Storkes: " + c);
-//        System.out.println("No. of strokes: " + c);
-//        c++;
-//        });
+    JButton pushButton = new JButton("PUTT!");
+    BotBasic Charley = new BotBasic();
 
     WindowMain(){
-        initC = new JButton("Set initial coords");
+        initC = new JButton("Start Bot");
         initC.addActionListener(e -> {
-            //receive origin coords
-            DataField.x = Float.parseFloat(originX.getText());
-            DataField.y = Float.parseFloat(originY.getText());
+            Charley.start();
         });
 
         pushButton.addActionListener (e -> {
@@ -64,11 +57,16 @@ public class WindowMain{
             counter.setText("Storkes: " + c);
             System.out.println("No. of strokes: " + c);
 
+            //receive origin coords
+            if(c == 1){
+                DataField.x = Float.parseFloat(originX.getText());
+                DataField.y = Float.parseFloat(originY.getText());
+            }
 
 
             //receive velocities
             ArrayList<Double> xc = new ArrayList<Double>();
-            xc.add(Double.parseDouble(velocityY.getText()));
+            xc.add(Double.parseDouble(velocityX.getText()));
             DataField.velocityX = xc;
             ArrayList<Double> yc = new ArrayList<Double>();
             yc.add(Double.parseDouble(velocityY.getText()));

@@ -1,5 +1,7 @@
 package physics.sytem;
 
+import com.mygdx.game.main.DataField;
+
 import java.util.function.BiFunction;
 
 public class Physics extends Thread{
@@ -27,12 +29,14 @@ public class Physics extends Thread{
      * @param friction the kinetic friction acting upon a ball
      * @return the acceleration in the Y direction
      */
+
     //acceleration in the Y-direction
     public double accelerationY(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction){
         double acc;
         acc = -GRAVITY *derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) - friction* GRAVITY * ((coordinatesAndVelocity[3])/(Math.sqrt((coordinatesAndVelocity[2]*coordinatesAndVelocity[2] + coordinatesAndVelocity[3]*coordinatesAndVelocity[3]))));
         return acc;
     }
+
     //accelerationX2 and accelerationY2 are used, when the total velocity is exactly 0
     public double accelerationX2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
     {

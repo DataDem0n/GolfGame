@@ -20,9 +20,9 @@ public class DesktopLauncher extends Thread {
 	@Override
 	public void run() {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(30);
+		config.setForegroundFPS(60);
 		config.setTitle("GolfSim");
-		config.setWindowedMode(1200,900);
+		config.setWindowedMode(900,900);
 		config.setResizable(false);
 		if(useGUI){new WindowMain();}
 

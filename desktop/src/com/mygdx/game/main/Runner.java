@@ -29,6 +29,7 @@ public class Runner extends Thread
     public static double getStringValueGame(String s)
     {
       String sub;
+
       String value;
       for(int i=0; i < s.length(); i++)
       {
@@ -40,7 +41,6 @@ public class Runner extends Thread
                 if(s.substring(j,j+1).equals(" ") || s.substring(j,j+1).equals("") || j==s.length()-1)
                 {
                     value = s.substring(i+2, j+1);
-
                     return  Double.parseDouble(value);
                 }
 
@@ -106,22 +106,19 @@ public class Runner extends Thread
                                  {
                                    if(s.substring(k,k+1).equals(" ") || k==s.length()-1)
                                    {
-                                    value = Double.parseDouble(s.substring(p+2, k));
-                                    radius[2] = value;
-                                    return radius;
+                                        value = Double.parseDouble(s.substring(p+2, k));
+                                        radius[2] = value;
+                                        return radius;
                                    }
                                 }
                             }
                         }
                     }
                 }
-
             }
-
-    }
+        }
     return radius;
 }
-
 
     //gets the height profile in string form
     public static String get_function(){
@@ -192,7 +189,6 @@ public class Runner extends Thread
         vely.add(getStringValueGame(scan3.nextLine()));
     }
 
-
         String heightProfile = get_function();
 
         //this sets terrain to the heightprofile given in the read.txt
@@ -257,7 +253,8 @@ public class Runner extends Thread
         DataField.terrain = new BiFunction<Double, Double, Double>() {
             @Override
             public Double apply(Double x, Double y) {
-                return 0.05*((x*x)+(y*y));
+                return 1.0;
+//              return 0.05*((x*x)+(y*y));
             }
         };
 
@@ -269,7 +266,7 @@ public class Runner extends Thread
             DataField.velocityX = velx;
             DataField.velocityY = vely;
             DataField.GUI = false;
-            DataField.usingGui = false;
+            DataField.usingGui = false;//TODO 2d array for trees
         }
 
         //starts the GUI and Physics thread
