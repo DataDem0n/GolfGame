@@ -36,6 +36,7 @@ public class Physics extends Thread{
         acc = -GRAVITY *derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) - friction* GRAVITY * ((coordinatesAndVelocity[3])/(Math.sqrt((coordinatesAndVelocity[2]*coordinatesAndVelocity[2] + coordinatesAndVelocity[3]*coordinatesAndVelocity[3]))));
         return acc;
     }
+
     //accelerationX2 and accelerationY2 are used, when the total velocity is exactly 0
     public double accelerationX2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
     {
@@ -111,21 +112,20 @@ public class Physics extends Thread{
     {
         double scalingSlope = 0.0008;
 
-        if(Math.abs(coordinatesAndVelocity[2]) < step* Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))&&
-                Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
+        if(Math.abs(coordinatesAndVelocity[2]) < step &&
+                Math.abs(coordinatesAndVelocity[3]) < step
                 && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
                 && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
-        {
-            return true; }
+        { return true; }
 
-        else if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
+        else if(Math.abs(coordinatesAndVelocity[2]) < step
+                && Math.abs(coordinatesAndVelocity[3]) < step
                 && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope)
                 || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope))))
         {
             if(staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+
                     Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)))
-            {  return true; }
+            { return true; }
             else
             { return false; }
         }
