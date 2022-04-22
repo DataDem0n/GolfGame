@@ -21,13 +21,6 @@ public class WindowMain{
     JPanel panel;
     JPanel sideMenu;
 
-    //sliders
-    JLabel labelForce;
-    JLabel labelDegree;
-    JLabel titleForce;
-    JLabel titleDegree;
-    JSlider degreeStrike;
-
     //velocity
     JTextField velocityX;
     JTextField velocityY;
@@ -35,13 +28,11 @@ public class WindowMain{
     JLabel inputVelocityY;
 
     //origin
-    JTextField originX;
-    JTextField originY;
-    JLabel inputOriginX;
-    JLabel inputOriginY;
+    JLabel ballXCoord;
+    JLabel ballYCoord;
     JButton initC;
-    // Push Button
 
+    // Push Button
     JButton pushButton = new JButton("PUTT!");
     BotBasic Charley = new BotBasic();
 
@@ -80,16 +71,10 @@ public class WindowMain{
         frame = new JFrame("Golf controls");
         panel = new JPanel();
         sideMenu = new JPanel();
-
-        //slider visual elements
-        labelForce = new JLabel();
-        labelDegree = new JLabel();
-        titleDegree = new JLabel("degree of turn");
-        degreeStrike = new JSlider(0, 359, 0);
+        JMenuBar menuBar = new JMenuBar();
 
         //velocity visual elements
         velocityX = new JTextField();
-
         velocityY = new JTextField();
         inputVelocityX = new JLabel("Velocity X axis");
         inputVelocityY = new JLabel("Velocity Y axis");
@@ -102,12 +87,6 @@ public class WindowMain{
 
         counter = new JLabel("Strokes: " + c); //this returns the number of total strokes use
 
-        // degree slider seffects
-        degreeStrike.setPaintTicks(true);
-        degreeStrike.setMinorTickSpacing(10);
-        // degreeStrike.setOrientation(SwingConstants.VERTICAL);
-
-
         // Elevation Depiction
         JLabel elevationDepictionLabel = new JLabel("\nElevation Depiction");
         JLabel highElevationLabel = new JLabel("10");
@@ -117,6 +96,30 @@ public class WindowMain{
         JLabel imgL = new JLabel(gradientImage);
         frame.add(imgL);
         //imgL.set
+
+        //menubar items
+        JMenu fileTab = new JMenu("File");
+        JMenu extrasTab = new JMenu("Extras");
+        menuBar.add(fileTab);
+        menuBar.add(extrasTab);
+
+        //file tab buttons
+        JMenuItem exit = new JMenuItem("Exit");
+        fileTab.add(exit);
+
+        exit.addActionListener (e -> {
+            if(e.getSource()==exit){
+                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //TODO: does not actually work
+            }
+        });
+        //extras tab buttons
+//        JMenuItem music = new JMenuItem("Music????");
+//        extrasTab.add(music);
+
+        frame.setJMenuBar(menuBar);
+        menuBar.setVisible(true);
+
+
 
         //elements inside the control window
         sideMenu.add(panel);
@@ -135,21 +138,7 @@ public class WindowMain{
         gc.gridx = 1;
         gc.gridy = 0;
         gc.gridwidth = 1;
-        panel.add(inputOriginY, gc);
-
-        //This adds a text box for inputting the initial x-coordinate of the ball
-        gc.gridx = 0;
-        gc.gridy = 1;
-        gc.gridwidth = 1;
-        gc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(originX, gc);
-
-        //This adds a text box for inputting the initial y-coordinate of the ball
-        gc.gridx = 1;
-        gc.gridy = 1;
-        gc.gridwidth = 1;
-        gc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(originY, gc);
+        panel.add(ballYCoord, gc);
 
         //This adds a label for inputting the x-velocity of the ball
         gc.gridx = 0;
@@ -227,4 +216,3 @@ public class WindowMain{
         frame.setVisible(true);
     }
 }
-

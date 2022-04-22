@@ -134,7 +134,7 @@ public class Runner extends Thread
     }
 
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 
 
     Scanner s = new Scanner(System.in);
