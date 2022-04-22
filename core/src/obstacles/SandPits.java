@@ -1,4 +1,4 @@
-package physics.sytem;
+package obstacles;
 
 import com.mygdx.game.main.DataField;
 

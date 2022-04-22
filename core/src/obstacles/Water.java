@@ -1,8 +1,8 @@
-package physics.sytem;
+package obstacles;
 
 import com.mygdx.game.main.DataField;
 
-public class Water implements DifferentTerrain{
+public class Water implements DifferentTerrain {
 
     public  Water(){
 

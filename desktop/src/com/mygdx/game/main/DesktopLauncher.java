@@ -2,12 +2,6 @@ package com.mygdx.game.main;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygdx.game.main.MainGame;
-import physics.sytem.EulerSolver;
-import physics.sytem.GameEngine;
-
-import javax.xml.crypto.Data;
-import java.util.function.BiFunction;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher extends Thread {
