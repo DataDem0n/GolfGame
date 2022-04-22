@@ -1,13 +1,14 @@
-package physics.sytem;
+package solvers;
 
 import com.mygdx.game.main.DataField;
+import physics.Physics;
+import obstacles.SandPits;
+import obstacles.Tree;
+import obstacles.Wall;
 
-import javax.xml.crypto.Data;
-import java.util.Arrays;
-import java.util.Timer;
 import java.util.function.BiFunction;
 
-public class EulerSolver extends Physics {
+public class Euler extends Physics implements Solver {
 
     private double counter = 0;
     private int fps = 120;
@@ -15,10 +16,12 @@ public class EulerSolver extends Physics {
     private double kFriction;
     private double sFriction;
     double[] targetRXY;
+
     public double[] tempCoordinates = new double [2];
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+    private Tree tree = new Tree(5,5);
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -34,7 +37,7 @@ public class EulerSolver extends Physics {
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
-    public EulerSolver(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
+    public Euler(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         this.terrain = terrain;
         this.coordinatesAndVelocity = coordinatesAndVelocity;
         DataField.kFriction = kFriction;
@@ -48,6 +51,7 @@ public class EulerSolver extends Physics {
      * @param step a step size in the Euler's method
      * @return an array with final coordinates and velocities of a ball that has stopped after a shot
      */
+    @Override
     public double[] coordinatesAndVelocityUntilStop(double step)  {
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
@@ -109,6 +113,7 @@ public class EulerSolver extends Physics {
      * A setter for kinetic friction
      * @param kFriction kinetic friction
      */
+    @Override
     public void setkFriction(double kFriction){
         if(kFriction > 0.1){
             System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
@@ -127,6 +132,7 @@ public class EulerSolver extends Physics {
      * A setter for static friction
      * @param sFriction static friction
      */
+    @Override
     public void setsFriction(double sFriction){
         if(sFriction > 0.2){
             System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
@@ -146,6 +152,7 @@ public class EulerSolver extends Physics {
      * @param X x-coordinate
      * @param Y y-coordinate
      */
+    @Override
     public void setCoordinates(double X, double Y) {
         this.coordinatesAndVelocity [0] = X;
         this.coordinatesAndVelocity [1] = Y;
@@ -156,6 +163,7 @@ public class EulerSolver extends Physics {
      * @param X velocity in the X-direction
      * @param Y velocity in the Y-direction
      */
+    @Override
     public void setVelocity(double X, double Y) {
         this.coordinatesAndVelocity [2] = X;
         this.coordinatesAndVelocity [3] = Y;
@@ -165,6 +173,7 @@ public class EulerSolver extends Physics {
      * A setter for taget's position and radius
      * @param targetRXY and array containing target's radius and x,y coordinates
      */
+    @Override
     public void setTargetRXY(double[] targetRXY) {
         this.targetRXY = targetRXY;
     }
@@ -173,6 +182,7 @@ public class EulerSolver extends Physics {
      * A setter for terrain
      * @param terrain the function of two variables describing the terrain surface
      */
+    @Override
     public void setTerrain(BiFunction<Double,Double,Double> terrain){
         this.terrain = terrain;
     }
@@ -182,53 +192,56 @@ public class EulerSolver extends Physics {
      * A getter for x-Coordinate of the ball's position
      * @return x-Coordinate of the ball's position
      */
+    @Override
     public double getXCoord(){ return this.coordinatesAndVelocity[0]; };
 
     /**
      * A getter for y-Coordinate of the ball's position
      * @return y-Coordinate of the ball's position
      */
+    @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
 
-    /**
-     * A getter for the X-velocity of the ball
-     * @return the X-velocity of the ball
-     */
-    public double getXVel() {
-        return this.coordinatesAndVelocity[2];
-    }
-
-    /**
-     * A getter for the Y-velocity of the ball
-     * @return the Y-velocity of the ball
-     */
-    public double getYVel() {
-        return this.coordinatesAndVelocity[3];
-    }
-
-    /**
-     * A getter for target's radius
-     * @return the target's radius
-     */
-    public double getTRadius() {
-        return this.targetRXY[0];
-    }
-
-    /**
-     * A getter for target's x-coordinate
-     * @return the target's x-coordinate
-     */
-    public double getXTarget() {
-        return this.targetRXY[1];
-    }
-
-    /**
-     * A getter for target's y-coordinate
-     * @return the target's y-coordinate
-     */
-    public double getYTarget() {
-        return targetRXY[2];
-    }
+//    /**
+//     * A getter for the X-velocity of the ball
+//     * @return the X-velocity of the ball
+//     */
+//
+//    public double getXVel() {
+//        return this.coordinatesAndVelocity[2];
+//    }
+//
+//    /**
+//     * A getter for the Y-velocity of the ball
+//     * @return the Y-velocity of the ball
+//     */
+//    public double getYVel() {
+//        return this.coordinatesAndVelocity[3];
+//    }
+//
+//    /**
+//     * A getter for target's radius
+//     * @return the target's radius
+//     */
+//    public double getTRadius() {
+//        return this.targetRXY[0];
+//    }
+//
+//    /**
+//     * A getter for target's x-coordinate
+//     * @return the target's x-coordinate
+//     */
+//    public double getXTarget() {
+//        return this.targetRXY[1];
+//    }
+//
+//    /**
+//     * A getter for target's y-coordinate
+//     * @return the target's y-coordinate
+//     */
+//    public double getYTarget() {
+//        return targetRXY[2];
+//    }
 
 //    public static void main(String[] args) { testing
 //        double[] coordinatesAndVelocity = {0,0,2,0};

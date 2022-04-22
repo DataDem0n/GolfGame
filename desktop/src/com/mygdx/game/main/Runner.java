@@ -1,13 +1,9 @@
 package com.mygdx.game.main;
 
- import com.badlogic.gdx.Gdx;
- import com.badlogic.gdx.files.FileHandle;
- import org.lwjgl.system.CallbackI;
  import org.mariuszgromada.math.mxparser.Argument;
  import org.mariuszgromada.math.mxparser.Expression;
- import physics.sytem.EulerSolver;
- import physics.sytem.GameEngine;
- import java.util.Arrays;
+ import engine.GameEngine;
+
  import java.util.function.BiFunction;
 
 import java.io.BufferedWriter;
@@ -18,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.mariuszgromada.math.mxparser.*;
 
 public class Runner extends Thread
 {

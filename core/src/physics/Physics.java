@@ -1,6 +1,4 @@
-package physics.sytem;
-
-import com.mygdx.game.main.DataField;
+package physics;
 
 import java.util.function.BiFunction;
 

@@ -1,11 +1,12 @@
-package physics.sytem;
+package engine;
 
 import com.mygdx.game.main.DataField;
-import javax.xml.crypto.Data;
+import solvers.Euler;
+
 import java.util.Scanner;
 import java.util.function.BiFunction;
 
-public class GameEngine extends EulerSolver{
+public class GameEngine extends Euler {
 
     Scanner s = new Scanner(System.in);
     /**

@@ -1,19 +1,20 @@
-package physics.sytem;
+package obstacles;
 
-public class Tree implements Obstacles{
+import obstacles.Obstacles;
+
+public class Wall implements Obstacles {
 
     private double coordX;
     private double coordY;
-    private final double radius = 2;
 
-    public Tree(double coordX, double coordY) {
+    public Wall(double coordX, double coordY){
         this.coordX = coordX;
         this.coordY = coordY;
     }
+
     @Override
     public double[] collide(double[] coordsAndVelocity) {
-        //TODO:
-        if(coordsAndVelocity[0] < coordX || coordsAndVelocity[0] <= -coordX){
+        if(coordsAndVelocity[0] >= coordX || coordsAndVelocity[0] <= -coordX){
             coordsAndVelocity[2] = - coordsAndVelocity[2];
         }
         if(coordsAndVelocity[1] >= coordY || coordsAndVelocity[1] <= -coordY){
