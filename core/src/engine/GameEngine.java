@@ -1,8 +1,6 @@
 package engine;
-
 import com.mygdx.game.main.DataField;
 import solvers.Euler;
-
 import java.util.Scanner;
 import java.util.function.BiFunction;
 

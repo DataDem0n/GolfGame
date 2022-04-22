@@ -1,7 +1,6 @@
 package obstacles;
 
 import com.mygdx.game.main.DataField;
-import physics.DifferentTerrain;
 
 public class SandPits implements DifferentTerrain {
 
