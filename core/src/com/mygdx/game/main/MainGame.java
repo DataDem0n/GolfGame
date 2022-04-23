@@ -126,7 +126,7 @@ public class MainGame extends ApplicationAdapter {
 //		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
 //		s.setColor(Color.BLUE);
 //		s.rect(0,-5,1,1);
-//		s.end();
+		s.end();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
