@@ -100,7 +100,7 @@ public class settingsMenu{
          */
 
         panelMain.add(setButton);
-
+//test
         panelMain.setLayout(new FlowLayout());
         //panelMain.setLayout(new GridLayout());
         panelMain.add(treeAmount);
