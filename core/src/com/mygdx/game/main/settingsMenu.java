@@ -4,12 +4,8 @@ import com.badlogic.gdx.Gdx;
 import obstacles.SandPits;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
@@ -73,44 +69,41 @@ public class settingsMenu{
             frameMain.setVisible(false);
         });
 
-        /*
+        /**
         This code is adapted from this stack overflow answer https://stackoverflow.com/a/1178720
         this is only for user convenience to quickly tab between the 4 JTextFields
          */
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addPropertyChangeListener("permanentFocusOwner", new PropertyChangeListener()
-                {
-                    public void propertyChange(final PropertyChangeEvent e)
-                    {
-                        if (e.getNewValue() instanceof JTextField)
-                        {
-                            SwingUtilities.invokeLater(new Runnable()
-                            {
-                                public void run()
-                                {
-                                    JTextField textField = (JTextField)e.getNewValue();
-                                    textField.selectAll();
-                                }
-                            });
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("permanentFocusOwner", new PropertyChangeListener() {
+            public void propertyChange(final PropertyChangeEvent e){
+                if (e.getNewValue() instanceof JTextField){
+                    SwingUtilities.invokeLater(new Runnable(){
+                        public void run(){
+                            JTextField textField = (JTextField)e.getNewValue();
+                            textField.selectAll();
                         }
-                    }
-                });
-        /*
+                    });
+                }
+            }
+        });
+        /**
         end of referenced code
          */
 
         panelMain.add(setButton);
-//test
         panelMain.setLayout(new FlowLayout());
         //panelMain.setLayout(new GridLayout());
+        //adding tree related components
         panelMain.add(treeAmount);
         panelMain.add(amountOfTree);
+
+        //adding sandpit related components
         panelMain.add(sandpitCoordText);
         panelMain.add(sandpitCoordsX1);
         panelMain.add(sandpitCoordsY1);
         panelMain.add(sandpitCoordsX2);
         panelMain.add(sandpitCoordsY2);
 
+        //adding ball related components
         panelMain.add(originXText);
         panelMain.add(originX);
         panelMain.add(originYText);

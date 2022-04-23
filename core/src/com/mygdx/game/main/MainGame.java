@@ -43,7 +43,6 @@ public class MainGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
 		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
 	}
-//test
 	/**
 	 * This method sets the color of the terrain based on the height of the point.
 	 * @param val: this is the height of the terrain
@@ -137,7 +136,6 @@ public class MainGame extends ApplicationAdapter {
 			tree.setOpac(false);
 		}
 
-
 		myHole.draw(batch);
 
 		gBall.draw(batch);
@@ -173,4 +171,5 @@ public class MainGame extends ApplicationAdapter {
 		s.dispose();
 		batch.dispose();
 	}
+
 }
