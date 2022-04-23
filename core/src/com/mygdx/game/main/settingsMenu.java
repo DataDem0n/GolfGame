@@ -10,6 +10,8 @@ import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
 public class settingsMenu{
@@ -70,6 +72,32 @@ public class settingsMenu{
             settingsMenu.finished = false;
             frameMain.setVisible(false);
         });
+
+        /*
+        This code is adapted from this stack overflow answer https://stackoverflow.com/a/1178720
+        this is only for user convenience to quickly tab between the 4 JTextFields
+         */
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .addPropertyChangeListener("permanentFocusOwner", new PropertyChangeListener()
+                {
+                    public void propertyChange(final PropertyChangeEvent e)
+                    {
+                        if (e.getNewValue() instanceof JTextField)
+                        {
+                            SwingUtilities.invokeLater(new Runnable()
+                            {
+                                public void run()
+                                {
+                                    JTextField textField = (JTextField)e.getNewValue();
+                                    textField.selectAll();
+                                }
+                            });
+                        }
+                    }
+                });
+        /*
+        end of referenced code
+         */
 
         panelMain.add(setButton);
 
