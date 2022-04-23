@@ -38,7 +38,7 @@ public class MainGame extends ApplicationAdapter {
 		gBall= new Ball();
 		//TODO implement trees for each tree: draw tree.
 		tree = new Tree();
-		tree.setTreePos(4,4,PPM);
+		tree.setTreePos(0*1.8f,-5*1.8f,PPM);
 		s = new ShapeRenderer();
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
 		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
@@ -124,7 +124,9 @@ public class MainGame extends ApplicationAdapter {
 
 //		s.rect(tree.treeHitBox.x, tree.treeHitBox.y,8,5.8f ); hitboxes
 //		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
-		s.end();
+//		s.setColor(Color.BLUE);
+//		s.rect(0,-5,1,1);
+//		s.end();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();

@@ -36,8 +36,8 @@ public class Tree {
     public void setTreePos(float x,float y, float PPM) {
         this.x = x;
         this.y = y;
-        spriteLog.setPosition(x,y);
-        spriteLeaves.setPosition(x,y);
+        spriteLog.setPosition(x-4f,y);
+        spriteLeaves.setPosition(x-4f,y);
 
         treeHitBox.set(x,y+1.6f,8,5.8f);
         //spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));

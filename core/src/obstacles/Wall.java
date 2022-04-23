@@ -1,8 +1,6 @@
 package obstacles;
 
-import obstacles.Obstacles;
-
-public class Wall implements Obstacles {
+public class Wall implements Obstacles{
 
     private double coordX;
     private double coordY;
@@ -13,7 +11,7 @@ public class Wall implements Obstacles {
     }
 
     @Override
-    public double[] collide(double[] coordsAndVelocity) {
+    public double[] collide(double[] coordsAndVelocity, double[] tempCoordinates) {
         if(coordsAndVelocity[0] >= coordX || coordsAndVelocity[0] <= -coordX){
             coordsAndVelocity[2] = - coordsAndVelocity[2];
         }

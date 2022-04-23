@@ -21,7 +21,7 @@ public class Euler extends Physics implements Solver {
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
-    private Tree tree = new Tree(5,5);
+    private Tree tree = new Tree(0,-5);
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -96,9 +96,9 @@ public class Euler extends Physics implements Solver {
 
                 return coordinatesAndVelocity;
             }
-            wall.collide(coordinatesAndVelocity);
+            wall.collide(coordinatesAndVelocity,tempCoordinates);
             sandPits.change(coordinatesAndVelocity);
-
+            tree.collide(coordinatesAndVelocity,tempCoordinates);
        }
 //        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
