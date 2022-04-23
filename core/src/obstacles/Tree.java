@@ -15,12 +15,24 @@ public class Tree implements Obstacles {
     @Override
     public double[] collide(double[] coordsAndVelocity) {
         //TODO:
-        if(coordsAndVelocity[0] < coordX || coordsAndVelocity[0] <= -coordX){
-            coordsAndVelocity[2] = - coordsAndVelocity[2];
+        if(((coordsAndVelocity[0]-coordX)*(coordsAndVelocity[0]-coordX))+((coordsAndVelocity[1]-coordY)*(coordsAndVelocity[1]-coordY))<=radius*radius){
+            //finding the line going throug the ball coords and center of the circle
+            if(!(coordsAndVelocity[0]==coordX))
+            int a = (coordsAndVelocity[1]-coordY)/(coordsAndVelocity[0]-coordX);
+            int b = coordY-a*coordX;
+            //we have a line l: y=a*x+b
+
+            //ending point of the vector
+            xEndVector = coordsAndVelocity[0]+coordsAndVelocity[2];
+            yEndVector = coordsAndVelocity[1]+coordsAndVelocity[3];
+
+            //orthogonal projection of a point (xEndVector, yEndVector) onto the line l
+
+
+
+
+
         }
-        if(coordsAndVelocity[1] >= coordY || coordsAndVelocity[1] <= -coordY){
-            coordsAndVelocity[3] = - coordsAndVelocity[3];
-        }
-        return coordsAndVelocity;
+
     }
 }
