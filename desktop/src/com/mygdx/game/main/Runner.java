@@ -265,6 +265,13 @@ public class Runner extends Thread
         }
 
         //starts the GUI and Physics thread
+
+        settingsMenu pregame = new settingsMenu();
+
+        while(settingsMenu.finished){
+            Thread.sleep(500);
+        }
+
          DesktopLauncher t = new DesktopLauncher(useGUI);
          t.start();
          GameEngine g = new GameEngine(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);

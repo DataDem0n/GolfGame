@@ -48,13 +48,6 @@ public class WindowMain{
             counter.setText("Storkes: " + c);
             System.out.println("No. of strokes: " + c);
 
-            //receive origin coords
-            if(c == 1){
-                DataField.x = Float.parseFloat(originX.getText());
-                DataField.y = Float.parseFloat(originY.getText());
-            }
-
-
             //receive velocities
             ArrayList<Double> xc = new ArrayList<Double>();
             xc.add(Double.parseDouble(velocityX.getText()));
@@ -80,10 +73,13 @@ public class WindowMain{
         inputVelocityY = new JLabel("Velocity Y axis");
 
         //origin coordinates visual elements
-        originX = new JTextField();
-        originY = new JTextField();
-        inputOriginX = new JLabel("Ball origin X");
-        inputOriginY = new JLabel("Ball origin Y");
+
+        ballXCoord = new JLabel("Ball X coord:");
+
+        ballXCoord.setText("Ball X coord:" + DataField.x);
+
+
+        ballYCoord = new JLabel("Ball Y coord:");
 
         counter = new JLabel("Strokes: " + c); //this returns the number of total strokes use
 
@@ -132,7 +128,7 @@ public class WindowMain{
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth = 1;
-        panel.add(inputOriginX, gc);
+        panel.add(ballXCoord, gc);
 
         //This adds a label for the input of the initial y-coordinate of the ball.
         gc.gridx = 1;
