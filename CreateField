@@ -1,0 +1,160 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Queue;
+
+/**
+ * CreateField
+ */
+public class CreateField 
+{
+    public double interval;
+    public double[] holeCoordinates = new double[2];
+
+    public CreateField(double interval, double holeCoorx, double holeCoory)     //interval = trade-off between accuracy and speed.
+    {
+        this.interval = interval;
+        holeCoordinates[0] = holeCoorx;
+        holeCoordinates[1] = holeCoory;
+    }
+
+    public int[] getHolePosition()
+    {
+        int[] arrayPosition = new int[2];
+        double coordinateX = holeCoordinates[0];
+        double coordinateY = holeCoordinates[1];
+
+        if(coordinateX > 0)
+        {
+        coordinateX += 25;
+        }
+        if(coordinateY > 0)
+        {
+        coordinateY += 25;
+        }
+        
+        arrayPosition[0] = (int)( coordinateX/interval);
+        arrayPosition[1] = (int)( coordinateY/interval);
+        return arrayPosition;
+    }
+
+    public int[][] Field()
+    {
+        int[][] field = new int[(int)(50/interval)][(int)(50/interval)];
+        for(int i = 0; i<field.length;i++)
+        {
+            for(int j = 0;j<field[0].length; j++)
+            {
+               field[i][j] = -1;
+            }
+            
+        }
+        return field;
+    }
+
+    public int[][] floodFill()
+    {
+        Queue<int[]> queue = new ArrayDeque<int[]>();
+        int[][] field = Field();
+        int[] start = {getHolePosition()[0],getHolePosition()[1]};
+        field[start[0]][start[1]] = 0;
+        queue.add(start);
+        
+        while(!queue.isEmpty())
+        {
+            int[] storeNeighborValues = new int[4];
+            ArrayList<int[]> container = new ArrayList<int[]>();
+            for(int i = 0; i < storeNeighborValues.length; i++)
+            {
+                storeNeighborValues[i] = -1;
+            }
+            
+            if(queue.peek()[0]+1 < field.length)
+            {
+                int[] neighbor1 = {queue.peek()[0]+1, queue.peek()[1]};
+                if(!container.contains(neighbor1))
+                {
+                    storeNeighborValues[0] = field[queue.peek()[0]+1][queue.peek()[1]];
+                    queue.add(neighbor1);
+                    container.add(neighbor1);
+                }
+              
+            }
+            if(queue.peek()[0]-1 >= 0)
+            {
+                int[] neighbor2 = {queue.peek()[0]-1, queue.peek()[1]};
+                if(!container.contains(neighbor2))
+                {
+                    storeNeighborValues[1] = field[queue.peek()[0]-1][queue.peek()[1]];
+                    queue.add(neighbor2);
+                    container.add(neighbor2); 
+                }
+                
+            }
+            if(queue.peek()[1]+1 < field[0].length)
+            {
+                int[] neighbor3 = {queue.peek()[0], queue.peek()[1]+1};
+                if(!container.contains(neighbor3))
+                {
+                    storeNeighborValues[2] = field[queue.peek()[0]][queue.peek()[1]+1];
+                    queue.add(neighbor3);
+                    container.add(neighbor3);
+                }
+                
+            }
+            if(queue.peek()[1]-1 >= 0)
+            {
+                int[] neighbor4 = {queue.peek()[0], queue.peek()[1]-1};
+                if(!container.contains(neighbor4))
+                {
+                    storeNeighborValues[3] = field[queue.peek()[0]][queue.peek()[1]-1];
+                    queue.add(neighbor4);
+                    container.add(neighbor4);
+                }
+                
+            }
+            
+            int minvalueneighbor = -1;
+            for(int i = 0; i < storeNeighborValues.length; i++)
+            {
+                try 
+                {
+                    if(storeNeighborValues[i] >= 0 && storeNeighborValues[i] < minvalueneighbor && minvalueneighbor>=0)
+                    {
+                        minvalueneighbor = storeNeighborValues[i];
+                    }
+                } 
+                catch (Exception e) 
+                {
+                    
+                }
+            }
+
+            field[queue.peek()[0]][queue.peek()[1]] = minvalueneighbor+1;
+            queue.poll();
+        }
+        return field;
+    }
+
+
+
+
+    //testing (problem = java.lang.OutOfMemoryError)
+    public static void main(String[] args) 
+    {
+        CreateField a = new CreateField(10, 3, 3);
+        int[][] testing = a.floodFill();
+
+        for(int i = 0; i<testing.length;i++)
+        {
+            for(int j = 0;j<testing[0].length; j++)
+            {
+                System.out.print(testing[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    
+
+}
