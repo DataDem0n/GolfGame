@@ -1,8 +1,0 @@
-begin X-Coor = -6
-begin Y-Coor = 4
-Static Friction = 0.1
-Kinetic Friction = 0.05
-Target radius = 1.0, 10.0, 10.0
-Height profile = f(x,y) = sin(x+y)
-Velocity(X) = 2.0
-Velocity(Y) = 0.0
