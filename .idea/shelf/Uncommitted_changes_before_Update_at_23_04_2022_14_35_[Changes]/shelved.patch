@@ -1,0 +1,32 @@
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>org.gradle.daemon=true\r\norg.gradle.jvmargs=-Xms128m -Xmx1500m\r\norg.gradle.configureondemand=false\r\norg.gradle.java.home=/C:/Program Files/Java/jdk-17\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle.properties b/gradle.properties
+--- a/gradle.properties	(revision 806077db53f27dee3476e33954efcedf7a78a523)
++++ b/gradle.properties	(date 1650716832947)
+@@ -1,4 +1,4 @@
+ org.gradle.daemon=true
+ org.gradle.jvmargs=-Xms128m -Xmx1500m
+ org.gradle.configureondemand=false
+-org.gradle.java.home=/C:/Program Files/Java/jdk-17
++org.gradle.java.home=/C:/Program Files/Java/jdk-16.0.2
+Index: core/src/com/mygdx/game/main/DataField.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.mygdx.game.main;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.function.BiFunction;\r\n\r\npublic class DataField \r\n{\r\n    public static boolean GUI;\r\n    public static boolean usingGui;\r\n    public static BiFunction<Double, Double, Double> terrain;\r\n    public static ArrayList<Double> velocityX;\r\n    public static ArrayList<Double> velocityY;\r\n    public static double sFriction;\r\n    public static double kFriction;\r\n    public static double[] targetRXY;\r\n    public static double[] coordinatesandVelocity;\r\n    public static double[] sandPit = {3.0,5.0,0,3.0};\r\n    public static float x;\r\n    public static float y;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/src/com/mygdx/game/main/DataField.java b/core/src/com/mygdx/game/main/DataField.java
+--- a/core/src/com/mygdx/game/main/DataField.java	(revision 806077db53f27dee3476e33954efcedf7a78a523)
++++ b/core/src/com/mygdx/game/main/DataField.java	(date 1650717041659)
+@@ -17,4 +17,5 @@
+     public static double[] sandPit = {3.0,5.0,0,3.0};
+     public static float x;
+     public static float y;
++    public static int amountOfTrees;
+ }

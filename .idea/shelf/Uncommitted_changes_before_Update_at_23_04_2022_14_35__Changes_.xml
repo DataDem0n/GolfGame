@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_23_04_2022_14_35_[Changes]" date="1650717311182" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_04_2022_14_35_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 23/04/2022 14:35 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/com/mygdx/game/main/WindowMain.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/com/mygdx/game/main/MainGame.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/com/mygdx/game/main/MainGame.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_04_2022_14_35_[Changes]/MainGame.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/com/mygdx/game/main/DataField.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/com/mygdx/game/main/DataField.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_04_2022_14_35_[Changes]/DataField.class" />
+  </binary>
+</changelist>

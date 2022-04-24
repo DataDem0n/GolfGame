@@ -1,0 +1,39 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]" date="1650650058545" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 22/04/2022 19:54 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/com/mygdx/game/main/MainGame.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/com/mygdx/game/main/MainGame.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/MainGame.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="desktop/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="AFTER_PATH" value="desktop/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/previous-compilation-data.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/physics/sytem/GameEngine.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/physics/sytem/GameEngine.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/GameEngine.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="AFTER_PATH" value="core/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/previous-compilation-data1.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/physics/sytem/Physics.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/physics/sytem/Physics.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/Physics.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/classes/java/main/physics/sytem/EulerSolver.class" />
+    <option name="AFTER_PATH" value="core/build/classes/java/main/physics/sytem/EulerSolver.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/EulerSolver.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="core/build/libs/core-1.0.jar" />
+    <option name="AFTER_PATH" value="core/build/libs/core-1.0.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_04_2022_19_54_[Changes]/core-1.0.jar" />
+  </binary>
+</changelist>
