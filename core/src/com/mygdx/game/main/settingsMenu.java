@@ -1,10 +1,6 @@
 package com.mygdx.game.main;
 
-import com.badlogic.gdx.Gdx;
-import obstacles.SandPits;
-
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,6 +34,8 @@ public class settingsMenu{
     settingsMenu(){
         JPanel panelMain= new JPanel();
         JFrame frameMain= new JFrame("Pre-game settings");
+        Image frameIcon = new ImageIcon("Icon.png").getImage();
+        frameMain.setIconImage(frameIcon);
 
         treeAmount = new JLabel("Amount of trees:");
 

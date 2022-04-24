@@ -62,6 +62,8 @@ public class WindowMain{
         });
 
         frame = new JFrame("Golf controls");
+        Image frameIcon = new ImageIcon("Icon.png").getImage();
+        frame.setIconImage(frameIcon);
         panel = new JPanel();
         sideMenu = new JPanel();
         JMenuBar menuBar = new JMenuBar();
@@ -74,12 +76,12 @@ public class WindowMain{
 
         //origin coordinates visual elements
 
-        ballXCoord = new JLabel("Ball X coord:");
+        ballXCoord = new JLabel("Ball X coord: ");
 
         ballXCoord.setText("Ball X coord:" + DataField.x);
 
 
-        ballYCoord = new JLabel("Ball Y coord:");
+        ballYCoord = new JLabel("Ball Y coord: ");
 
         counter = new JLabel("Strokes: " + c); //this returns the number of total strokes use
 
@@ -88,10 +90,10 @@ public class WindowMain{
         JLabel highElevationLabel = new JLabel("10");
         JLabel lowElevationLabel = new JLabel("-10");
 
+        //imgL.set
         ImageIcon gradientImage = new ImageIcon("gradient_chart.jpg");
         JLabel imgL = new JLabel(gradientImage);
         frame.add(imgL);
-        //imgL.set
 
         //menubar items
         JMenu fileTab = new JMenu("File");
@@ -105,7 +107,7 @@ public class WindowMain{
 
         exit.addActionListener (e -> {
             if(e.getSource()==exit){
-                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //TODO: does not actually work
+                System.exit(0);
             }
         });
         //extras tab buttons
@@ -114,8 +116,6 @@ public class WindowMain{
 
         frame.setJMenuBar(menuBar);
         menuBar.setVisible(true);
-
-
 
         //elements inside the control window
         sideMenu.add(panel);
@@ -147,18 +147,21 @@ public class WindowMain{
         gc.gridx = 1;
         gc.gridy = 9;
         gc.fill=GridBagConstraints.CENTER;
+        gc.gridwidth = 1;
         panel.add(inputVelocityY, gc);
 
         //This adds a text box for inputting the x-velocity of the ball
         gc.gridx = 0;
         gc.gridy = 10;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(velocityX, gc);
 
         //This adds a text box for inputting the y-velocity of the ball
         gc.gridx = 1;
         gc.gridy = 10;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(velocityY, gc);
 
         //This adds the "PUTT!" button to the menu
@@ -170,8 +173,8 @@ public class WindowMain{
         //This adds the counter which represents the number of strokes made until now
         gc.gridx = 1;
         gc.gridy = 14;
-        gc.gridwidth = 1;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(counter, gc);
 
         //This adds a button that locks the origin coordinates in
