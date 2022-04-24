@@ -71,7 +71,7 @@ public class settingsMenu{
             DataField.y = Float.parseFloat(originY.getText());
 
             DataField.amountOfTrees = amountOfTree.getSelectedIndex();
-
+            //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
             double[] coordSP = new double[4];
             coordSP[0] = 30.0;
             coordSP[1] = 31.0;
