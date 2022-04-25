@@ -10,6 +10,7 @@ public class CreateField
 {
     public double interval;
     public double[] holeCoordinates = new double[2];
+    public int queueSize = 0;                                                   //testing purposes
 
     public CreateField(double interval, double holeCoorx, double holeCoory)     //interval = trade-off between accuracy and speed.
     {
@@ -52,6 +53,20 @@ public class CreateField
         return field;
     }
 
+    public boolean Contain(int[] neighbor, ArrayList<int[]> container)
+    {
+        for(int i = 0; i < container.size(); i++)
+        {
+           
+            if(neighbor[0] == container.get(i)[0] && neighbor[1] == container.get(i)[1])
+            {
+                
+                return true;
+            }
+        }
+        return false; 
+    }
+
     public int[][] floodFill()
     {
         Queue<int[]> queue = new ArrayDeque<int[]>();
@@ -59,11 +74,14 @@ public class CreateField
         int[] start = {getHolePosition()[0],getHolePosition()[1]};
         field[start[0]][start[1]] = 0;
         queue.add(start);
+        ArrayList<int[]> container = new ArrayList<int[]>();
         
-        while(!queue.isEmpty())
+
+       
+        while(queue.peek() != null)                                                                   
         {
             int[] storeNeighborValues = new int[4];
-            ArrayList<int[]> container = new ArrayList<int[]>();
+            
             for(int i = 0; i < storeNeighborValues.length; i++)
             {
                 storeNeighborValues[i] = -1;
@@ -72,10 +90,15 @@ public class CreateField
             if(queue.peek()[0]+1 < field.length)
             {
                 int[] neighbor1 = {queue.peek()[0]+1, queue.peek()[1]};
-                if(!container.contains(neighbor1))
+                storeNeighborValues[0] = field[queue.peek()[0]+1][queue.peek()[1]];                                               
+                if(field[queue.peek()[0]+1][queue.peek()[1]]>field[queue.peek()[0]][queue.peek()[1]]+1 || field[queue.peek()[0]+1][queue.peek()[1]]<0)
                 {
-                    storeNeighborValues[0] = field[queue.peek()[0]+1][queue.peek()[1]];
+                    field[queue.peek()[0]+1][queue.peek()[1]] = field[queue.peek()[0]][queue.peek()[1]]+1;
+                }
+                if(Contain(neighbor1, container) == false)                                      
+                {
                     queue.add(neighbor1);
+                    queueSize++;                                                                                                   
                     container.add(neighbor1);
                 }
               
@@ -83,10 +106,15 @@ public class CreateField
             if(queue.peek()[0]-1 >= 0)
             {
                 int[] neighbor2 = {queue.peek()[0]-1, queue.peek()[1]};
-                if(!container.contains(neighbor2))
+                storeNeighborValues[1] = field[queue.peek()[0]-1][queue.peek()[1]];
+                if(field[queue.peek()[0]-1][queue.peek()[1]]>field[queue.peek()[0]][queue.peek()[1]]+1 || field[queue.peek()[0]-1][queue.peek()[1]]<0)
                 {
-                    storeNeighborValues[1] = field[queue.peek()[0]-1][queue.peek()[1]];
+                    field[queue.peek()[0]-1][queue.peek()[1]] = field[queue.peek()[0]][queue.peek()[1]]+1;
+                }
+                if(Contain(neighbor2, container) == false)                                      
+                {
                     queue.add(neighbor2);
+                    queueSize++;                                                                                                       
                     container.add(neighbor2); 
                 }
                 
@@ -94,10 +122,15 @@ public class CreateField
             if(queue.peek()[1]+1 < field[0].length)
             {
                 int[] neighbor3 = {queue.peek()[0], queue.peek()[1]+1};
-                if(!container.contains(neighbor3))
+                storeNeighborValues[2] = field[queue.peek()[0]][queue.peek()[1]+1];
+                if(field[queue.peek()[0]][queue.peek()[1]+1]>field[queue.peek()[0]][queue.peek()[1]]+1 || field[queue.peek()[0]][queue.peek()[1]+1]<0)
                 {
-                    storeNeighborValues[2] = field[queue.peek()[0]][queue.peek()[1]+1];
+                    field[queue.peek()[0]][queue.peek()[1]+1] = field[queue.peek()[0]][queue.peek()[1]]+1;
+                }
+                if(Contain(neighbor3, container) == false)                                   
+                {
                     queue.add(neighbor3);
+                    queueSize++;                                                                                                        
                     container.add(neighbor3);
                 }
                 
@@ -105,45 +138,40 @@ public class CreateField
             if(queue.peek()[1]-1 >= 0)
             {
                 int[] neighbor4 = {queue.peek()[0], queue.peek()[1]-1};
-                if(!container.contains(neighbor4))
+                storeNeighborValues[3] = field[queue.peek()[0]][queue.peek()[1]-1];
+                if(field[queue.peek()[0]][queue.peek()[1]-1]>field[queue.peek()[0]][queue.peek()[1]]+1 || field[queue.peek()[0]][queue.peek()[1]-1]<0)
                 {
-                    storeNeighborValues[3] = field[queue.peek()[0]][queue.peek()[1]-1];
-                    queue.add(neighbor4);
+                    field[queue.peek()[0]][queue.peek()[1]-1] = field[queue.peek()[0]][queue.peek()[1]]+1;
+                }
+                if(Contain(neighbor4, container) == false)                                      
+                {
+                    queue.add(neighbor4);   
+                    queueSize++;                                                                                                     
                     container.add(neighbor4);
                 }
                 
             }
+          
             
-            int minvalueneighbor = -1;
-            for(int i = 0; i < storeNeighborValues.length; i++)
-            {
-                try 
-                {
-                    if(storeNeighborValues[i] >= 0 && storeNeighborValues[i] < minvalueneighbor && minvalueneighbor>=0)
-                    {
-                        minvalueneighbor = storeNeighborValues[i];
-                    }
-                } 
-                catch (Exception e) 
-                {
-                    
-                }
-            }
-
-            field[queue.peek()[0]][queue.peek()[1]] = minvalueneighbor+1;
-            queue.poll();
+        
+            queue.poll(); 
+            queueSize--;                                                                                                                   
+            
         }
         return field;
     }
 
+   
 
 
 
-    //testing (problem = java.lang.OutOfMemoryError)
+  
     public static void main(String[] args) 
     {
-        CreateField a = new CreateField(10, 3, 3);
+        CreateField a = new CreateField(1, 20, 20);                                                         
         int[][] testing = a.floodFill();
+        System.out.println(a.queueSize);
+    
 
         for(int i = 0; i<testing.length;i++)
         {
@@ -158,3 +186,4 @@ public class CreateField
     
 
 }
+
