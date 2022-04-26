@@ -2,6 +2,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Queue;
+import java.util.function.BiFunction;
 
 /**
  * CreateField
@@ -11,12 +12,24 @@ public class CreateField
     public double interval;
     public double[] holeCoordinates = new double[2];
     public int queueSize = 0;                                                   //testing purposes
-
-    public CreateField(double interval, double holeCoorx, double holeCoory)     //interval = trade-off between accuracy and speed.
+    int sandpitResentment;
+    BiFunction<Double,Double,Double> terrain;
+    double[] coorTX,coorTY,beginX,endX,beginY,endY;
+    double radius;
+    public CreateField(double interval, double holeCoorx, double holeCoory, int sandpitResentment, BiFunction<Double,Double,Double> terrain, double[] coorTX, double[] coorTY, double radius, double[] beginX, double[] endX, double[] beginY, double[] endY)     //interval = trade-off between accuracy and speed.
     {
+        this.terrain = terrain;
         this.interval = interval;
         holeCoordinates[0] = holeCoorx;
         holeCoordinates[1] = holeCoory;
+        this.sandpitResentment = sandpitResentment;
+        this.coorTX = coorTX;
+        this.coorTY = coorTY;
+        this.radius = radius;
+        this.beginX = beginX;
+        this.endX = endX;
+        this.beginY = beginY;
+        this.endY = endY;
     }
 
     public int[] getHolePosition()
@@ -161,6 +174,66 @@ public class CreateField
         return field;
     }
 
+    public int[][] floodFillUpdateWater()
+    {
+        int[][] field = floodFill();
+        
+        for(int i = 0; i < field.length; i++)
+        {
+            for(int j = 0; j < field[0].length; j++)
+            {
+                if(terrain.apply(i/interval-25, j/interval-25) < 0)
+                {
+                    field[i][j] = -1;
+                }
+            }
+        }
+        
+        
+        
+        return field;
+    }
+
+    public int[][] floodFillUpdateTree()
+    {
+        int[][] field = floodFillUpdateWater();
+
+        for(int i = 0; i < field.length; i++)
+        {
+            for(int j = 0; j < field[0].length; j++)
+            {
+                for(int k = 0; k < coorTX.length; k++)
+                {
+                        if(((i/interval-25 <= coorTX[k]+radius) && (i/interval-25 >= coorTX[k]-radius)) && ((j/interval-25 <= coorTY[k]+radius) && (j/interval-25 >= coorTY[k]-radius)) && field[i][j] != -1)
+                        {
+                            field[i][j] = -2;
+                        }
+                }
+            }
+        }
+        return field;
+    }
+
+    public int[][] floodFillUpdateSandpits()
+    {
+        int[][] field = floodFillUpdateTree();
+
+        for(int i = 0; i < field.length; i++)
+        {
+            for(int j = 0; j < field[0].length; j++)
+            {
+                for(int k = 0; k < beginX.length; k++)
+                {
+                        if(((i/interval-25 <= endX[k]) && (i/interval-25 >= beginX[k])) && ((j/interval-25 <= endY[k]) && (j/interval-25 >= beginY[k])) && field[i][j] != -1 && field[i][j] != -2)
+                        {
+                            field[i][j] = sandpitResentment;
+                        }
+                }
+            }
+        }
+        return field;
+    }
+
    
 
 
@@ -168,8 +241,21 @@ public class CreateField
   
     public static void main(String[] args) 
     {
-        CreateField a = new CreateField(1, 20, 20);                                                         
-        int[][] testing = a.floodFill();
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));            //the terrain (so the ai detects water)
+        double[] coorTX = {19, 12, 14, -12, -8, -6};       //x-coordinates of the trees
+        double[] coorTY = {8, 11, 18, -8, -7, -2};         //y-coordinates of the trees
+        double interval = 1;
+        double holeCoorx = 20;
+        double holeCoory = 20;
+        double radius = 2;                                  //radius of all trees
+        double[] beginX = {1,-6,-20,18};                    //begin x-coordinates for the sandpits
+        double[] endX = {8,0,-15,23};                       //end x-coordinates for the sandpits
+        double[] beginY = {1,-6,-20,18};                    //begin y-coordinates for the sandpits
+        double[] endY = {8,0,-15,23};                       //end y-coordinates for the sandpits
+        int sandpitResentment = 1000;                      //the higher this value, the less likely the ai takes a route through a sandpit
+
+        CreateField a = new CreateField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);                                                         
+        int[][] testing = a.floodFillUpdateSandpits();
         System.out.println(a.queueSize);
     
 
@@ -186,4 +272,3 @@ public class CreateField
     
 
 }
-
