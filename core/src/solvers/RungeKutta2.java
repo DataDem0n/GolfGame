@@ -68,29 +68,24 @@ public class RungeKutta2 extends Physics implements Solver{
 
         while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
 
-            if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
-            }
-            else
-            {
-                tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting x-velocity using midpoint
-                tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
-                tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step;
-                tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
+            tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;        //getting x-velocity using midpoint
+            // System.out.println("K1 = " + tempvelx1);
+            tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
+            tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
+            tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
+            // System.out.println("K2 = " + tempvelx2);
 
 
+            tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;        //getting y-velocity using midpoint
+            tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
+            tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
+            tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
 
-                tempvely1 = coordinatesAndVelocity[3] + accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting y-velocity using midpoint
-                tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
-                tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step;
-                tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-
-                coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
-                coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
-            }
-
+            coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
+            // System.out.println("dX = " + 0.5*(tempvelx1+tempvelx3));
+            // System.out.println("Xtot = " + coordinatesAndVelocity[2]);
+            coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;

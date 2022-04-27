@@ -1,8 +1,10 @@
 package com.mygdx.game.main;
 
+ import engine.GameEngineRK2;
+ import engine.GameEngineRK4;
  import org.mariuszgromada.math.mxparser.Argument;
  import org.mariuszgromada.math.mxparser.Expression;
- import engine.GameEngine;
+ import engine.GameEngineEuler;
 
  import java.util.function.BiFunction;
 
@@ -267,7 +269,13 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher(useGUI);
          t.start();
-         GameEngine g = new GameEngine(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-         g.start();
+         //GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+         //g.start();
+//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+//        r2.start();
+        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+        r4.start();
+//        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+//        am.start();
     }
 }

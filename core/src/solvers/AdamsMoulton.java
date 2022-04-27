@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.function.BiFunction;
 
-public class AdamsMoulton {//extends Physics implements Solver {
+public class AdamsMoulton extends Physics implements Solver{//extends Physics implements Solver {
 
 //    private double counter = 0;
 //    private int fps = 120;
@@ -123,46 +123,195 @@ public class AdamsMoulton {//extends Physics implements Solver {
 //                historyX[p] = tempHistoryX[p];
 //                historyY[p] = tempHistoryY[p];
 //            }
-//
-//
-////            if(counter>=1/fps) {
-////                try {
-////                    Thread.sleep(0,2);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-////                counter = 0.0;
-////            }
-//
-//            DataField.x = (float)coordinatesAndVelocity[0];
-//            DataField.y = (float)coordinatesAndVelocity[1];
-//
-//            //checking if the ball has fallen into water
-//            if(terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
-//                System.out.println("YOU'RE IN THE WATER!!");
-//                coordinatesAndVelocity[0] = tempCoordinates[0];
-//                coordinatesAndVelocity[1] = tempCoordinates[1];
-////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//
-//                return coordinatesAndVelocity;
-//            }
-//            wall.collide(coordinatesAndVelocity);
-//            sandPits.change(coordinatesAndVelocity);
-//
-//        }
-////        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//
-//        return coordinatesAndVelocity;
-//    }
-//
-//    //SETTERS
-//
-//    //0.05-0.1
-//    //Static friction (grass) µS 0.1-0.2
-//    /**
-//     * A setter for kinetic friction
-//     * @param kFriction kinetic friction
-//     */
+
+            DataField.x = (float)coordinatesAndVelocity[0];
+            DataField.y = (float)coordinatesAndVelocity[1];
+
+            //checking if the ball has fallen into water
+            if(terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
+                System.out.println("YOU'RE IN THE WATER!!");
+                coordinatesAndVelocity[0] = tempCoordinates[0];
+                coordinatesAndVelocity[1] = tempCoordinates[1];
+//                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+
+                return coordinatesAndVelocity;
+            }
+            wall.collide(coordinatesAndVelocity);
+            sandPits.change(coordinatesAndVelocity);
+        return coordinatesAndVelocity;
+    }
+
+    @Override
+    public void setkFriction(double kFriction) {
+
+    }
+
+    @Override
+    public void setsFriction(double sFriction) {
+
+    }
+
+    @Override
+    public void setCoordinates(double X, double Y) {
+
+    }
+
+    @Override
+    public void setVelocity(double X, double Y) {
+
+    }
+
+    @Override
+    public void setTargetRXY(double[] targetRXY) {
+
+    }
+
+    @Override
+    public void setTerrain(BiFunction<Double, Double, Double> terrain) {
+
+    }
+
+    @Override
+    public double getXCoord() {
+        return 0;
+    }
+
+    @Override
+    public double getYCoord() {
+        return 0;
+    }
+//        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+
+
+
+    public double[] rk4(double step)
+    {
+        double tempvelx1;
+        double tempvely1;
+        double tempvelx2;
+        double tempvely2;
+        double tempvelx3;
+        double tempvely3;
+        double tempvelx4;
+        double tempvely4;
+        double tempvelx5;
+        double tempvely5;
+        double tempvely6;
+        double tempvelx6;
+        double tempvelx7;
+        double tempvely7;
+
+        double tempcoorx1;
+        double tempcoory1;
+        double tempcoorx2;
+        double tempcoory2;
+        double tempcoorx3;
+        double tempcoory3;
+
+        tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;     //k1
+
+        tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
+        tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
+        tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;    //k2
+
+        tempvelx4 = coordinatesAndVelocity[2] + 0.5*tempvelx3;
+        tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4*step*0.5;
+        tempvelx5 = accelerationrungeX(tempcoorx2,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;      //k3
+
+        tempvelx6 = coordinatesAndVelocity[2] + tempvelx5;
+        tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6*step;
+        tempvelx7 = accelerationrungeX(tempcoorx3,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;         //k4
+
+
+        tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;      //k1
+
+        tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
+        tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
+        tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;            //k2
+
+        tempvely4 = coordinatesAndVelocity[3] + 0.5 * tempvely3;
+        tempcoory2 = coordinatesAndVelocity[1] + tempvely4*step*0.5;
+        tempvely5 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory2,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;           //k3
+
+        tempvely6 = coordinatesAndVelocity[3] + tempvely5;
+        tempcoory3 = coordinatesAndVelocity[1] + tempvely6*step;
+        tempvely7 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory3,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;            //k4
+
+
+        //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
+        double[] results = new double[2];
+        results[0] = (tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7)/6;
+        results[1] = (tempvely1+2*tempvely3+2*tempvely5+tempvely7)/6;
+        return results;
+    }
+
+    public double[] futureRK4(double step, double[] futureArray)
+    {
+        double tempvelx1;
+        double tempvely1;
+        double tempvelx2;
+        double tempvely2;
+        double tempvelx3;
+        double tempvely3;
+        double tempvelx4;
+        double tempvely4;
+        double tempvelx5;
+        double tempvely5;
+        double tempvely6;
+        double tempvelx6;
+        double tempvelx7;
+        double tempvely7;
+
+        double tempcoorx1;
+        double tempcoory1;
+        double tempcoorx2;
+        double tempcoory2;
+        double tempcoorx3;
+        double tempcoory3;
+
+        tempvelx1 = accelerationrungeX(futureArray[0],futureArray[1],futureArray[2],futureArray[3] , terrain, kFriction)*step;     //k1
+
+        tempvelx2 = futureArray[2] + 0.5*tempvelx1;
+        tempcoorx1 = futureArray[0] + tempvelx2*step*0.5;
+        tempvelx3 = accelerationrungeX(tempcoorx1,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;    //k2
+
+        tempvelx4 = futureArray[2] + 0.5*tempvelx3;
+        tempcoorx2 = futureArray[0] + tempvelx4*step*0.5;
+        tempvelx5 = accelerationrungeX(tempcoorx2,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;      //k3
+
+        tempvelx6 = futureArray[2] + tempvelx5;
+        tempcoorx3 = futureArray[0] + tempvelx6*step;
+        tempvelx7 = accelerationrungeX(tempcoorx3,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;         //k4
+
+
+        tempvely1 = accelerationrungeY(futureArray[0],futureArray[1],futureArray[2],futureArray[3] , terrain, kFriction)*step;      //k1
+
+        tempvely2 = futureArray[3] + 0.5*tempvely1;
+        tempcoory1 = futureArray[1] + tempvely2*step*0.5;
+        tempvely3 = accelerationrungeY(futureArray[0],tempcoory1,futureArray[2],futureArray[3],terrain,kFriction)*step;            //k2
+
+        tempvely4 = futureArray[3] + 0.5 * tempvely3;
+        tempcoory2 = futureArray[1] + tempvely4*step*0.5;
+        tempvely5 = accelerationrungeY(futureArray[0],tempcoory2,futureArray[2],futureArray[3],terrain,kFriction)*step;           //k3
+
+        tempvely6 = futureArray[3] + tempvely5;
+        tempcoory3 = futureArray[1] + tempvely6*step;
+        tempvely7 = accelerationrungeY(futureArray[0],tempcoory3,futureArray[2],futureArray[3],terrain,kFriction)*step;            //k4
+
+        //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
+        double[] results = new double[2];
+        results[0] = (tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7)/6;
+        results[1] = (tempvely1+2*tempvely3+2*tempvely5+tempvely7)/6;
+        return results;
+    }
+
+
+
+    //SETTERS
+
+    //0.05-0.1
+    //Static friction (grass) µS 0.1-0.2
+
 //    public void setkFriction(double kFriction){
 //        if(kFriction > 0.1){
 //            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
@@ -283,104 +432,5 @@ public class AdamsMoulton {//extends Physics implements Solver {
 //    public double getYTarget() {
 //        return targetRXY[2];
 //    }
-//
-//    public double[] rk4(double step)
-//    {
-//
-//        if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0)
-//        {
-//            coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, kFriction)); //X-Velocity = xVelocity + step*acc
-//            coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, kFriction)); //Y-Velocity = YVelocity + step*acc
-//            //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
-//            return {(step * accelerationX2(coordinatesAndVelocity, terrain, kFriction),(step * accelerationY2(coordinatesAndVelocity, terrain, kFriction)};
-//        }
-//        else
-//        {
-//            tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;    //tempacc1
-//
-//            tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
-//            tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step;
-//            tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;    //tempacc2
-//
-//            tempvelx4 = coordinatesAndVelocity[2] + 0,5*tempvelx3;
-//            tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4*step;
-//            tempvelx5 = accelerationrungeX(tempcoorx2,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;      //tempacc3
-//
-//            tempvelx6 = coordinatesAndVelocity[2] + tempvelx5;
-//            tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6*step;
-//            tempvelx7 = accelerationrungeX(tempcoorx3,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
-//
-//            tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;
-//
-//            tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
-//            tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step;
-//            tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
-//
-//            tempvely4 = coordinatesAndVelocity[3] + 0,5*tempvely3;
-//            tempcoory2 = coordinatesAndVelocity[1] + tempvely4*step;
-//            tempvely5 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory2,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
-//
-//            tempvely6 = coordinatesAndVelocity[3] + tempvely5;
-//            tempcoory3 = coordinatesAndVelocity[1] + tempvely6*step;
-//            tempvely7 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory3,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
-//
-//            //IMPLEMENT 1,3,5,7
-//
-//            coordinatesAndVelocity[2] += (1/6)*(tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7);
-//            coordinatesAndVelocity[3] += (1/6)*(tempvely1+2*tempvely3+2*tempvely5+tempvely7);
-//            //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
-//            return {(1/6)*(tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7), (1/6)*(tempvely1+2*tempvely3+2*tempvely5+tempvely7)};
-//        }
-//        return {0,0};
-//    }
-//
-//    public double[] futureRK4(double step, double[] futureArray)
-//    {
-//
-//        if(futureArray[2] == 0 && futureArray[3] == 0)
-//        {
-//            futureArray[2] = futureArray[2] + (step * accelerationX2(futureArray, terrain, kFriction)); //X-Velocity = xVelocity + step*acc
-//            futureArray[3] = futureArray[3] + (step * accelerationY2(futureArray, terrain, kFriction)); //Y-Velocity = YVelocity + step*acc
-//            //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
-//            return {(step * accelerationX2(futureArray, terrain, kFriction),(step * accelerationY2(futureArray, terrain, kFriction)};
-//        }
-//        else
-//        {
-//            tempvelx1 = accelerationrungeX(futureArray[0],futureArray[1],futureArray[2],futureArray[3] , terrain, kFriction)*step;    //tempacc1
-//
-//            tempvelx2 = futureArray[2] + 0.5*tempvelx1;
-//            tempcoorx1 = futureArray[0] + tempvelx2*step;
-//            tempvelx3 = accelerationrungeX(tempcoorx1,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;    //tempacc2
-//
-//            tempvelx4 = futureArray[2] + 0,5*tempvelx3;
-//            tempcoorx2 = futureArray[0] + tempvelx4*step;
-//            tempvelx5 = accelerationrungeX(tempcoorx2,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;      //tempacc3
-//
-//            tempvelx6 = futureArray[2] + tempvelx5;
-//            tempcoorx3 = futureArray[0] + tempvelx6*step;
-//            tempvelx7 = accelerationrungeX(tempcoorx3,futureArray[1],futureArray[2],futureArray[3],terrain,kFriction)*step;
-//
-//            tempvely1 = accelerationrungeY(futureArray[0],futureArray[1],futureArray[2],futureArray[3] , terrain, kFriction)*step;
-//
-//            tempvely2 = futureArray[3] + 0.5*tempvely1;
-//            tempcoory1 = futureArray[1] + tempvely2*step;
-//            tempvely3 = accelerationrungeY(futureArray[0],tempcoory1,futureArray[2],futureArray[3],terrain,kFriction)*step;
-//
-//            tempvely4 = futureArray[3] + 0,5*tempvely3;
-//            tempcoory2 = futureArray[1] + tempvely4*step;
-//            tempvely5 = accelerationrungeY(futureArray[0],tempcoory2,futureArray[2],futureArray[3],terrain,kFriction)*step;
-//
-//            tempvely6 = futureArray[3] + tempvely5;
-//            tempcoory3 = futureArray[1] + tempvely6*step;
-//            tempvely7 = accelerationrungeY(futureArray[0],tempcoory3,futureArray[2],futureArray[3],terrain,kFriction)*step;
-//
-//            //IMPLEMENT 1,3,5,7
-//
-//            futureArray[2] += (1/6)*(tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7);
-//            futureArray[3] += (1/6)*(tempvely1+2*tempvely3+2*tempvely5+tempvely7);
-//            //return ACCx and ACCy as kickstarter and predictor values for adams-bashforth
-//            return {(1/6)*(tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7), (1/6)*(tempvely1+2*tempvely3+2*tempvely5+tempvely7)};
-//        }
-//        return {0,0};
-//    }
+
 }

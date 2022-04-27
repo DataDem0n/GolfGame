@@ -103,12 +103,8 @@ public class RungeKutta4 extends Physics implements Solver {
                 tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6*step;
                 tempvelx7 = accelerationrungeX(tempcoorx3,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
 
-                //IMPLEMENT 1,3,5,7
-
-
-
-
-                tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;
+            //IMPLEMENT 1,3,5,7
+            tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;      //k1
 
                 tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step;
@@ -158,7 +154,6 @@ public class RungeKutta4 extends Physics implements Solver {
             wall.collide(coordinatesAndVelocity);
             sandPits.change(coordinatesAndVelocity);
 
-        }
 //        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
         return coordinatesAndVelocity;

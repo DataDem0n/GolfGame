@@ -128,7 +128,7 @@ public class Physics extends Thread{
     {
         double scalingSlope = 0.0008;
 
-        if(Math.abs(coordinatesAndVelocity[2]) < step* Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))&&
+        if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))&&
                 Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
                 && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
                 && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
