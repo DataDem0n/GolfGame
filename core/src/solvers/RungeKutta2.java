@@ -5,6 +5,7 @@ import obstacles.SandPits;
 import obstacles.Wall;
 import physics.Physics;
 import java.util.function.BiFunction;
+//new
 
 public class RungeKutta2 extends Physics implements Solver{
 
