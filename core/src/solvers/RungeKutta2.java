@@ -2,6 +2,7 @@ package solvers;
 
 import com.mygdx.game.main.DataField;
 import obstacles.SandPits;
+import obstacles.Tree;
 import obstacles.Wall;
 import physics.Physics;
 import java.util.function.BiFunction;
@@ -19,6 +20,7 @@ public class RungeKutta2 extends Physics implements Solver{
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+    private Tree tree = new Tree(5,5);
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX

@@ -11,16 +11,16 @@ import java.util.function.BiFunction;
 
 public class AdamsMoulton extends Physics implements Solver{//extends Physics implements Solver {
 
-//    private double counter = 0;
-//    private int fps = 120;
-//    private BiFunction<Double, Double, Double> terrain;
-//    private double kFriction;
-//    private double sFriction;
-//    double[] targetRXY;
-//    public double[] tempCoordinates = new double [2];
-//    private double[] coordinatesAndVelocity;
-//    private Wall wall = new Wall(25,25);
-//    private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+    private double counter = 0;
+    private int fps = 120;
+    private BiFunction<Double, Double, Double> terrain;
+    private double kFriction;
+    private double sFriction;
+    double[] targetRXY;
+    public double[] tempCoordinates = new double [2];
+    private double[] coordinatesAndVelocity;
+    private Wall wall = new Wall(25,25);
+    private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
 //
 //    // Overview of what is stored in the coordinatedAndVelocity array:
 //    // [0] - coordinateX
@@ -36,92 +36,110 @@ public class AdamsMoulton extends Physics implements Solver{//extends Physics im
 //     * @param sFriction the static friction acting upon a ball
 //     * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
 //     */
-//    public AdamsMoulton(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
-//        this.terrain = terrain;
-//        this.coordinatesAndVelocity = coordinatesAndVelocity;
-//        DataField.kFriction = kFriction;
-//        DataField.sFriction = sFriction;
-//        this.targetRXY = targetRXY;
-//    }
-//
-//    /**
-//     * Method based on the Euler Method for solving differential equations that calculates the next velocities in the X-direction and Y-direction, after a certain step size
-//     * and calculates the next coordinates of the ball based on the resulting velocities, so that it tracks ball's movements
-//     * @param step a step size in the Euler's method
-//     * @return an array with final coordinates and velocities of a ball that has stopped after a shot
-//     */
-//    public double[] coordinatesAndVelocityUntilStop(double step)  {
-//        double[] historyX = new double[3];
-//        double[] historyY = new double[3];
-//        double[] tempHistoryX = new double[3];
-//        double[] tempHistoryY = new double[3];
-//        int counter = -1;
-//        double CurrentAccx;
-//        double CurrentAccy;
-//        double futureAccx;
-//        double futureAccy;
-//        double[] futureArray = new double[4];
-//
-//
-//        tempCoordinates[0] = coordinatesAndVelocity[0];
-//        tempCoordinates[1] = coordinatesAndVelocity[1];
-//        coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
-//
-//        //kickstart for moulton with s = 3
-//        for(int p = 0; p <3; p++)       //3 == s
-//        {
-//            counter++;
-//            historyX[counter] = rk4(step)[0];
-//            historyY[counter] = rk4(step)[1];
-//
-//            coordinatesAndVelocity[2] +=  historyX[counter];
-//            coordinatesAndVelocity[3] +=  historyY[counter];
-//            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
-//            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
-//        }
-//
-//        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
-//
-//            if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
-//                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
-//                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
-//            }
-//            else{
-//                //current acc
-//                CurrentAccx = rk4(step)[0];
-//                CurrentAccy = rk4(step)[1];
-//
-//                //future acc
-//                futureArray[2] = coordinatesAndVelocity[2] + CurrentAccx;
-//                futureArray[3] = coordinatesAndVelocity[3] + CurrentAccy;
-//                futureArray[0] = coordinatesAndVelocity[0] + futureArray[2]*step;
-//                futureArray[1] = coordinatesAndVelocity[1] + futureArray[3]*step;
-//
-//                futureAccx = futureRK4(step,futureArray)[0];
-//                futureAccy = futureRK4(step,futureArray)[1];
-//
-//
-//                coordinatesAndVelocity[2] += -(historyX[2]*(264/720)) + historyX[1]*(106/720) -(historyX[0]*(19/720)) + CurrentAccx*(646/720) + futureAccx*(251/720);
-//                coordinatesAndVelocity[3] += -(historyY[2]*(264/720)) + historyY[1]*(106/720) -(historyY[0]*(19/720)) + CurrentAccy*(646/720) + futureAccy*(251/720);
-//            }
-//
-//            //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
-//            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
-//            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
-//
-//            counter+= step;
-//
-//            for(int p = 1; p<historyX.length;p++)
-//            {
-//                tempHistoryX[p-1] = historyX[p];
-//                tempHistoryY[p-1] = historyY[p];
-//            }
-//            tempHistoryX[historyX.length-1] = -(historyX[2]*(264/720)) + historyX[1]*(106/720) -(historyX[0]*(19/720)) + CurrentAccx*(646/720) + futureAccx*(251/720);    //....................................................
-//            tempHistoryY[historyX.length-1] = -(historyY[2]*(264/720)) + historyY[1]*(106/720) -(historyY[0]*(19/720)) + CurrentAccy*(646/720) + futureAccy*(251/720);
-//            for(int p = 0; p<historyX.length;p++)
-//            {
-//                historyX[p] = tempHistoryX[p];
-//                historyY[p] = tempHistoryY[p];
+    public AdamsMoulton(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
+        this.terrain = terrain;
+        this.coordinatesAndVelocity = coordinatesAndVelocity;
+        DataField.kFriction = kFriction;
+        DataField.sFriction = sFriction;
+        this.targetRXY = targetRXY;
+    }
+
+    /**
+     * Method based on the Euler Method for solving differential equations that calculates the next velocities in the X-direction and Y-direction, after a certain step size
+     * and calculates the next coordinates of the ball based on the resulting velocities, so that it tracks ball's movements
+     * @param step a step size in the Euler's method
+     * @return an array with final coordinates and velocities of a ball that has stopped after a shot
+     */
+    public double[] coordinatesAndVelocityUntilStop(double step){
+
+        double[] historyX = new double[3];
+        double[] historyY = new double[3];
+        double[] tempHistoryX = new double[3];
+        double[] tempHistoryY = new double[3];
+        int counter = -1;
+        double CurrentAccx;
+        double CurrentAccy;
+        double futureAccx;
+        double futureAccy;
+        double[] futureArray = new double[4];
+
+
+//kickstart for moulton with s = 3
+        for(int p = 0; p <3; p++)       //3 == s
+        {
+            counter++;
+            historyX[counter] = rk4(step)[0];
+            historyY[counter] = rk4(step)[1];
+
+            coordinatesAndVelocity[2] +=  historyX[counter];
+            coordinatesAndVelocity[3] +=  historyY[counter];
+            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
+            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
+        }
+
+
+
+
+        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
+            //current acc
+            CurrentAccx = rk4(step)[0];
+            CurrentAccy = rk4(step)[1];
+
+            //future acc
+            futureArray[2] = coordinatesAndVelocity[2] + CurrentAccx;
+            futureArray[3] = coordinatesAndVelocity[3] + CurrentAccy;
+            futureArray[0] = coordinatesAndVelocity[0] + futureArray[2]*step;
+            futureArray[1] = coordinatesAndVelocity[1] + futureArray[3]*step;
+
+            futureAccx = futureRK4(step,futureArray)[0];
+            futureAccy = futureRK4(step,futureArray)[1];
+
+
+            coordinatesAndVelocity[2] += -264*historyX[2]/720 + 106*historyX[1]/720 -19*historyX[0]/720 + 646*CurrentAccx/720 + 251*futureAccx/720;
+            coordinatesAndVelocity[3] += -264*historyY[2]/720 + 106*historyY[1]/720 -19*historyY[0]/720 + 646*CurrentAccy/720 + 251*futureAccy/720;
+
+            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
+            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
+
+            for(int p = 0; p<historyX.length-1;p++)
+            {
+                tempHistoryX[p] = historyX[p+1];
+                tempHistoryY[p] = historyY[p+1];
+            }
+            tempHistoryX[historyX.length-1] = -264*historyX[2]/720 + 106*historyX[1]/720 -19*historyX[0]/720 + 646*CurrentAccx/720 + 251*futureAccx/720;    //....................................................
+            tempHistoryY[historyX.length-1] = -264*historyY[2]/720 + 106*historyY[1]/720 -19*historyY[0]/720 + 646*CurrentAccy/720 + 251*futureAccy/720;
+            for(int p = 0; p<historyX.length;p++)
+            {
+                historyX[p] = tempHistoryX[p];
+                historyY[p] = tempHistoryY[p];
+            }
+
+
+            //     try {
+            //         Thread.sleep(1000);
+            //     }
+            // catch (Exception e)
+            // {
+            // }
+
+
+            //testing purposes:
+            // System.out.println(" ACC:  " + accelerationX(coordinatesAndVelocity, terrain, kFriction));
+            // System.out.println("   ---------   ");
+            // System.out.println("  X:"+ coordinatesAndVelocity[0] + "  Y:" + coordinatesAndVelocity[1] + "   VelX:" + coordinatesAndVelocity[2] + "  VelY" + coordinatesAndVelocity[3]);
+        }
+        //System.out.println("FINAL ACC: " + accelerationX(coordinatesAndVelocity, terrain, kFriction));
+
+
+
+       //TUTAJ NIE
+//            if(counter>=1/fps) {
+//                try {
+//                    Thread.sleep(0,2);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                counter = 0.0;
 //            }
 
             DataField.x = (float)coordinatesAndVelocity[0];
