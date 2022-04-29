@@ -16,6 +16,7 @@ public class RungeKutta2 extends Physics implements Solver{
     private double kFriction;
     private double sFriction;
     double[] targetRXY;
+
     public double[] tempCoordinates = new double [2];
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
@@ -50,6 +51,7 @@ public class RungeKutta2 extends Physics implements Solver{
      * @param step a step size in the Euler's method
      * @return an array with final coordinates and velocities of a ball that has stopped after a shot
      */
+
     @Override
     public double[] coordinatesAndVelocityUntilStop(double step)
     {
@@ -119,7 +121,7 @@ public class RungeKutta2 extends Physics implements Solver{
             sandPits.change(coordinatesAndVelocity);
 
         }
-//        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
         return coordinatesAndVelocity;
     }
@@ -135,17 +137,17 @@ public class RungeKutta2 extends Physics implements Solver{
      */
     @Override
     public void setkFriction(double kFriction){
-        if(kFriction > 0.1){
-            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-            DataField.kFriction = 0.1;
-        }
-        else if(kFriction < 0.05){
-            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-            DataField.kFriction = 0.05;
-        }
-        else{
+//        if(kFriction > 0.1){
+//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
+//            DataField.kFriction = 0.1;
+//        }
+//        else if(kFriction < 0.05){
+//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
+//            DataField.kFriction = 0.05;
+//        }
+//        else{
             DataField.kFriction = kFriction;
-        }
+        //}
     };
 
     /**
@@ -154,17 +156,17 @@ public class RungeKutta2 extends Physics implements Solver{
      */
     @Override
     public void setsFriction(double sFriction){
-        if(sFriction > 0.2){
-            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-            DataField.sFriction = 0.2;
-        }
-        else if(sFriction < 0.1){
-            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-            DataField.sFriction = 0.1;
-        }
-        else{
+//        if(sFriction > 0.2){
+//            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
+//            DataField.sFriction = 0.2;
+//        }
+//        else if(sFriction < 0.1){
+//            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
+//            DataField.sFriction = 0.1;
+//        }
+//        else{
             DataField.sFriction = sFriction;
-        }
+//        }
     }
 
     /**

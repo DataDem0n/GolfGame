@@ -54,14 +54,14 @@ public class Physics extends Thread{
         return acc;
     }
 
-    public double accelerationrungeX(double velx, double vely, double coorx, double coory, BiFunction <Double, Double, Double> terrain, double friction)
+    public double accelerationrungeX(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
     {
         double acc;
         acc = -GRAVITY * derivativeXValue(terrain, coorx, coory) - friction * GRAVITY * ((velx)/(Math.sqrt((velx*velx + vely*vely))));
         return acc;
     }
 
-    public double accelerationrungeY(double velx, double vely, double coorx, double coory, BiFunction <Double, Double, Double> terrain, double friction)
+    public double accelerationrungeY(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
     {
         double acc;
         acc = -GRAVITY * derivativeYValue(terrain, coorx, coory) - friction * GRAVITY * ((vely)/(Math.sqrt((velx*velx + vely*vely))));
