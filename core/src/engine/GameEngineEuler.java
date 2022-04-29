@@ -40,7 +40,7 @@ public class GameEngineEuler extends Euler {
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            coordinatesAndVelocityUntilStop( 0.00000001);
+            coordinatesAndVelocityUntilStop( 0.00001);
 
             DataField.x = (float) getXCoord();
             DataField.y = (float) getYCoord();

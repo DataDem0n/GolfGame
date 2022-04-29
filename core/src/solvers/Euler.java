@@ -115,17 +115,17 @@ public class Euler extends Physics implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-        if(kFriction > 0.1){
-            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-            DataField.kFriction = 0.1;
-        }
-        else if(kFriction < 0.05){
-            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-            DataField.kFriction = 0.05;
-        }
-        else{
+//        if(kFriction > 0.1){
+//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
+//            DataField.kFriction = 0.1;
+//        }
+//        else if(kFriction < 0.05){
+//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
+//            DataField.kFriction = 0.05;
+//        }
+//        else{
             DataField.kFriction = kFriction;
-        }
+//        }
     };
 
     /**
@@ -134,17 +134,17 @@ public class Euler extends Physics implements Solver {
      */
     @Override
     public void setsFriction(double sFriction){
-        if(sFriction > 0.2){
-            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-            DataField.sFriction = 0.2;
-        }
-        else if(sFriction < 0.1){
-            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-            DataField.sFriction = 0.1;
-        }
-        else{
+//        if(sFriction > 0.2){
+//            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
+//            DataField.sFriction = 0.2;
+//        }
+//        else if(sFriction < 0.1){
+//            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
+//            DataField.sFriction = 0.1;
+//        }
+//        else{
             DataField.sFriction = sFriction;
-        }
+//        }
     }
 
     /**

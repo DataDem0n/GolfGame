@@ -189,12 +189,7 @@ public class Runner extends Thread
         String heightProfile = get_function();
 
         //this sets terrain to the heightprofile given in the read.txt
-        terrain = (x,y) -> {
-            Argument a = new Argument("x = " + x);
-            Argument b = new Argument("y = " + y);
-            Expression expression = new Expression(heightProfile, a, b);
-            return expression.calculate();
-        };
+
 
         /*
         sets all the static fields from the DataFieldclass,
@@ -243,14 +238,13 @@ public class Runner extends Thread
         DataField.targetRXY = targetRXY;
         DataField.sFriction = staticFriction;
         DataField.kFriction = kineticFriction;
-        DataField.terrain = terrain;
         DataField.GUI = true;
         DataField.usingGui = true;
 
         DataField.terrain = new BiFunction<Double, Double, Double>() {
             @Override
             public Double apply(Double x, Double y) {
-                return 1.0;
+                return (1.0/20.0)*(Math.pow(x,2)+Math.pow(y,2));
 //              return 0.05*((x*x)+(y*y));
             }
         };
@@ -269,12 +263,12 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher(useGUI);
          t.start();
-         //GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-         //g.start();
-//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-//        r2.start();
-        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-        r4.start();
+//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+//         g.start();
+        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+        r2.start();
+//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+//        r4.start();
 //        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //        am.start();
     }
