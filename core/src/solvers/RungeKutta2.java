@@ -9,7 +9,6 @@ import java.util.function.BiFunction;
 //new
 
 public class RungeKutta2 extends Physics implements Solver{
-
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
@@ -284,3 +283,4 @@ public class RungeKutta2 extends Physics implements Solver{
 //    }
 }
 
+//test

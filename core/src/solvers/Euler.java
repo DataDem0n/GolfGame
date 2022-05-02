@@ -9,7 +9,6 @@ import obstacles.Wall;
 import java.util.function.BiFunction;
 
 public class Euler extends Physics implements Solver {
-
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
@@ -261,3 +260,5 @@ public class Euler extends Physics implements Solver {
 //
 //    }
 }
+
+//test
