@@ -20,6 +20,7 @@ import java.util.Scanner;
 
 public class Runner extends Thread
 {
+
     //A variable, that stores the coordinates of the ball and velocity of the ball in the x-direction and y-direction.
     static double[] coordinatesAndVelocity;
     public static boolean useGUI = true;
@@ -268,3 +269,5 @@ public class Runner extends Thread
 //        am.start();
     }
 }
+
+//test
