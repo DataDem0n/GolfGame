@@ -123,10 +123,11 @@ public class Physics extends Thread{
      * @param terrain the function of two variables describing the terrain surface
      * @return true if the ball has stopped, false if not
      */
+
     public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step)
     {
-        double scalingVelX = step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction));   //0.001
-        double scalingVelY = step * Math.abs(accelerationY(coordinatesAndVelocity, terrain,  DataField.kFriction));  //0.001
+        double scalingVelX = 0.001;   //step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+        double scalingVelY = 0.001;  //step * Math.abs(accelerationY(coordinatesAndVelocity, terrain,  DataField.kFriction));
 
         if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX &&
                 Math.abs(coordinatesAndVelocity[3]) < scalingVelY
@@ -138,14 +139,6 @@ public class Physics extends Thread{
 
         else if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX && Math.abs(coordinatesAndVelocity[3]) < scalingVelY)
         {
-//            System.out.println("sFriction: "+ staticFriction +"\n>?:" +Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+       //fuckup
-//                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)));
-//
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
             return staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+       //fuckup
                     Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
         }

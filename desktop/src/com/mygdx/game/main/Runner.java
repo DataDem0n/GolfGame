@@ -259,12 +259,12 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher(useGUI);
          t.start();
-//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.05, 0.2, targetRXY);
+//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //         g.start();
-//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.05, 0.2, targetRXY);            //MORE ACCURATE FOR THIRD FUNCTION
-//        r2.start();
-        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity,0.01 , 0.1, targetRXY);
-        r4.start();
+        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
+        r2.start();
+//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
+//        r4.start();
 //        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
 //        am.start();
     }
