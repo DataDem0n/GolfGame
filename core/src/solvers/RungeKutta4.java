@@ -79,56 +79,64 @@ public class RungeKutta4 extends Physics implements Solver {
         double tempcoory3;
 
 
-        double velx;
-        double vely;
+
 
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
 
         while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)) {
 
-            tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;     //k1
-            //System.out.println("K1 = " + tempvelx1);
-            //___________________________
+            if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0)
+            {
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
+            }
+            else
+            {
+                tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;     //k1
+                //System.out.println("K1 = " + tempvelx1);
+                //___________________________
 
-            tempvelx2 = coordinatesAndVelocity[2] + 0.5 * tempvelx1;
-            tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2 * step * 0.5;
-            tempvelx3 = accelerationrungeX(tempcoorx1, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;    //k2
-            //System.out.println("K2 = " + tempvelx3);
+                tempvelx2 = coordinatesAndVelocity[2] + 0.5 * tempvelx1;
+                tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2 * step * 0.5;
+                tempvelx3 = accelerationrungeX(tempcoorx1, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;    //k2
+                //System.out.println("K2 = " + tempvelx3);
 
-            //____________________________
+                //____________________________
 
-            tempvelx4 = coordinatesAndVelocity[2] + 0.5 * tempvelx3;
-            tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4 * step * 0.5;
-            tempvelx5 = accelerationrungeX(tempcoorx2, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;      //k3
-            //System.out.println("K3 = " + tempvelx5);
+                tempvelx4 = coordinatesAndVelocity[2] + 0.5 * tempvelx3;
+                tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4 * step * 0.5;
+                tempvelx5 = accelerationrungeX(tempcoorx2, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;      //k3
+                //System.out.println("K3 = " + tempvelx5);
 
-            tempvelx6 = coordinatesAndVelocity[2] + tempvelx5;
-            tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6 * step;
-            tempvelx7 = accelerationrungeX(tempcoorx3, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;         //k4
-            //System.out.println("K4 = " + tempvelx7);
+                tempvelx6 = coordinatesAndVelocity[2] + tempvelx5;
+                tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6 * step;
+                tempvelx7 = accelerationrungeX(tempcoorx3, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;         //k4
+                //System.out.println("K4 = " + tempvelx7);
 
-            //IMPLEMENT 1,3,5,7
-            tempvely1 = accelerationrungeY(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;      //k1
+                //IMPLEMENT 1,3,5,7
+                tempvely1 = accelerationrungeY(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;      //k1
 
-            tempvely2 = coordinatesAndVelocity[3] + 0.5 * tempvely1;
-            tempcoory1 = coordinatesAndVelocity[1] + tempvely2 * step * 0.5;
-            tempvely3 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory1, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;            //k2
+                tempvely2 = coordinatesAndVelocity[3] + 0.5 * tempvely1;
+                tempcoory1 = coordinatesAndVelocity[1] + tempvely2 * step * 0.5;
+                tempvely3 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory1, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;            //k2
 
 
-            tempvely4 = coordinatesAndVelocity[3] + 0.5 * tempvely3;
-            tempcoory2 = coordinatesAndVelocity[1] + tempvely4 * step * 0.5;
-            tempvely5 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory2, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;           //k3
+                tempvely4 = coordinatesAndVelocity[3] + 0.5 * tempvely3;
+                tempcoory2 = coordinatesAndVelocity[1] + tempvely4 * step * 0.5;
+                tempvely5 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory2, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;           //k3
 
-            tempvely6 = coordinatesAndVelocity[3] + tempvely5;
-            tempcoory3 = coordinatesAndVelocity[1] + tempvely6 * step;
-            tempvely7 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory3, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, kFriction) * step;            //k4
+                tempvely6 = coordinatesAndVelocity[3] + tempvely5;
+                tempcoory3 = coordinatesAndVelocity[1] + tempvely6 * step;
+                tempvely7 = accelerationrungeY(coordinatesAndVelocity[0], tempcoory3, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;            //k4
 
-            //IMPLEMENT 1,3,5,7
+                //IMPLEMENT 1,3,5,7
 
-            coordinatesAndVelocity[2] += (tempvelx1 + 2 * tempvelx3 + 2 * tempvelx5 + tempvelx7) / 6;        //(0.166666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666667)
-            //System.out.println("dX = " + (tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7)/6);
-            //System.out.println("Xtot = " + coordinatesAndVelocity[2]);
-            coordinatesAndVelocity[3] += (tempvely1 + 2 * tempvely3 + 2 * tempvely5 + tempvely7) / 6;
+                coordinatesAndVelocity[2] += (tempvelx1 + 2 * tempvelx3 + 2 * tempvelx5 + tempvelx7) / 6;        //(0.166666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666667)
+                //System.out.println("dX = " + (tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7)/6);
+                //System.out.println("Xtot = " + coordinatesAndVelocity[2]);
+                coordinatesAndVelocity[3] += (tempvely1 + 2 * tempvely3 + 2 * tempvely5 + tempvely7) / 6;
+            }
+
             // System.out.println("velocityX = " + coordinatesAndVelocity[2]);
             // System.out.println("velocityY = " + coordinatesAndVelocity[3]);
             // try {
@@ -174,6 +182,8 @@ public class RungeKutta4 extends Physics implements Solver {
             sandPits.change(coordinatesAndVelocity);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("accx: " + coordinatesAndVelocity[2]);
+        System.out.println("accy: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }

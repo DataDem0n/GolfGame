@@ -1,5 +1,6 @@
 package com.mygdx.game.main;
 
+ import engine.GameEngineAM;
  import engine.GameEngineRK2;
  import engine.GameEngineRK4;
  import org.mariuszgromada.math.mxparser.Argument;
@@ -241,13 +242,7 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = new BiFunction<Double, Double, Double>() {
-            @Override
-            public Double apply(Double x, Double y) {
-                return (1.0/20.0)*(Math.pow(x,2)+Math.pow(y,2));
-//              return 0.05*((x*x)+(y*y));
-            }
-        };
+        DataField.terrain = (x,y)->(double)((1.0/20.0)*(x*x+y*y));
 
         if(!choice.equals("y")){
             useGUI = false;
@@ -263,13 +258,13 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher(useGUI);
          t.start();
-//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //         g.start();
-//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-//        r2.start();
-        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-        r4.start();
-//        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+        r2.start();
+//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+//        r4.start();
+//        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
 //        am.start();
     }
 }
