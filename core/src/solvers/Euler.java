@@ -9,12 +9,9 @@ import obstacles.Wall;
 import java.util.function.BiFunction;
 
 public class Euler extends Physics implements Solver {
-
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
-    private double kFriction;
-    private double sFriction;
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
@@ -58,7 +55,7 @@ public class Euler extends Physics implements Solver {
         tempCoordinates[1] = coordinatesAndVelocity[1];
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
 
-        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
+        while(!hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
                 coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
@@ -100,7 +97,9 @@ public class Euler extends Physics implements Solver {
             sandPits.change(coordinatesAndVelocity);
 
        }
-//        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("accx: " + coordinatesAndVelocity[2]);
+        System.out.println("accy: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }
@@ -115,17 +114,17 @@ public class Euler extends Physics implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-        if(kFriction > 0.1){
-            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-            DataField.kFriction = 0.1;
-        }
-        else if(kFriction < 0.05){
-            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-            DataField.kFriction = 0.05;
-        }
-        else{
+//        if(kFriction > 0.1){
+//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
+//            DataField.kFriction = 0.1;
+//        }
+//        else if(kFriction < 0.05){
+//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
+//            DataField.kFriction = 0.05;
+//        }
+//        else{
             DataField.kFriction = kFriction;
-        }
+//        }
     };
 
     /**
@@ -134,17 +133,17 @@ public class Euler extends Physics implements Solver {
      */
     @Override
     public void setsFriction(double sFriction){
-        if(sFriction > 0.2){
-            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-            DataField.sFriction = 0.2;
-        }
-        else if(sFriction < 0.1){
-            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-            DataField.sFriction = 0.1;
-        }
-        else{
+//        if(sFriction > 0.2){
+//            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
+//            DataField.sFriction = 0.2;
+//        }
+//        else if(sFriction < 0.1){
+//            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
+//            DataField.sFriction = 0.1;
+//        }
+//        else{
             DataField.sFriction = sFriction;
-        }
+//        }
     }
 
     /**
@@ -261,3 +260,5 @@ public class Euler extends Physics implements Solver {
 //
 //    }
 }
+
+//test

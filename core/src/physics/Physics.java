@@ -6,7 +6,6 @@ import com.mygdx.game.main.DataField;
 import java.util.function.BiFunction;
 
 public class Physics extends Thread{
-
     public final double GRAVITY = 9.81;
 
     /**
@@ -54,17 +53,17 @@ public class Physics extends Thread{
         return acc;
     }
 
-    public double accelerationrungeX(double velx, double vely, double coorx, double coory, BiFunction <Double, Double, Double> terrain, double friction)
-    {
-        double acc;
-        acc = -GRAVITY * derivativeXValue(terrain, coorx, coory) - friction * GRAVITY * ((velx)/(Math.sqrt((velx*velx + vely*vely))));
-        return acc;
-    }
 
-    public double accelerationrungeY(double velx, double vely, double coorx, double coory, BiFunction <Double, Double, Double> terrain, double friction)
+    public double accelerationrungeY(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
     {
         double acc;
         acc = -GRAVITY * derivativeYValue(terrain, coorx, coory) - friction * GRAVITY * ((vely)/(Math.sqrt((velx*velx + vely*vely))));
+        return acc;
+    }
+    public double accelerationrungeX(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
+    {
+        double acc;
+        acc = -GRAVITY * derivativeXValue(terrain, coorx, coory) - friction * GRAVITY * ((velx)/(Math.sqrt((velx*velx + vely*vely))));
         return acc;
     }
 
@@ -124,29 +123,24 @@ public class Physics extends Thread{
      * @param terrain the function of two variables describing the terrain surface
      * @return true if the ball has stopped, false if not
      */
+
     public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step)
     {
-        double scalingSlope = 0.0008;
+        double scalingVelX = 0.001;   //step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+        double scalingVelY = 0.001;  //step * Math.abs(accelerationY(coordinatesAndVelocity, terrain,  DataField.kFriction));
 
-        if(Math.abs(coordinatesAndVelocity[2]) < step* Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))&&
-                Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
-                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
+        if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX &&
+                Math.abs(coordinatesAndVelocity[3]) < scalingVelY
+                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0)
+                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0))
         {
-            return true; }
+            return true;
+        }
 
-        else if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope)
-                || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope))))
+        else if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX && Math.abs(coordinatesAndVelocity[3]) < scalingVelY)
         {
-            if(staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+
-                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)))
-            {
-                return true; }
-            else
-            {
-                return false; }
+            return staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+       //fuckup
+                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
         }
         return false;
     }
@@ -171,3 +165,5 @@ public class Physics extends Thread{
 
 
 }
+
+//test

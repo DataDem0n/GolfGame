@@ -1,10 +1,13 @@
 package engine;
+
 import com.mygdx.game.main.DataField;
 import solvers.Euler;
+import solvers.RungeKutta4;
+
 import java.util.Scanner;
 import java.util.function.BiFunction;
 
-public class GameEngine extends Euler {
+public class GameEngineRK4 extends RungeKutta4 {
 
     Scanner s = new Scanner(System.in);
     /**
@@ -15,7 +18,7 @@ public class GameEngine extends Euler {
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
-    public GameEngine(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
+    public GameEngineRK4(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         super(terrain, coordinatesAndVelocity, kFriction, sFriction, targetRXY);
     }
 
@@ -40,7 +43,7 @@ public class GameEngine extends Euler {
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            coordinatesAndVelocityUntilStop( 0.00000001);
+            coordinatesAndVelocityUntilStop( 0.00001);
 
             DataField.x = (float) getXCoord();
             DataField.y = (float) getYCoord();
