@@ -58,7 +58,7 @@ public class Euler extends Physics implements Solver {
         tempCoordinates[1] = coordinatesAndVelocity[1];
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
 
-        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)){
+        while(!hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
                 coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc

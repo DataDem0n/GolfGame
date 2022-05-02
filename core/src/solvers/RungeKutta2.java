@@ -67,11 +67,12 @@ public class RungeKutta2 extends Physics implements Solver{
         tempCoordinates[1] = coordinatesAndVelocity[1];
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
 
-        while (!hasBallStopped(coordinatesAndVelocity,  sFriction,terrain, step)) {
+        while (!hasBallStopped(coordinatesAndVelocity,   DataField.sFriction,terrain, step)) {
             if (coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0) {
                 coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
                 coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
-            } else {
+            } else
+            {
                 tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting x-velocity using midpoint
                 tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
                 tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
