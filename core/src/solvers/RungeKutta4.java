@@ -15,8 +15,6 @@ public class RungeKutta4 extends Physics implements Solver {
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
-    private double kFriction;
-    private double sFriction;
     double[] targetRXY;
     public double[] tempCoordinates = new double [2];
     private double[] coordinatesAndVelocity;
@@ -82,8 +80,8 @@ public class RungeKutta4 extends Physics implements Solver {
 
 
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
-
-        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, step)) {
+        System.out.println();
+        while(!hasBallStopped(coordinatesAndVelocity, DataField.sFriction, terrain, step)) {
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0)
             {

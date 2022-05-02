@@ -13,8 +13,6 @@ public class RungeKutta2 extends Physics implements Solver{
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
-    private double kFriction;
-    private double sFriction;
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
