@@ -44,7 +44,7 @@ public class GameEngineRK2 extends RungeKutta2 {
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            coordinatesAndVelocityUntilStop( 0.00001);
+            coordinatesAndVelocityUntilStop( 0.00000001);//0.00000001 for smooth animation
 
             DataField.x = (float) getXCoord();
             DataField.y = (float) getYCoord();

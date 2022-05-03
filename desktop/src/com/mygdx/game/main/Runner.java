@@ -23,7 +23,6 @@ public class Runner extends Thread
 
     //A variable, that stores the coordinates of the ball and velocity of the ball in the x-direction and y-direction.
     static double[] coordinatesAndVelocity;
-    public static boolean useGUI = true;
     //gets String from read.txt and puts it to double for use as variable
     public static double getStringValueGame(String s)
     {
@@ -243,10 +242,9 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = (x,y)->(double)((1.0/20.0)*(x*x+y*y));
+        DataField.terrain = (x,y)->(double)(1);
 
         if(!choice.equals("y")){
-            useGUI = false;
             DataField.x = (float) coordinatesAndVelocity[0];
             DataField.y = (float) coordinatesAndVelocity[1];
             DataField.coordinatesandVelocity = coordinatesAndVelocity;
@@ -256,8 +254,17 @@ public class Runner extends Thread
             DataField.usingGui = false;//TODO 2d array for trees
         }
 
+        settingsMenu pregame = new settingsMenu();
+        while(settingsMenu.finished){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         //starts the GUI and Physics thread
-         DesktopLauncher t = new DesktopLauncher(useGUI);
+         DesktopLauncher t = new DesktopLauncher();
          t.start();
 //         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //         g.start();

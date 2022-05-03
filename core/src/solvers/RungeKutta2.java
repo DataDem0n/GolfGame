@@ -1,6 +1,7 @@
 package solvers;
 
 import com.mygdx.game.main.DataField;
+import obstacles.Forest;
 import obstacles.SandPits;
 import obstacles.Tree;
 import obstacles.Wall;
@@ -18,7 +19,7 @@ public class RungeKutta2 extends Physics implements Solver{
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
-    private Tree tree = new Tree(5,5);
+    private Forest f = DataField.gameForest;
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -34,6 +35,7 @@ public class RungeKutta2 extends Physics implements Solver{
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
+
     public RungeKutta2(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         this.terrain = terrain;
         this.coordinatesAndVelocity = coordinatesAndVelocity;
@@ -51,12 +53,8 @@ public class RungeKutta2 extends Physics implements Solver{
 
     @Override
     public double[] coordinatesAndVelocityUntilStop(double step) {
-        double tempvelx1;
-        double tempvely1;
-        double tempvelx2;
-        double tempvely2;
-        double tempvelx3;
-        double tempvely3;
+        double tempvelx1, tempvely1, tempvelx2, tempvely2, tempvelx3, tempvely3;
+
         double tempcoorx1;
         double tempcoory1;
 
@@ -74,27 +72,16 @@ public class RungeKutta2 extends Physics implements Solver{
                 tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
                 tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-
-
                 tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting y-velocity using midpoint
                 tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
                 tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-
                 //System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
                 coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
                 //System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
 
-
                 coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
-
-
-
-
-
-
-
             }
 
 
@@ -118,7 +105,7 @@ public class RungeKutta2 extends Physics implements Solver{
             }
             wall.collide(coordinatesAndVelocity);
             sandPits.change(coordinatesAndVelocity);
-
+            //f.collide(coordinatesAndVelocity);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 

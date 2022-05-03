@@ -23,4 +23,16 @@ public class Tree implements Obstacles {
         }
         return coordsAndVelocity;
     }
+
+    public double getCoordX() {
+        return coordX;
+    }
+
+    public double getCoordY() {
+        return coordY;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
 }

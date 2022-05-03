@@ -21,13 +21,6 @@ public class WindowMain{
     JPanel panel;
     JPanel sideMenu;
 
-    //sliders
-    JLabel labelForce;
-    JLabel labelDegree;
-    JLabel titleForce;
-    JLabel titleDegree;
-    JSlider degreeStrike;
-
     //velocity
     JTextField velocityX;
     JTextField velocityY;
@@ -35,13 +28,11 @@ public class WindowMain{
     JLabel inputVelocityY;
 
     //origin
-    JTextField originX;
-    JTextField originY;
-    JLabel inputOriginX;
-    JLabel inputOriginY;
+    JLabel ballXCoord;
+    JLabel ballYCoord;
     JButton initC;
-    // Push Button
 
+    // Push Button
     JButton pushButton = new JButton("PUTT!");
     BotBasic Charley = new BotBasic();
 
@@ -57,13 +48,6 @@ public class WindowMain{
             counter.setText("Storkes: " + c);
             System.out.println("No. of strokes: " + c);
 
-            //receive origin coords
-            if(c == 1){
-                DataField.x = Float.parseFloat(originX.getText());
-                DataField.y = Float.parseFloat(originY.getText());
-            }
-
-
             //receive velocities
             ArrayList<Double> xc = new ArrayList<Double>();
             xc.add(Double.parseDouble(velocityX.getText()));
@@ -78,45 +62,62 @@ public class WindowMain{
         });
 
         frame = new JFrame("Golf controls");
+        Image frameIcon = new ImageIcon("Icon.png").getImage();
+        frame.setIconImage(frameIcon);
         panel = new JPanel();
         sideMenu = new JPanel();
-
-        //slider visual elements
-        labelForce = new JLabel();
-        labelDegree = new JLabel();
-        titleDegree = new JLabel("degree of turn");
-        degreeStrike = new JSlider(0, 359, 0);
+        JMenuBar menuBar = new JMenuBar();
 
         //velocity visual elements
         velocityX = new JTextField();
-
         velocityY = new JTextField();
         inputVelocityX = new JLabel("Velocity X axis");
         inputVelocityY = new JLabel("Velocity Y axis");
 
         //origin coordinates visual elements
-        originX = new JTextField();
-        originY = new JTextField();
-        inputOriginX = new JLabel("Ball origin X");
-        inputOriginY = new JLabel("Ball origin Y");
+
+
+        ballXCoord = new JLabel("Ball X coord: "+ DataField.y);
+
+        ballXCoord.setText("Ball X coord:" + DataField.x);
+
+        ballYCoord = new JLabel("Ball X coord: "+ DataField.y);
+
+        ballYCoord = new JLabel("Ball Y coord: ");
 
         counter = new JLabel("Strokes: " + c); //this returns the number of total strokes use
-
-        // degree slider seffects
-        degreeStrike.setPaintTicks(true);
-        degreeStrike.setMinorTickSpacing(10);
-        // degreeStrike.setOrientation(SwingConstants.VERTICAL);
-
 
         // Elevation Depiction
         JLabel elevationDepictionLabel = new JLabel("\nElevation Depiction");
         JLabel highElevationLabel = new JLabel("10");
         JLabel lowElevationLabel = new JLabel("-10");
 
+        //imgL.set
         ImageIcon gradientImage = new ImageIcon("gradient_chart.jpg");
         JLabel imgL = new JLabel(gradientImage);
         frame.add(imgL);
-        //imgL.set
+
+        //menubar items
+        JMenu fileTab = new JMenu("File");
+        JMenu extrasTab = new JMenu("Extras");
+        menuBar.add(fileTab);
+        menuBar.add(extrasTab);
+
+        //file tab buttons
+        JMenuItem exit = new JMenuItem("Exit");
+        fileTab.add(exit);
+
+        exit.addActionListener (e -> {
+            if(e.getSource()==exit){
+                System.exit(0);
+            }
+        });
+        //extras tab buttons
+//        JMenuItem music = new JMenuItem("Music????");
+//        extrasTab.add(music);
+
+        frame.setJMenuBar(menuBar);
+        menuBar.setVisible(true);
 
         //elements inside the control window
         sideMenu.add(panel);
@@ -129,27 +130,13 @@ public class WindowMain{
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth = 1;
-        panel.add(inputOriginX, gc);
+        panel.add(ballXCoord, gc);
 
         //This adds a label for the input of the initial y-coordinate of the ball.
         gc.gridx = 1;
         gc.gridy = 0;
         gc.gridwidth = 1;
-        panel.add(inputOriginY, gc);
-
-        //This adds a text box for inputting the initial x-coordinate of the ball
-        gc.gridx = 0;
-        gc.gridy = 1;
-        gc.gridwidth = 1;
-        gc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(originX, gc);
-
-        //This adds a text box for inputting the initial y-coordinate of the ball
-        gc.gridx = 1;
-        gc.gridy = 1;
-        gc.gridwidth = 1;
-        gc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(originY, gc);
+        panel.add(ballYCoord, gc);
 
         //This adds a label for inputting the x-velocity of the ball
         gc.gridx = 0;
@@ -162,18 +149,21 @@ public class WindowMain{
         gc.gridx = 1;
         gc.gridy = 9;
         gc.fill=GridBagConstraints.CENTER;
+        gc.gridwidth = 1;
         panel.add(inputVelocityY, gc);
 
         //This adds a text box for inputting the x-velocity of the ball
         gc.gridx = 0;
         gc.gridy = 10;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(velocityX, gc);
 
         //This adds a text box for inputting the y-velocity of the ball
         gc.gridx = 1;
         gc.gridy = 10;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(velocityY, gc);
 
         //This adds the "PUTT!" button to the menu
@@ -185,8 +175,8 @@ public class WindowMain{
         //This adds the counter which represents the number of strokes made until now
         gc.gridx = 1;
         gc.gridy = 14;
-        gc.gridwidth = 1;
         gc.fill=GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
         panel.add(counter, gc);
 
         //This adds a button that locks the origin coordinates in
@@ -225,6 +215,13 @@ public class WindowMain{
         frame.setResizable(true);
         frame.setSize(300,637);
         frame.setVisible(true);
-    }
-}
 
+
+    }
+
+    public void update(){
+        ballXCoord.setText("Ball X coord:" + DataField.x);
+        ballYCoord.setText("Ball Y coord:" + DataField.y);
+    }
+
+}

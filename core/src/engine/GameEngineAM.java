@@ -61,7 +61,7 @@ public class GameEngineAM extends AdamsMoulton {
                         Thread.sleep(50);
                     }
 
-                    if(DataField.usingGui) {
+                    if(DataField.GUI) {
                         DataField.velocityX.remove(0);
                         DataField.velocityY.remove(0);
                         DataField.GUI = true;
