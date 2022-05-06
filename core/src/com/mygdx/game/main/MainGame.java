@@ -106,7 +106,7 @@ public class MainGame extends ApplicationAdapter {
 
 
 
-		gBall.setPos((DataField.x)*1.8f,(DataField.y)*1.8f,PPM);
+		gBall.setPos(((float)DataField.x)*1.8f,((float)DataField.y)*1.8f,PPM);
 		//draws lines based on the height at the coord that the line is drawn at
 		for (int i = 0; i < coordsX.size(); i++) {
 			for (int j = 0; j < coordsY.size(); j++) {

@@ -7,6 +7,7 @@ package com.mygdx.game.main;
  import org.mariuszgromada.math.mxparser.Expression;
  import engine.GameEngineEuler;
 
+ import java.util.Arrays;
  import java.util.function.BiFunction;
 
 import java.io.BufferedWriter;
@@ -242,17 +243,18 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = (x,y)->(double)(1);
+        DataField.terrain = (x,y)->(double)(((x*x)+(y*y))/20.0);
 
         if(!choice.equals("y")){
-            DataField.x = (float) coordinatesAndVelocity[0];
-            DataField.y = (float) coordinatesAndVelocity[1];
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
             DataField.coordinatesandVelocity = coordinatesAndVelocity;
             DataField.velocityX = velx;
             DataField.velocityY = vely;
             DataField.GUI = false;
             DataField.usingGui = false;//TODO 2d array for trees
         }
+        System.out.println(Arrays.toString(coordinatesAndVelocity));
 
         settingsMenu pregame = new settingsMenu();
         while(settingsMenu.finished){
@@ -268,10 +270,10 @@ public class Runner extends Thread
          t.start();
 //         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //         g.start();
-        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-        r2.start();
-//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-//        r4.start();
+//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
+//        r2.start();
+        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
+        r4.start();
 //        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
 //        am.start();
     }

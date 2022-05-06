@@ -142,8 +142,8 @@ public class RungeKutta4 extends Physics implements Solver {
 //                counter = 0.0;
 //            }
 
-            DataField.x = (float) coordinatesAndVelocity[0];
-            DataField.y = (float) coordinatesAndVelocity[1];
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
             if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {

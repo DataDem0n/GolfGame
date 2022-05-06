@@ -75,8 +75,8 @@ public class settingsMenu{
                 DataField.sandPit = coordSP.clone();
             }
 
-            DataField.x = Float.parseFloat(originX.getText());
-            DataField.y = Float.parseFloat(originY.getText());
+            DataField.x = Double.parseDouble(originX.getText());
+            DataField.y = Double.parseDouble(originY.getText());
 
             DataField.gameForest = new Forest(amountOfTree.getSelectedIndex());
 
