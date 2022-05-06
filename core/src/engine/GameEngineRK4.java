@@ -32,10 +32,10 @@ public class GameEngineRK4 extends RungeKutta4 {
         }
 
         setCoordinates(DataField.x, DataField.y);
-        //setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
-        //System.out.println(DataField.velocityX.get(0)+""+DataField.velocityY.get(0));
+        setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
         setkFriction(DataField.kFriction);
         setsFriction(DataField.sFriction);
+
         setTargetRXY(DataField.targetRXY);
 
         setTerrain(DataField.terrain);
@@ -44,7 +44,7 @@ public class GameEngineRK4 extends RungeKutta4 {
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            coordinatesAndVelocityUntilStop( 0.00001);
+            coordinatesAndVelocityUntilStop( 0.000001);
 
             DataField.x = getXCoord();
             DataField.y = getYCoord();
@@ -66,10 +66,10 @@ public class GameEngineRK4 extends RungeKutta4 {
                         DataField.GUI = true;
                         game();
                     }
-                    if(index!=DataField.velocityX.size()){
-                        setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
-                        index++;
-                    }
+//                    if(index!=DataField.velocityX.size()){
+//                        setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
+//                        index++;
+//                    }
                     else{
                         System.out.println("You did not win, better luck next time.\nPlease restart with a new file input.");
                         break;

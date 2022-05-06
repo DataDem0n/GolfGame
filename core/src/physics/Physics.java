@@ -126,24 +126,53 @@ public class Physics extends Thread{
 
     public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step)
     {
-        double scalingVelX = 0.001;   //step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
-        double scalingVelY = 0.001;  //step * Math.abs(accelerationY(coordinatesAndVelocity, terrain,  DataField.kFriction));
+        staticFriction = 0.2;
+        double scalingSlope = 0.0008;
 
-        if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX &&
-                Math.abs(coordinatesAndVelocity[3]) < scalingVelY
-                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0)
-                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0))
+        if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain,DataField.kFriction))&&
+                Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
+                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
+                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
         {
-            return true;
-        }
+            return true; }
 
-        else if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX && Math.abs(coordinatesAndVelocity[3]) < scalingVelY)
+        else if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+                && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
+                && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope)
+                || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope))))
         {
-            return staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+       //fuckup
-                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
+            if(staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+
+                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)))
+            {
+                return true; }
+            else
+            {
+                return false; }
         }
         return false;
     }
+
+
+//    public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step)
+//    {
+//        double scalingVelX = 0.001;   //step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+//        double scalingVelY = 0.001;  //step * Math.abs(accelerationY(coordinatesAndVelocity, terrain,  DataField.kFriction));
+//
+//        if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX &&
+//                Math.abs(coordinatesAndVelocity[3]) < scalingVelY
+//                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0)
+//                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) == 0.0))
+//        {
+//            return true;
+//        }
+//
+//        else if(Math.abs(coordinatesAndVelocity[2]) < scalingVelX && Math.abs(coordinatesAndVelocity[3]) < scalingVelY)
+//        {
+//            return staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+       //fuckup
+//                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
+//        }
+//        return false;
+//    }
 
     public static void main(String[] args) {
         double[] coords = {0,0};

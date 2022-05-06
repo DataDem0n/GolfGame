@@ -92,7 +92,8 @@ public class MainGame extends ApplicationAdapter {
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
 //		return 0.05*((x*x)+(y*y));
 //		return Math.cos(x+(y*y)); //testing
-		return  (1.0/10.0)*(Math.sin(x+y)+1);
+		return  ((x*x)+(y*y))/20.0;
+//		return (Math.sin(x+y)/10);
 	}
 
 	/**

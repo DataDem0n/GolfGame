@@ -77,9 +77,9 @@ public class RungeKutta2 extends Physics implements Solver{
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
                 tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-                //System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
+//                System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
                 coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
-                //System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
+//                System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
 
                 coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
             }
@@ -91,8 +91,8 @@ public class RungeKutta2 extends Physics implements Solver{
 
             counter += 1;
 
-            DataField.x = (float) coordinatesAndVelocity[0];
-            DataField.y = (float) coordinatesAndVelocity[1];
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
             if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {

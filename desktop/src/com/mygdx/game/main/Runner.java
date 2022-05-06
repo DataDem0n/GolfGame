@@ -270,10 +270,10 @@ public class Runner extends Thread
          t.start();
 //         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
 //         g.start();
-//        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-//        r2.start();
-        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-        r4.start();
+        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+        r2.start();
+//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+//        r4.start();
 //        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
 //        am.start();
     }

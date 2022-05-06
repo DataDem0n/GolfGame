@@ -33,7 +33,7 @@ public class GameEngineRK2 extends RungeKutta2 {
         }
 
         setCoordinates(DataField.x, DataField.y);
-        //setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+        setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
         setkFriction(DataField.kFriction);
         setsFriction(DataField.sFriction);
         setTargetRXY(DataField.targetRXY);//this should all be done in constructor?
