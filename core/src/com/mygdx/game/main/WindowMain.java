@@ -36,6 +36,9 @@ public class WindowMain{
     JButton pushButton = new JButton("PUTT!");
     BotBasic Charley = new BotBasic();
 
+    //solver
+    JLabel selectedSolver = new JLabel("Solver: ");
+
     WindowMain(){
         initC = new JButton("Start Bot");
         initC.addActionListener(e -> {
@@ -220,8 +223,8 @@ public class WindowMain{
     }
 
     public void update(){
-        ballXCoord.setText("Ball X coord:" + DataField.x);
-        ballYCoord.setText("Ball Y coord:" + DataField.y);
+        ballXCoord.setText("Ball X coord: " + Math.round(DataField.x*10000.0)/10000.0);
+        ballYCoord.setText("Ball Y coord: " + Math.round(DataField.y*10000.0)/10000.0);
     }
 
 }

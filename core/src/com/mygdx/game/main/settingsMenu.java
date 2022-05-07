@@ -29,9 +29,12 @@ public class settingsMenu{
     JTextField sandpitCoordsY2;
     JLabel sandpitCoordText;
 
+    //solvers drop down
+    String[] solvers = {"Choose solver", "Euler's Method", "Runge-Kutta 2", "Runge-Kutta 4", "Adams-Moulton"};
+    JComboBox<String> chooseSolvers = new JComboBox<>(solvers);
 
     //set button
-    JButton setButton = new JButton("Set");
+    JButton setButton = new JButton("Set!");
 
     settingsMenu(){
         JPanel panelMain= new JPanel();
@@ -58,35 +61,40 @@ public class settingsMenu{
         originY = new JTextField("0");
 
         setButton.addActionListener(e->{
-            double[] coordSP = new double[4];
-            coordSP[0] = 30.0;
-            coordSP[1] = 31.0;
-            coordSP[2] = 30.0;
-            coordSP[3] = 31.0;
 
-            if(!spGetX1.equals("x1") && !spGetY1.equals("y1") && !spGetX2.equals("x2") && !spGetY2.equals("y2")){
-
-                coordSP[0] = Double.parseDouble(sandpitCoordsX1.getText());
-                coordSP[1] = Double.parseDouble(sandpitCoordsY1.getText());
-                coordSP[2] = Double.parseDouble(sandpitCoordsX2.getText());
-                coordSP[3] = Double.parseDouble(sandpitCoordsY2.getText());
-
-                System.out.println(Arrays.toString(coordSP));
-                DataField.sandPit = coordSP.clone();
+            if(chooseSolvers.getSelectedIndex()==0){
+                JOptionPane.showMessageDialog(null, "Please select a solver.", "Invalid solver choice", JOptionPane.ERROR_MESSAGE);
             }
+            else {
 
-            DataField.x = Double.parseDouble(originX.getText());
-            DataField.y = Double.parseDouble(originY.getText());
+                double[] coordSP = new double[4];
+                coordSP[0] = 30.0;
+                coordSP[1] = 31.0;
+                coordSP[2] = 30.0;
+                coordSP[3] = 31.0;
 
-            DataField.gameForest = new Forest(amountOfTree.getSelectedIndex());
+                if (!spGetX1.equals("x1") && !spGetY1.equals("y1") && !spGetX2.equals("x2") && !spGetY2.equals("y2")) {
 
-            //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
+                    coordSP[0] = Double.parseDouble(sandpitCoordsX1.getText());
+                    coordSP[1] = Double.parseDouble(sandpitCoordsY1.getText());
+                    coordSP[2] = Double.parseDouble(sandpitCoordsX2.getText());
+                    coordSP[3] = Double.parseDouble(sandpitCoordsY2.getText());
 
+                    System.out.println(Arrays.toString(coordSP));
+                    DataField.sandPit = coordSP.clone();
+                }
 
-            DataField.sandPit = coordSP.clone();
-            settingsMenu.finished = false;
-            frameMain.setVisible(false);
+                DataField.x = Double.parseDouble(originX.getText());
+                DataField.y = Double.parseDouble(originY.getText());
 
+                DataField.gameForest = new Forest(amountOfTree.getSelectedIndex());
+
+                //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
+                DataField.sandPit = coordSP.clone();
+
+                settingsMenu.finished = false;
+                frameMain.setVisible(false);
+            }
         });
 
         /**
@@ -111,7 +119,7 @@ public class settingsMenu{
 
         panelMain.add(setButton);
         panelMain.setLayout(new FlowLayout());
-        //panelMain.setLayout(new GridLayout());
+
         //adding tree related components
         panelMain.add(treeAmount);
         panelMain.add(amountOfTree);
@@ -128,6 +136,8 @@ public class settingsMenu{
         panelMain.add(originX);
         panelMain.add(originYText);
         panelMain.add(originY);
+
+        panelMain.add(chooseSolvers);
 
         panelMain.add(setButton);
 

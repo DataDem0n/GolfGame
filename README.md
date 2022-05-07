@@ -56,4 +56,4 @@ The algorithm calculates the position of the ball in time increments and shows t
 To exit the program press X on the top corner or from the open Window. (side depends on the operating system)
 
 ###AUTHORS
-Liwia Padowska, Adriana Purici, Oistin Rutledge, Kumar Sambhavit, Saman Sarandib, Amelia Sasin, Matei Turcan;
+Liwia Padowska, Adriana Purici, Oístin Rutledge, Kumar Sambhavit, Saman Sarandib, Amelia Sasin, Matei Țurcan;

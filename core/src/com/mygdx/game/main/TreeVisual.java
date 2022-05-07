@@ -19,7 +19,6 @@ public class TreeVisual {
         /**
          * Tree log sprite and textures
          */
-        //TODO: make sprites for logs and leaves
         log = new Texture("Log.png");
         spriteLog = new Sprite(log);
         treeHitBox = new Rectangle();
