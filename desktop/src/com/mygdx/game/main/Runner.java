@@ -270,15 +270,24 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher();
          t.start();
+
          switch(pregame.chooseSolvers.getSelectedIndex()) {
-             case 1: GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+             case 1:
+                 GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
                  g.start();
-             case 2: GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 break;
+             case 2:
+                 GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
                  r2.start();
-             case 3: GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 break;
+             case 3:
+                 GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
                  r4.start();
-             case 4: GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 break;
+             case 4:
+                 GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
                  am.start();
+                 break;
          }
     }
 }

@@ -59,11 +59,28 @@ public class settingsMenu{
         originX = new JTextField("0");
         originYText = new JLabel("Enter ball's Y coordinate origin");
         originY = new JTextField("0");
+        originX.setColumns(3);
+        originY.setColumns(3);
+
+        sfricLabel = new JLabel("Static Friction:");
+        sfric = new JTextField("0.05");
+
+        kfricLabel = new JLabel("Kinetic Friction:");
+        kfric = new JTextField("0.01");
+
+        sfric.setColumns(5);
+        kfric.setColumns(5);
+
+        funcField = new JLabel("Enter Function:");
+        function = new JTextField();
 
         setButton.addActionListener(e->{
 
             if(chooseSolvers.getSelectedIndex()==0){
                 JOptionPane.showMessageDialog(null, "Please select a solver.", "Invalid solver choice", JOptionPane.ERROR_MESSAGE);
+            }
+            else if(Double.parseDouble(sfric.getText())<=0 || Double.parseDouble(kfric.getText()) <= 0){
+                JOptionPane.showMessageDialog(null, "Please select proper friction values.", "Invalid friction values", JOptionPane.ERROR_MESSAGE);
             }
             else {
 
@@ -83,6 +100,9 @@ public class settingsMenu{
                     System.out.println(Arrays.toString(coordSP));
                     DataField.sandPit = coordSP.clone();
                 }
+
+                DataField.kFriction = Double.parseDouble(kfric.getText());
+                DataField.sFriction = Double.parseDouble(sfric.getText());
 
                 DataField.x = Double.parseDouble(originX.getText());
                 DataField.y = Double.parseDouble(originY.getText());

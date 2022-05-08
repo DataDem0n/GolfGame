@@ -217,13 +217,11 @@ public class WindowMain{
         frame.setResizable(true);
         frame.setSize(320,500);
         frame.setVisible(true);
-
-
     }
 
     public void update(){
-        ballXCoord.setText("Ball X coord: " + Math.round(DataField.x*10000.0)/10000.0);
-        ballYCoord.setText("Ball Y coord: " + Math.round(DataField.y*10000.0)/10000.0);
+        ballXCoord.setText("Ball X coord: " + Math.round(DataField.x*100000.0)/100000.0);//this rounds the output
+        ballYCoord.setText("Ball Y coord: " + Math.round(DataField.y*100000.0)/100000.0);//to 5 d.p
     }
 
 }
