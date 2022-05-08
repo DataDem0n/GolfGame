@@ -74,6 +74,8 @@ public class WindowMain{
         //velocity visual elements
         velocityX = new JTextField();
         velocityY = new JTextField();
+        velocityX.setColumns(15);
+        velocityY.setColumns(15);
         inputVelocityX = new JLabel("Velocity X axis");
         inputVelocityY = new JLabel("Velocity Y axis");
 
@@ -133,6 +135,7 @@ public class WindowMain{
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth = 1;
+        gc.anchor = GridBagConstraints.LINE_START;
         panel.add(ballXCoord, gc);
 
         //This adds a label for the input of the initial y-coordinate of the ball.
@@ -182,16 +185,12 @@ public class WindowMain{
         gc.gridwidth = 1;
         panel.add(counter, gc);
 
-        //This adds a button that locks the origin coordinates in
-        gc.gridx = 0;
-        gc.gridy = 15;
-        gc.gridwidth = 1;
-        panel.add(initC, gc);
 
         //This adds the label for Elevation Depiction
         gc.gridx = 0;
         gc.gridy = 16;
         gc.fill=GridBagConstraints.CENTER;
+        gc.anchor = GridBagConstraints.CENTER;
         gc.gridwidth = 2;
         panel.add(elevationDepictionLabel, gc);
 
@@ -216,7 +215,7 @@ public class WindowMain{
         frame.add(sideMenu);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.setSize(300,637);
+        frame.setSize(320,500);
         frame.setVisible(true);
 
 
