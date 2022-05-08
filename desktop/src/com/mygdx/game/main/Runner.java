@@ -7,6 +7,7 @@ package com.mygdx.game.main;
  import org.mariuszgromada.math.mxparser.Expression;
  import engine.GameEngineEuler;
 
+ import java.util.Arrays;
  import java.util.function.BiFunction;
 
 import java.io.BufferedWriter;
@@ -23,7 +24,6 @@ public class Runner extends Thread
 
     //A variable, that stores the coordinates of the ball and velocity of the ball in the x-direction and y-direction.
     static double[] coordinatesAndVelocity;
-    public static boolean useGUI = true;
     //gets String from read.txt and puts it to double for use as variable
     public static double getStringValueGame(String s)
     {
@@ -243,31 +243,51 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = (x,y)->(double)((1.0/20.0)*(x*x+y*y));
+        DataField.terrain = (x,y)->(double)(((x*x)+(y*y))/20.0);
 
         if(!choice.equals("y")){
-            useGUI = false;
-            DataField.x = (float) coordinatesAndVelocity[0];
-            DataField.y = (float) coordinatesAndVelocity[1];
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
             DataField.coordinatesandVelocity = coordinatesAndVelocity;
             DataField.velocityX = velx;
             DataField.velocityY = vely;
             DataField.GUI = false;
             DataField.usingGui = false;//TODO 2d array for trees
         }
+        System.out.println(Arrays.toString(coordinatesAndVelocity));
+
+        settingsMenu pregame = new settingsMenu();
+
+
+        while(settingsMenu.finished){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         //starts the GUI and Physics thread
-         DesktopLauncher t = new DesktopLauncher(useGUI);
+         DesktopLauncher t = new DesktopLauncher();
          t.start();
-//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-//         g.start();
-        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-        r2.start();
-//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.1, targetRXY);
-//        r4.start();
-//        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-//        am.start();
+
+         switch(pregame.chooseSolvers.getSelectedIndex()) {
+             case 1:
+                 GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
+                 g.start();
+                 break;
+             case 2:
+                 GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
+                 r2.start();
+                 break;
+             case 3:
+                 GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
+                 r4.start();
+                 break;
+             case 4:
+                 GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
+                 am.start();
+                 break;
+         }
     }
 }
-
-//test

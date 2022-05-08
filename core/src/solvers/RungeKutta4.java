@@ -53,33 +53,12 @@ public class RungeKutta4 extends Physics implements Solver {
     public double[] coordinatesAndVelocityUntilStop(double step)  {
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
-        double tempvelx1;
-        double tempvely1;
-        double tempvelx2;
-        double tempvely2;
-        double tempvelx3;
-        double tempvely3;
-        double tempvelx4;
-        double tempvely4;
-        double tempvelx5;
-        double tempvely5;
-        double tempvely6;
-        double tempvelx6;
-        double tempvelx7;
-        double tempvely7;
 
-        double tempcoorx1;
-        double tempcoory1;
-        double tempcoorx2;
-        double tempcoory2;
-        double tempcoorx3;
-        double tempcoory3;
-
-
-
+        double tempvelx1,tempvely1,tempvelx2, tempvely2, tempvelx3, tempvely3, tempvelx4, tempvely4, tempvelx5, tempvely5, tempvely6, tempvelx6, tempvelx7, tempvely7;
+        double tempcoorx1, tempcoory1, tempcoorx2, tempcoory2, tempcoorx3, tempcoory3;
 
         coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
-        System.out.println();
+
         while(!hasBallStopped(coordinatesAndVelocity, DataField.sFriction, terrain, step)) {
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0)
@@ -163,8 +142,8 @@ public class RungeKutta4 extends Physics implements Solver {
 //                counter = 0.0;
 //            }
 
-            DataField.x = (float) coordinatesAndVelocity[0];
-            DataField.y = (float) coordinatesAndVelocity[1];
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
             if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {

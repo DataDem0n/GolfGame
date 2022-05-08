@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import obstacles.Tree;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.function.BiFunction;
 
 public class MainGame extends ApplicationAdapter {
 	ArrayList<Float> coordsX;
@@ -20,8 +19,8 @@ public class MainGame extends ApplicationAdapter {
 	Ball gBall;
 	ScreenViewport viewport;
 	Hole myHole;
-	Tree tree;
-
+	WindowMain WM;
+	TreeVisual[] tree1;
 	public static final float PPM =10f;
 
 	float holeX= (float) DataField.targetRXY[1];
@@ -29,6 +28,7 @@ public class MainGame extends ApplicationAdapter {
 
 	@Override
 	public void create (){
+		if(DataField.GUI){WM = new WindowMain();}
 		pointGenerator();
 		viewport = new ScreenViewport();
 		viewport.setUnitsPerPixel(1/PPM);
@@ -37,8 +37,14 @@ public class MainGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gBall= new Ball();
 		//TODO implement trees for each tree: draw tree.
-		tree = new Tree();
-		tree.setTreePos(4,4,PPM);
+		tree1 = new TreeVisual[DataField.gameForest.getForest().size()];
+
+		for (int i = 0;i<tree1.length;i++) {
+			tree1[i] = new TreeVisual();
+			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX(),(float) DataField.gameForest.getForest().get(i).getCoordY());
+		}
+
+
 		s = new ShapeRenderer();
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
 		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
@@ -86,7 +92,8 @@ public class MainGame extends ApplicationAdapter {
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
 //		return 0.05*((x*x)+(y*y));
 //		return Math.cos(x+(y*y)); //testing
-		return  (1.0/10.0)*(Math.sin(x+y)+1);
+		return  ((x*x)+(y*y))/20.0;
+//		return (Math.sin(x+y)/10);
 	}
 
 	/**
@@ -94,11 +101,13 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	@Override
 	public void render (){
+		WM.update();
 		s.setProjectionMatrix(viewport.getCamera().combined);
 		s.begin(ShapeRenderer.ShapeType.Filled);
 
 
-		gBall.setPos((DataField.x)*1.8f,(DataField.y)*1.8f,PPM);
+
+		gBall.setPos(((float)DataField.x)*1.8f,((float)DataField.y)*1.8f,PPM);
 		//draws lines based on the height at the coord that the line is drawn at
 		for (int i = 0; i < coordsX.size(); i++) {
 			for (int j = 0; j < coordsY.size(); j++) {
@@ -130,19 +139,21 @@ public class MainGame extends ApplicationAdapter {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
 
-		if (gBall.ballHitBox.overlaps(tree.treeHitBox)){
-			tree.setOpac(true);
+		for (int i = 0;i<tree1.length;i++) {
+			if (gBall.ballHitBox.overlaps(tree1[i].treeHitBox)){
+				tree1[i].setOpac(true);
+			}
+			else{
+				tree1[i].setOpac(false);
+			}
+			tree1[i].draw(batch);
+			tree1[i].drawLeaves(batch);
 		}
-		else{
-			tree.setOpac(false);
-		}
-
 
 		myHole.draw(batch);
 
 		gBall.draw(batch);
-		tree.draw(batch);
-		tree.drawLeaves(batch);
+
 		batch.end();
 
 	}

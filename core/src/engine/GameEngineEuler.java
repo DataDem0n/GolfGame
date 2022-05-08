@@ -42,8 +42,8 @@ public class GameEngineEuler extends Euler {
 
             coordinatesAndVelocityUntilStop( 0.00001);
 
-            DataField.x = (float) getXCoord();
-            DataField.y = (float) getYCoord();
+            DataField.x = getXCoord();
+            DataField.y = getYCoord();
 
                 if((Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 ))))
                 {

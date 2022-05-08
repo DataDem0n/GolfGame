@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-public class Tree {
+public class TreeVisual {
     Sprite spriteLog;
     Texture log;
     Sprite spriteLeaves;
@@ -15,7 +15,7 @@ public class Tree {
     float size = 250;
     Rectangle treeHitBox;
 
-    public Tree(){
+    public TreeVisual(){
         /**
          * Tree log sprite and textures
          */
@@ -33,7 +33,7 @@ public class Tree {
      * @param y: the center y-coordinate is set to this
      * setHolePos() method sets the position of the whole on the terrain
      */
-    public void setTreePos(float x,float y, float PPM) {
+    public void setTreePos(float x,float y) {
         this.x = x;
         this.y = y;
         spriteLog.setPosition(x,y);
