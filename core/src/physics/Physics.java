@@ -125,7 +125,7 @@ public class Physics extends Thread{
      */
 
     public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step) {
-        staticFriction = 0.2;
+
         double scalingSlope = 0.0008;
 
         if (Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)) &&

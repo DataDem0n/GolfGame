@@ -271,7 +271,7 @@ public class Runner extends Thread
          DesktopLauncher t = new DesktopLauncher();
          t.start();
          switch(pregame.chooseSolvers.getSelectedIndex()) {
-             case 1: GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+             case 1: GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
                  g.start();
              case 2: GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
                  r2.start();

@@ -107,7 +107,7 @@ public class RungeKutta2 extends Physics implements Solver{
             sandPits.change(coordinatesAndVelocity);
             //f.collide(coordinatesAndVelocity);
         }
-        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        //System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
         return coordinatesAndVelocity;
     }
