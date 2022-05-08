@@ -124,32 +124,23 @@ public class Physics extends Thread{
      * @return true if the ball has stopped, false if not
      */
 
-    public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step)
-    {
+    public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction <Double, Double, Double> terrain, double step) {
         staticFriction = 0.2;
         double scalingSlope = 0.0008;
 
-        if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain,DataField.kFriction))&&
+        if (Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)) &&
                 Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope))
-                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])< Math.abs(scalingSlope)))
-        {
-            return true; }
-
-        else if(Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
-                && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope)
-                || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])>=Math.abs(scalingSlope))))
-        {
-            if(staticFriction>Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))+
-                    Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2)))
-            {
-                return true; }
-            else
-            {
-                return false; }
+                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < Math.abs(scalingSlope))
+                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < Math.abs(scalingSlope))) {
+            return true;
+        } else {
+            return Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction))
+                    && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction))
+                    && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) >= Math.abs(scalingSlope)
+                    || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) >= Math.abs(scalingSlope)))
+                    && staticFriction > Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))
+                    + Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
         }
-        return false;
     }
 
 
