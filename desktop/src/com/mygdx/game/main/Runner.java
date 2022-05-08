@@ -257,6 +257,8 @@ public class Runner extends Thread
         System.out.println(Arrays.toString(coordinatesAndVelocity));
 
         settingsMenu pregame = new settingsMenu();
+
+
         while(settingsMenu.finished){
             try {
                 Thread.sleep(500);
@@ -268,15 +270,15 @@ public class Runner extends Thread
         //starts the GUI and Physics thread
          DesktopLauncher t = new DesktopLauncher();
          t.start();
-//         GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
-//         g.start();
-        GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-        r2.start();
-//        GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-//        r4.start();
-//        GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
-//        am.start();
+         switch(pregame.chooseSolvers.getSelectedIndex()) {
+             case 1: GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, 0.1, 0.2, targetRXY);
+                 g.start();
+             case 2: GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 r2.start();
+             case 3: GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 r4.start();
+             case 4: GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, 0.01, 0.05, targetRXY);
+                 am.start();
+         }
     }
 }
-
-//test
