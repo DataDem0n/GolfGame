@@ -33,6 +33,16 @@ public class settingsMenu{
     String[] solvers = {"Choose solver", "Euler's Method", "Runge-Kutta 2", "Runge-Kutta 4", "Adams-Moulton"};
     JComboBox<String> chooseSolvers = new JComboBox<>(solvers);
 
+    //frictions
+    JLabel sfricLabel;
+    JTextField sfric;
+    JLabel kfricLabel;
+    JTextField kfric;
+
+    //function
+    JLabel funcField;
+    JTextField function;
+
     //set button
     JButton setButton = new JButton("Set!");
 
@@ -157,6 +167,16 @@ public class settingsMenu{
         panelMain.add(originYText);
         panelMain.add(originY);
 
+        //add friction and function elements
+        panelMain.add(sfricLabel);
+        panelMain.add(sfric);
+        panelMain.add(kfricLabel);
+        panelMain.add(kfric);
+
+        panelMain.add(funcField);
+        panelMain.add(function);
+        function.setColumns(16);
+
         panelMain.add(chooseSolvers);
 
         panelMain.add(setButton);
@@ -164,7 +184,7 @@ public class settingsMenu{
         frameMain.add(panelMain);
         frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.setResizable(true);
-        frameMain.setSize(450,150);
+        frameMain.setSize(480,160);
         frameMain.setVisible(true);
     }
 }
