@@ -153,16 +153,19 @@ public class RungeKutta4 extends Thread implements Solver {
             DataField.y = coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
-            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
-                System.out.println("YOU'RE IN THE WATER!!");
-                coordinatesAndVelocity[0] = tempCoordinates[0];
-                coordinatesAndVelocity[1] = tempCoordinates[1];
-//                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-
-                return coordinatesAndVelocity;
-            }
-            wall.collide(coordinatesAndVelocity);
+//            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
+//                System.out.println("YOU'RE IN THE WATER!!");
+//                coordinatesAndVelocity[0] = tempCoordinates[0];
+//                coordinatesAndVelocity[1] = tempCoordinates[1];
+////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//
+//                return coordinatesAndVelocity;
+//            }
+            water.collide(coordinatesAndVelocity, tempCoordinates);
+            wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
+            //tree.collide(coordinatesAndVelocity, tempCoordinates);
+            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
         System.out.println("accx: " + coordinatesAndVelocity[2]);

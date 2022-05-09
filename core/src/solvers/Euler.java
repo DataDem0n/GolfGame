@@ -23,7 +23,7 @@ public class Euler extends Thread implements Solver {
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
-    private Tree tree = new Tree(5,5);
+    private Water water = new Water();
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -90,16 +90,18 @@ public class Euler extends Thread implements Solver {
             DataField.y = (float)coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
-            if(terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
-                System.out.println("YOU'RE IN THE WATER!!");
-                coordinatesAndVelocity[0] = tempCoordinates[0];
-                coordinatesAndVelocity[1] = tempCoordinates[1];
-//                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-
-                return coordinatesAndVelocity;
-            }
-            wall.collide(coordinatesAndVelocity);
+//            if(terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
+//                System.out.println("YOU'RE IN THE WATER!!");
+//                coordinatesAndVelocity[0] = tempCoordinates[0];
+//                coordinatesAndVelocity[1] = tempCoordinates[1];
+////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//
+//                return coordinatesAndVelocity;
+//            }
+            water.collide(coordinatesAndVelocity, tempCoordinates);
+            wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
+            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
 
        }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);

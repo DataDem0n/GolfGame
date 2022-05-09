@@ -21,11 +21,12 @@ public class MainGame extends ApplicationAdapter {
 	Hole myHole;
 	WindowMain WM;
 	TreeVisual[] tree1;
+
+
 	public static final float PPM =10f;
 
 	float holeX= (float) DataField.targetRXY[1];
 	float holeY= (float) DataField.targetRXY[2];
-
 	@Override
 	public void create (){
 		if(DataField.GUI){WM = new WindowMain();}
@@ -42,6 +43,7 @@ public class MainGame extends ApplicationAdapter {
 		for (int i = 0;i<tree1.length;i++) {
 			tree1[i] = new TreeVisual();
 			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX(),(float) DataField.gameForest.getForest().get(i).getCoordY());
+
 		}
 
 
@@ -87,13 +89,13 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);
+//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);
 //		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
 //		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
 //		return Math.cos(x+(y*y)); //testing
 //		return  ((x*x)+(y*y))/20.0;
-//		return (Math.sin(x+y)/10);
+		return (Math.sin(x+y)/10);
 	}
 
 	/**
@@ -134,6 +136,11 @@ public class MainGame extends ApplicationAdapter {
 
 //		s.rect(tree.treeHitBox.x, tree.treeHitBox.y,8,5.8f ); hitboxes
 //		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
+		s.setColor(Color.GRAY);
+		for (int i = 0;i<tree1.length;i++) {
+			s.rect(tree1[i].x,tree1[i].y,2,2);
+		}
+
 		s.end();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);

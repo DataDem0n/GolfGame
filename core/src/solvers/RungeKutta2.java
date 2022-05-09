@@ -68,6 +68,7 @@ public class RungeKutta2 extends Thread implements Solver{
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
+
         coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
         while (!hasBallStopped.hasBallStopped(coordinatesAndVelocity,  DataField.sFriction,terrain, step)) {
@@ -103,17 +104,18 @@ public class RungeKutta2 extends Thread implements Solver{
             DataField.y = coordinatesAndVelocity[1];
 
             //checking if the ball has fallen into water
-            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
-                System.out.println("YOU'RE IN THE WATER!!");
-                coordinatesAndVelocity[0] = tempCoordinates[0];
-                coordinatesAndVelocity[1] = tempCoordinates[1];
-//                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-
-                return coordinatesAndVelocity;
-            }
-            wall.collide(coordinatesAndVelocity);
+//            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
+//                System.out.println("YOU'RE IN THE WATER!!");
+//                coordinatesAndVelocity[0] = tempCoordinates[0];
+//                coordinatesAndVelocity[1] = tempCoordinates[1];
+////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//
+//                return coordinatesAndVelocity;
+//            }
+            water.collide(coordinatesAndVelocity, tempCoordinates);
+            wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            //f.collide(coordinatesAndVelocity);
+            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         //System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
