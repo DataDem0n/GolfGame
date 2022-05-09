@@ -10,7 +10,7 @@ import obstacles.Wall;
 
 import java.util.function.BiFunction;
 
-public class Euler  implements Solver {
+public class Euler extends Thread implements Solver {
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();

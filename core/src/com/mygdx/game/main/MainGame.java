@@ -87,12 +87,12 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-//		return 0.1*x + 1;
+		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);
 //		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
-//		return 0.05*((x*x)+(y*y));
+//		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
 //		return Math.cos(x+(y*y)); //testing
-		return  ((x*x)+(y*y))/20.0;
+//		return  ((x*x)+(y*y))/20.0;
 //		return (Math.sin(x+y)/10);
 	}
 

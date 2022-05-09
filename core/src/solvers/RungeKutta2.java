@@ -12,7 +12,7 @@ import physics.MaxSpeed;
 import java.util.function.BiFunction;
 //new
 
-public class RungeKutta2 implements Solver{
+public class RungeKutta2 extends Thread implements Solver{
 
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.function.BiFunction;
 
-public class AdamsMoulton implements Solver{
+public class AdamsMoulton extends Thread implements Solver{
     //TODO MaxSpeed
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();

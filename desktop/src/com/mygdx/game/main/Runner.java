@@ -137,7 +137,7 @@ public class Runner extends Thread
         return "";
     }
 
-
+    static FileWriter fr;
     public static void main(String[] args) throws FileNotFoundException {
 
 

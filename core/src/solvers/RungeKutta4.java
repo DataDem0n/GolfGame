@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.function.BiFunction;
 
-public class RungeKutta4  implements Solver {
+public class RungeKutta4 extends Thread implements Solver {
 
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
