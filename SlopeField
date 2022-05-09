@@ -68,7 +68,7 @@ public class SlopeField
     
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
         double interval = 1;
         SlopeField slopes = new SlopeField(interval, terrain);
         double[][] slopesX = slopes.slopeXCalculator();
