@@ -1,14 +1,19 @@
 package solvers;
 
 import com.mygdx.game.main.DataField;
-import physics.Physics;
+import physics.Acceleration;
+import physics.HasBallStopped;
+import physics.MaxSpeed;
 import obstacles.SandPits;
 import obstacles.Tree;
 import obstacles.Wall;
 
 import java.util.function.BiFunction;
 
-public class Euler extends Physics implements Solver {
+public class Euler  implements Solver {
+    private MaxSpeed maxSpeed = new MaxSpeed();
+    private Acceleration acceleration = new Acceleration();
+    private HasBallStopped hasBallStopped = new HasBallStopped();
     private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
@@ -53,17 +58,17 @@ public class Euler extends Physics implements Solver {
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
-        coordinatesAndVelocity = maxSpeedReached(coordinatesAndVelocity);
+        coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
-        while(!hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
+        while(!hasBallStopped.hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
 
             if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * acceleration.accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * acceleration.accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
             }
             else{
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * acceleration.accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * acceleration.accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
             }
 
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
