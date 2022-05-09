@@ -1,6 +1,7 @@
 package solvers;
 
 import com.mygdx.game.main.DataField;
+import obstacles.Water;
 import physics.Acceleration;
 import physics.HasBallStopped;
 import physics.MaxSpeed;

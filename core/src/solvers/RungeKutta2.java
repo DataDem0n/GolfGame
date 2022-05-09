@@ -1,10 +1,7 @@
 package solvers;
 
 import com.mygdx.game.main.DataField;
-import obstacles.Forest;
-import obstacles.SandPits;
-import obstacles.Tree;
-import obstacles.Wall;
+import obstacles.*;
 import physics.Acceleration;
 import physics.HasBallStopped;
 import physics.MaxSpeed;
@@ -28,6 +25,7 @@ public class RungeKutta2 extends Thread implements Solver{
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Forest f = DataField.gameForest;
+    private Water water = new Water();
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
