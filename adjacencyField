@@ -184,7 +184,7 @@ public class AdjacencyField
             {
                 if(terrain.apply(i/interval-25, j/interval-25) < 0)
                 {
-                    field[i][j] = 10000;           //10000
+                    field[i][j] = -1;           //10000
                 }
             }
         }
@@ -193,7 +193,7 @@ public class AdjacencyField
         
         return field;
     }
-
+    
     public int[][] floodFillUpdateTree()
     {
         int[][] field = floodFillUpdateWater();
@@ -206,7 +206,7 @@ public class AdjacencyField
                 {
                         if(((i/interval-25 <= coorTX[k]+radius) && (i/interval-25 >= coorTX[k]-radius)) && ((j/interval-25 <= coorTY[k]+radius) && (j/interval-25 >= coorTY[k]-radius)) && field[i][j] != -1)
                         {
-                            field[i][j] = 20000;           //20000
+                            field[i][j] = -2;           //20000
                         }
                 }
             }
@@ -234,6 +234,30 @@ public class AdjacencyField
         return field;
     }
 
+    public int[][] floodFillUpdateBall(double ballCoorX, double ballCoorY)
+    {
+        int[][] field = floodFillUpdateSandpits();
+        int[] arrayPosition = new int[2];
+        double coordinateX = ballCoorX;
+        double coordinateY = ballCoorY;
+
+        if(coordinateX > 0)
+        {
+        coordinateX += 25;
+        }
+        if(coordinateY > 0)
+        {
+        coordinateY += 25;
+        }
+        
+
+        arrayPosition[0] = (int)(coordinateX/interval);
+        arrayPosition[1] = (int)(coordinateY/interval);
+        field[arrayPosition[0]][arrayPosition[1]] = 1000;
+        
+        return field;
+    }
+
    
 
 
@@ -247,15 +271,16 @@ public class AdjacencyField
         double interval = 1;
         double holeCoorx = 20;
         double holeCoory = 20;
-        double radius = 2;                                  //radius of all trees
+        double radius = 1;                                  //radius of all trees
         double[] beginX = {1,-6,-20};                    //begin x-coordinates for the sandpits
         double[] endX = {8,0,-15};                       //end x-coordinates for the sandpits
         double[] beginY = {1,-6,-20};                    //begin y-coordinates for the sandpits
         double[] endY = {8,0,-15};                       //end y-coordinates for the sandpits
         int sandpitResentment = 1;                         //the higher this value, the less likely the ai takes a route through a sandpit
 
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);                                                         
-        int[][] testing = a.floodFillUpdateSandpits();
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);           
+        SlopeField b = new SlopeField(interval,terrain);                                              
+        int[][] testing = a.floodFillUpdateBall(20,0);
         System.out.println(a.queueSize);
     
 
@@ -267,6 +292,15 @@ public class AdjacencyField
             }
             System.out.println();
         }
+        PathCalculator path = new PathCalculator(a, b, 20, 0);
+        path.pathCalculator(path.getBallPosition()[0], path.getBallPosition()[1]);
+        
+        // for(int j = 0;j<path.pathX.size()-1; j++)
+        // {
+        //     System.out.print("x: "+path.pathX.get(j) + "  y: "+path.pathY.get(j));
+        //     System.out.println();
+        // }
+       
     }
 
     
