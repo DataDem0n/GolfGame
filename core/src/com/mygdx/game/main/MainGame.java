@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import obstacles.Tree;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainGame extends ApplicationAdapter {
 	ArrayList<Float> coordsX;
@@ -29,6 +31,7 @@ public class MainGame extends ApplicationAdapter {
 	float holeY= (float) DataField.targetRXY[2];
 	@Override
 	public void create (){
+		System.out.println(Arrays.toString(DataField.sandPit));
 		if(DataField.GUI){WM = new WindowMain();}
 		pointGenerator();
 		viewport = new ScreenViewport();
@@ -95,7 +98,7 @@ public class MainGame extends ApplicationAdapter {
 //		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
 //		return Math.cos(x+(y*y)); //testing
 //		return  ((x*x)+(y*y))/20.0;
-		return (Math.sin(x+y)/10);
+		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
 	}
 
 	/**
@@ -118,12 +121,15 @@ public class MainGame extends ApplicationAdapter {
 				s.setColor(getColorHeight(t));//bad implementation should be stored and called from elsewhere.
 				s.setColor(getColorHeight(t));
 
-				if(coordsX.get(i)>DataField.sandPit[0]&&coordsX.get(i)<DataField.sandPit[1]&&coordsY.get(j)>DataField.sandPit[2]&&coordsY.get(j)<DataField.sandPit[3]){
+				if(coordsX.get(i) > DataField.sandPit[0] && coordsX.get(i) < DataField.sandPit[2] &&
+						coordsY.get(j) > DataField.sandPit[1] && coordsY.get(j) < DataField.sandPit[3]) {
 					s.setColor(Color.YELLOW);
 				}
 
 				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
 					s.rectLine(new Vector2(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f),new Vector2(coordsX.get(i+1)*2.5f,coordsY.get(j)*2.5f),2f);
+
+
 
 //				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
 //					s.line(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f,coordsX.get(i)*2.5f,coordsY.get(j+1)*2.5f);

@@ -58,10 +58,7 @@ public class settingsMenu{
         sandpitCoordsY1 = new JTextField("y1");
         sandpitCoordsX2 = new JTextField("x2");
         sandpitCoordsY2 = new JTextField("y2");
-        String spGetX1 = sandpitCoordsX1.getText();
-        String spGetY1 = sandpitCoordsX1.getText();
-        String spGetX2 = sandpitCoordsX1.getText();
-        String spGetY2 = sandpitCoordsX1.getText();
+
 
         sandpitCoordText = new JLabel("Enter Coords:");
 
@@ -94,13 +91,9 @@ public class settingsMenu{
             }
             else {
 
-                double[] coordSP = new double[4];
-                coordSP[0] = 30.0;
-                coordSP[1] = 31.0;
-                coordSP[2] = 30.0;
-                coordSP[3] = 31.0;
+                double[] coordSP = new double[]{40.0, 40.0, 40.0, 40.0};
 
-                if (!spGetX1.equals("x1") && !spGetY1.equals("y1") && !spGetX2.equals("x2") && !spGetY2.equals("y2")) {
+                if (!sandpitCoordsX1.getText().equals("x1") && !sandpitCoordsY1.getText().equals("y1") && !sandpitCoordsX2.getText().equals("x2") && !sandpitCoordsY2.getText().equals("y2")) {
 
                     coordSP[0] = Double.parseDouble(sandpitCoordsX1.getText());
                     coordSP[1] = Double.parseDouble(sandpitCoordsY1.getText());
@@ -121,7 +114,7 @@ public class settingsMenu{
 
                 //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
                 DataField.sandPit = coordSP.clone();
-
+                System.out.println(Arrays.toString(DataField.sandPit));
                 settingsMenu.finished = false;
                 frameMain.setVisible(false);
             }

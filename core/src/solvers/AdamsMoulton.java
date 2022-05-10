@@ -144,7 +144,7 @@ public class AdamsMoulton extends Thread implements Solver{
 
                 return coordinatesAndVelocity;
             }
-            wall.collide(coordinatesAndVelocity);
+            //wall.collide(coordinatesAndVelocity);
             sandPits.change(coordinatesAndVelocity);
 
 
