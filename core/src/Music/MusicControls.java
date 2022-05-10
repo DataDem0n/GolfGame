@@ -8,6 +8,8 @@ import java.util.Arrays;
 public class MusicControls {
     int playCounter = 0;
 
+    JFrame frame;
+
     JLabel selectGroove;
     JLabel credit;
     String[] grooveTypes = {"chill", "not chill"};
@@ -19,18 +21,18 @@ public class MusicControls {
 
     public MusicControls(){
         JPanel panel= new JPanel();
-        JFrame frame= new JFrame("Music Controls");
+        frame= new JFrame("Music Controls");
         Image frameIcon = new ImageIcon("Icon.png").getImage();
         frame.setIconImage(frameIcon);
 
         panel.setLayout(new FlowLayout());
-        play = new JButton("wooh");
-        stop = new JButton("ay stop da noise man");
-        volumeSlider = new JSlider(0, 100, 50);
+        play = new JButton("⏯");
+        stop = new JButton("⏹");
+        volumeSlider = new JSlider(1, 100);
         volumeSlider.setPaintTicks(true);
         volumeInt = new JLabel();
 
-        credit = new JLabel("copi rite stefan dev 2022 :DDD");
+        credit = new JLabel("credit: Stefan Gorgos");
 
         //create a music object
         Music play1 = new Music();
@@ -40,7 +42,7 @@ public class MusicControls {
             if(e.getSource()==play){
                 playCounter = playCounter +1;
                 if(playCounter<=1) {
-                    play1.playMusic("A:/fl studio stuff/fl projects/dnb trash/2022/golf22/H.wav");
+                    play1.playMusic("E:/gungle.wav");
                     play1.startMusic();
                 }
             }
@@ -57,6 +59,8 @@ public class MusicControls {
 
         volumeSlider.addChangeListener (e -> {
             if(e.getSource()==volumeSlider){
+
+                play1.volume.setValue((20f * (float) Math.log10((float)volumeSlider.getValue()/100f)));
 
                 volumeInt.setText("vol: "+ volumeSlider.getValue());
 
@@ -78,5 +82,9 @@ public class MusicControls {
     }
     public float getVolume(float musicVolume){
         return volumeSlider.getValue();
+    }
+
+    public void setVisible(){
+        frame.setVisible(true);
     }
 }

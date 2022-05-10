@@ -118,7 +118,7 @@ public class WindowMain{
             music.addActionListener (e -> {
                 if(e.getSource()==music){
                     System.out.println("pressed button");
-                    MusicControls control = new MusicControls();
+                    control.setVisible();
                 }
             });
 
