@@ -1,16 +1,11 @@
 package com.mygdx.game.main;
 
-import com.badlogic.gdx.Gdx;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import Music.MusicControls;
+import Music.Music;
 
 public class WindowMain{
     JLabel counter;
@@ -48,7 +43,7 @@ public class WindowMain{
         pushButton.addActionListener (e -> {
             //counter updater
             c=c+1;
-            counter.setText("Storkes: " + c);
+            counter.setText("Strokes: " + c);
             System.out.println("No. of strokes: " + c);
 
             //receive velocities
@@ -90,7 +85,7 @@ public class WindowMain{
 
         ballYCoord = new JLabel("Ball Y coord: ");
 
-        counter = new JLabel("Strokes: " + c); //this returns the number of total strokes use
+        counter = new JLabel("Strokes: " + c); //this returns the number of total strokes used
 
         // Elevation Depiction
         JLabel elevationDepictionLabel = new JLabel("\nElevation Depiction");
@@ -111,15 +106,21 @@ public class WindowMain{
         //file tab buttons
         JMenuItem exit = new JMenuItem("Exit");
         fileTab.add(exit);
-
         exit.addActionListener (e -> {
             if(e.getSource()==exit){
                 System.exit(0);
             }
         });
+
         //extras tab buttons
-//        JMenuItem music = new JMenuItem("Music????");
-//        extrasTab.add(music);
+        JMenuItem music = new JMenuItem("Music");
+        extrasTab.add(music);
+            music.addActionListener (e -> {
+                if(e.getSource()==music){
+                    System.out.println("pressed button");
+                    MusicControls control = new MusicControls();
+                }
+            });
 
         frame.setJMenuBar(menuBar);
         menuBar.setVisible(true);
