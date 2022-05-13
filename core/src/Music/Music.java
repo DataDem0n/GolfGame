@@ -35,6 +35,8 @@ public class Music {
             e.printStackTrace();
         }
         volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(1f); // volume needs to be initialised when converting the setVisible method inside MusicControls.Java
+        //this is a semi random band-aid value which sounds close to its default max value
     }
 
     public void startMusic(){

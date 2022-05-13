@@ -32,7 +32,8 @@ public class MusicControls {
         volumeSlider.setPaintTicks(true);
         volumeInt = new JLabel();
 
-        credit = new JLabel("credit: Stefan Gorgos");
+        credit = new JLabel("credit: Stefan \"vegamane666 \" Gorgos");
+        credit.setForeground(Color.gray);
 
         //create a music object
         Music play1 = new Music();
@@ -84,7 +85,11 @@ public class MusicControls {
         return volumeSlider.getValue();
     }
 
-    public void setVisible(){
-        frame.setVisible(true);
+    public boolean setVisible(boolean bool){
+        frame.setVisible(bool);
+        return bool;
     }
+//public void setVisible(){
+//    frame.setVisible(true);
+//}
 }
