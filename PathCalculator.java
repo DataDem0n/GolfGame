@@ -3,9 +3,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.function.BiFunction;
+
+import javax.naming.ldap.PagedResultsControl;
 
 public class PathCalculator {
     
@@ -13,9 +16,112 @@ public class PathCalculator {
     double ballCoorY;
     AdjacencyField adjacency;
     SlopeField slope;
-    ArrayList<Integer> pathX;
-    ArrayList<Integer> pathY;
+    List<Integer> pathX;
+    List<Integer> pathY;
 
+
+    // public PathCalculator(AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
+    // {
+    //     this.adjacency = adjacency;
+    //     this.slope = slope;
+    //     this.ballCoorX = ballCoorX;
+    //     this.ballCoorY = ballCoorY;
+    //     pathX = new LinkedList<Integer>();
+    //     pathY = new LinkedList<Integer>();
+    // }
+
+    // public int[] getBallPosition()
+    // {
+    //     int[] arrayPosition = new int[2];
+    //     double coordinateX = ballCoorX;
+    //     double coordinateY = ballCoorY;
+
+    //     if(coordinateX > 0)
+    //     {
+    //     coordinateX += 25;
+    //     }
+    //     if(coordinateY > 0)
+    //     {
+    //     coordinateY += 25;
+    //     }
+        
+    //     arrayPosition[0] = (int)(coordinateX/adjacency.interval);
+    //     arrayPosition[1] = (int)(coordinateY/adjacency.interval);
+        
+    //     pathX.add(arrayPosition[0]);
+    //     pathY.add(arrayPosition[1]);
+        
+    //     return arrayPosition;
+    // }
+
+
+
+    // public List<List> pathCalculator(int xPos, int yPos, List pathX, List pathY)
+    // {
+    //     int min = Integer.MAX_VALUE;
+    //     int minX = 0;
+    //     int minY = 0;
+    //     ArrayList getPath = new ArrayList<List>();
+    //     if(adjacency.floodFillUpdateSandpits()[xPos][yPos] == 0)
+    //     {
+    //         System.out.println("PATH FOUND"); 
+    //         getPath.add(new LinkedList<Double>(pathX));
+    //         getPath.add(new LinkedList<Double>(pathY));
+    //         return getPath;
+    //     }
+    //     else
+    //     {
+    //         if(xPos + 1 < adjacency.floodFillUpdateSandpits().length)
+    //         {
+    //               if(min > adjacency.floodFillUpdateSandpits()[xPos+1][yPos] && adjacency.floodFillUpdateSandpits()[xPos+1][yPos] >= 0)
+    //               {
+    //                   min = adjacency.floodFillUpdateSandpits()[xPos+1][yPos];
+    //                   minX = xPos+1;
+    //                   minY = yPos;
+    //               }
+                  
+    //         }
+    //         if(xPos - 1 >= 0)
+    //         {
+    //             if(min > adjacency.floodFillUpdateSandpits()[xPos-1][yPos] && adjacency.floodFillUpdateSandpits()[xPos-1][yPos] >= 0)
+    //             {
+    //                 min = adjacency.floodFillUpdateSandpits()[xPos-1][yPos];
+    //                 minX = xPos-1;
+    //                 minY = yPos;
+    //             }
+                  
+    //         }
+    //         if(yPos + 1 < adjacency.floodFillUpdateSandpits()[0].length)
+    //         {
+    //             if(min > adjacency.floodFillUpdateSandpits()[xPos][yPos+1] && adjacency.floodFillUpdateSandpits()[xPos][yPos+1] >= 0)
+    //             {
+    //                 min = adjacency.floodFillUpdateSandpits()[xPos][yPos+1];
+    //                 minX = xPos;
+    //                 minY = yPos+1;
+    //             }
+                  
+    //         }
+    //         if(yPos - 1 >= 0)
+    //         {
+    //             if(min > adjacency.floodFillUpdateSandpits()[xPos][yPos-1] && adjacency.floodFillUpdateSandpits()[xPos][yPos-1] >= 0)
+    //             {
+    //                 min = adjacency.floodFillUpdateSandpits()[xPos][yPos-1];
+    //                 minX = xPos;
+    //                 minY = yPos-1;
+    //             }
+                  
+    //         }
+    //         pathX.add(minX);
+    //         pathY.add(minY);
+    //         // System.out.println("x: "+minX);
+    //         // System.out.println("y: "+minY);
+    //         System.out.println(pathX.toString());
+            
+
+    //         pathCalculator(minX,minY, new LinkedList<Double>(pathX), new LinkedList<Double>(pathY));
+    //     }
+    //     return null;
+    // }
 
     public PathCalculator(AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
     {
@@ -23,8 +129,8 @@ public class PathCalculator {
         this.slope = slope;
         this.ballCoorX = ballCoorX;
         this.ballCoorY = ballCoorY;
-        pathX = new ArrayList<Integer>();
-        pathY = new ArrayList<Integer>();
+        pathX = new LinkedList<Integer>();
+        pathY = new LinkedList<Integer>();
     }
 
     public int[] getBallPosition()
@@ -33,13 +139,23 @@ public class PathCalculator {
         double coordinateX = ballCoorX;
         double coordinateY = ballCoorY;
 
-        if(coordinateX > 0)
+        if(coordinateX >= 0)
         {
         coordinateX += 25;
         }
-        if(coordinateY > 0)
+        else
+        {
+        double temp = 25 - (coordinateX*-1.0);
+        coordinateX = temp;
+        }
+        if(coordinateY >= 0)
         {
         coordinateY += 25;
+        }
+        else
+        {
+            double temp = 25 - (coordinateY*-1.0);
+            coordinateY = temp;
         }
         
         arrayPosition[0] = (int)(coordinateX/adjacency.interval);
@@ -53,26 +169,20 @@ public class PathCalculator {
 
 
 
-    public List<List> pathCalculator(int xPos, int yPos)
+    public List<List> pathCalculator(int xPos, int yPos)                    //cannot start at [0][0]????????????
     {
         int min = Integer.MAX_VALUE;
         int minX = 0;
         int minY = 0;
         ArrayList getPath = new ArrayList<List>();
-        if(adjacency.floodFillUpdateSandpits()[xPos][yPos] == 0)
+        int[][] field = adjacency.floodFillUpdateSandpits();
+        while(field[xPos][yPos] != 0)
         {
-            System.out.println("PATH FOUND");
-            getPath.add(pathX);
-            getPath.add(pathY);
-            return getPath;
-        }
-        else
-        {
-            if(xPos + 1 < adjacency.floodFillUpdateSandpits().length)
+            if(xPos + 1 < field.length)
             {
-                  if(min > adjacency.floodFillUpdateSandpits()[xPos+1][yPos] && adjacency.floodFillUpdateSandpits()[xPos+1][yPos] >= 0)
+                  if(min > field[xPos+1][yPos] && field[xPos+1][yPos] >= 0)
                   {
-                      min = adjacency.floodFillUpdateSandpits()[xPos+1][yPos];
+                      min = field[xPos+1][yPos];
                       minX = xPos+1;
                       minY = yPos;
                   }
@@ -80,19 +190,19 @@ public class PathCalculator {
             }
             if(xPos - 1 >= 0)
             {
-                if(min > adjacency.floodFillUpdateSandpits()[xPos-1][yPos] && adjacency.floodFillUpdateSandpits()[xPos-1][yPos] >= 0)
+                if(min > field[xPos-1][yPos] && field[xPos-1][yPos] >= 0)
                 {
-                    min = adjacency.floodFillUpdateSandpits()[xPos-1][yPos];
+                    min = field[xPos-1][yPos];
                     minX = xPos-1;
                     minY = yPos;
                 }
                   
             }
-            if(yPos + 1 < adjacency.floodFillUpdateSandpits()[0].length)
+            if(yPos + 1 < field[0].length)
             {
-                if(min > adjacency.floodFillUpdateSandpits()[xPos][yPos+1] && adjacency.floodFillUpdateSandpits()[xPos][yPos+1] >= 0)
+                if(min > field[xPos][yPos+1] && field[xPos][yPos+1] >= 0)
                 {
-                    min = adjacency.floodFillUpdateSandpits()[xPos][yPos+1];
+                    min = field[xPos][yPos+1];
                     minX = xPos;
                     minY = yPos+1;
                 }
@@ -100,9 +210,9 @@ public class PathCalculator {
             }
             if(yPos - 1 >= 0)
             {
-                if(min > adjacency.floodFillUpdateSandpits()[xPos][yPos-1] && adjacency.floodFillUpdateSandpits()[xPos][yPos-1] >= 0)
+                if(min > field[xPos][yPos-1] && field[xPos][yPos-1] >= 0)
                 {
-                    min = adjacency.floodFillUpdateSandpits()[xPos][yPos-1];
+                    min = field[xPos][yPos-1];
                     minX = xPos;
                     minY = yPos-1;
                 }
@@ -112,22 +222,39 @@ public class PathCalculator {
             pathY.add(minY);
             System.out.println("x: "+minX);
             System.out.println("y: "+minY);
-
-            pathCalculator(minX,minY);
+            //System.out.println(pathX.toString());
+            xPos = minX;
+            yPos = minY;
         }
-        return null;
-    }
 
 
-    public List decreasePath(List pathX, List pathY)
-    {
-        ArrayList getPath = new ArrayList<List>();
-        pathX.remove(pathX.size()-1);
-        pathY.remove(pathY.size()-1);
+        System.out.println("PATH FOUND"); 
         getPath.add(pathX);
         getPath.add(pathY);
         return getPath;
+    }
 
+
+
+
+    // public List decreasePath(List pathX, List pathY)
+    // {
+    //     ArrayList getPath = new ArrayList<List>();
+    //     pathX.remove(pathX.size()-1);
+    //     pathY.remove(pathY.size()-1);
+    //     getPath.add(pathX);
+    //     getPath.add(pathY);
+    //     return getPath;
+    // }
+
+    public List decreasePath(List path1, List path2)
+    {
+        ArrayList getPath = new ArrayList<List>();
+        pathX.remove(path1.size()-1);
+        pathY.remove(path2.size()-1);
+        getPath.add(path1);
+        getPath.add(path2);
+        return getPath;
     }
 
 
@@ -185,181 +312,33 @@ public class PathCalculator {
     
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.1*x+1);            //the terrain (so the ai detects water)
+        double[] coorTX = {};       //x-coordinates of the trees
+        double[] coorTY = {};         //y-coordinates of the trees\
 
-        /*
-         * int[][] field = new int[4][4];
-         * for (int i = 0; i < field.length; i++) {
-         * for (int j = 0; j < field[i].length; j++) {
-         * field[i][j] = 0;
-         * }
-         * }
-         * field[0][0] = 4;
-         * field[0][1] = 3;
-         * field[0][2] = 2;
-         * field[0][3] = 3;
-         * field[1][0] = 3;
-         * field[1][1] = 2;
-         * field[1][2] = 1;
-         * field[1][3] = 2;
-         * field[2][0] = 2;
-         * field[2][1] = 1;
-         * field[2][2] = 0;
-         * field[2][3] = 1;
-         * field[3][0] = 3;
-         * field[3][1] = 2;
-         * field[3][2] = 1;
-         * field[3][3] = 2;
-         * 
-         * // Get ball position (for testing purposes, assume)
-         * int a = 3;
-         * int b = 0;
-         * // Assume hole position
-         * int[] holePosition = new int[2];
-         * holePosition[0] = 2;
-         * holePosition[1] = 2;
-         * 
-         * int[] currentPosition = new int[2];
-         * currentPosition[0] = a;
-         * currentPosition[1] = b;
-         */
-
-        /*
-         * while ((a != holePosition[0]) || (b != holePosition[1])) {
-         * try {
-         * if (field[a][b] > field[a][b + 1]) {
-         * b = b + 1;
-         * currentPosition[0] = a;
-         * currentPosition[1] = b;
-         * }
-         * } catch (ArrayIndexOutOfBoundsException e) {
-         * System.out.println("a");
-         * }
-         * 
-         * try {
-         * 
-         * if (field[a][b] > field[a][b - 1]) {
-         * b = b - 1;
-         * currentPosition[0] = a;
-         * currentPosition[1] = b;
-         * }
-         * } catch (ArrayIndexOutOfBoundsException e) {
-         * System.out.println("bb");
-         * }
-         * try {
-         * if (field[a][b] > field[a + 1][b]) {
-         * a = a + 1;
-         * currentPosition[0] = a;
-         * currentPosition[1] = b;
-         * }
-         * } catch (ArrayIndexOutOfBoundsException e) {
-         * System.out.println("c");
-         * }
-         * try {
-         * if (field[a][b] > field[a - 1][b]) {
-         * a = a - 1;
-         * currentPosition[0] = a;
-         * currentPosition[1] = b;
-         * }
-         * } catch (ArrayIndexOutOfBoundsException e) {
-         * System.out.println("d");
-         * }
-         * System.out.println(a);
-         * System.out.println(b);
-         * }
-         */
-
-        BiFunction<Double, Double, Double> terrain = (x, y) -> (double) (0.5 * (Math.sin((x - y) / 7) + 0.9));
-
-        double[] coorTX = { 19, 12, 14, -12, -8, -6 }; // x-coordinates of the trees
-        double[] coorTY = { 8, 11, 18, -8, -7, -2 }; // y-coordinates of the trees
+        double ballCoorX = -2;
+        double ballCoorY = -2;
         double interval = 1;
-        double holeCoorx = 20;
-        double holeCoory = 20;
-        double radius = 2; // radius of all trees
-        double[] beginX = { 1, -6, -20 }; // begin x-coordinates for the sandpits
-        double[] endX = { 8, 0, -15 }; // end x-coordinates for the sandpits
-        double[] beginY = { 1, -6, -20 }; // begin y-coordinates for the sandpits
-        double[] endY = { 8, 0, -15 }; // end y-coordinates for the sandpits
-        int sandpitResentment = 1; // the higher this value, the less likely the ai takes a route through a sandpit
+        double holeCoorx = 13;
+        double holeCoory = 13;
+        double radius = 3;                                  //radius of all trees
+        double[] beginX = {};                    //begin x-coordinates for the sandpits
+        double[] endX = {};                       //end x-coordinates for the sandpits
+        double[] beginY = {};                    //begin y-coordinates for the sandpits
+        double[] endY = {};                       //end y-coordinates for the sandpits
+        int sandpitResentment = 1;                         //the higher this value, the less likely the ai takes a route through a sandpit
 
-        AdjacencyField cf = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX,
-                coorTY, radius, beginX, endX, beginY, endY);
-        int[][] field = cf.floodFillUpdateSandpits();
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);        
+        SlopeField b = new SlopeField(interval,terrain);   
+        PathCalculator path = new PathCalculator(a, b, ballCoorX, ballCoorY);
 
-        boolean check = false;
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                if (field[i][j] == 0) {
-                    check = true;
-                    int c = i;
-                    int d = j;
-                    System.out.println(check);
-                    System.out.println(c);
-                    System.out.println(d);
+        int[] test = path.getBallPosition();
+        System.out.println(test[0]); 
+        System.out.println(test[1]); 
+    }
 
-                }
-            }
-
-        }
-        System.out.println(check);
-    //a and b are the coordinates of the ball at the beginning 
-        int a = 4;
-        int b = 5;
-        int[] currentPosition = new int[2];
-        currentPosition[0] = a;
-        currentPosition[1] = b;
-
-
-        // i made the field using double holeCoorx = 20; double holeCoory = 20;, for some reason when i looped through the field the 0 is in the squre with coordinates 45 and 45
-        int hx = 45;
-        int hy = 45;
-
-        while ((a != hx) || (b != hy)) {
-
-            try {
-                if (field[a][b] > field[a + 1][b]) {
-                    a = a + 1;
-                    currentPosition[0] = a;
-                    currentPosition[1] = b;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("c");
-            }
-            try {
-                if (field[a][b] > field[a - 1][b]) {
-                    a = a - 1;
-                    currentPosition[0] = a;
-                    currentPosition[1] = b;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("d");
-            }
-            try {
-                if (field[a][b] > field[a][b + 1]) {
-                    b = b + 1;
-                    currentPosition[0] = a;
-                    currentPosition[1] = b;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("a");
-            }
-
-            try {
-
-                if (field[a][b] > field[a][b - 1]) {
-                    b = b - 1;
-                    currentPosition[0] = a;
-                    currentPosition[1] = b;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("bb");
-            }
-
-            System.out.println(a);
-            System.out.println(b);
-
-        }
 
     }
-}
+
