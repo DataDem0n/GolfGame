@@ -97,9 +97,15 @@ public class RungeKutta2 extends Thread implements Solver{
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
             counter += 1;
-
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
+
+            if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)){
+                System.out.println("You Won! yay");
+                return coordinatesAndVelocity;
+            }
+
+
 
             //checking if the ball has fallen into water
 //            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {

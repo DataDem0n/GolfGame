@@ -254,8 +254,7 @@ public class Runner extends Thread
             DataField.GUI = false;
             DataField.usingGui = false;//TODO 2d array for trees
         }
-        System.out.println(Arrays.toString(coordinatesAndVelocity));
-
+        System.out.println(Arrays.toString(DataField.targetRXY));
         settingsMenu pregame = new settingsMenu();
 
 

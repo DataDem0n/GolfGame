@@ -49,7 +49,6 @@ public class MainGame extends ApplicationAdapter {
 
 		}
 
-
 		s = new ShapeRenderer();
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
 		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
@@ -92,11 +91,11 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);
+//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);//hill
 //		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
-//		return (-Math.E*.5)*((-(x*x)-(y*y))/35f);
+//		return (-Math.E*.5)*((-(x*x)-(y*y))/35.0);//hole
 //		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
-//		return Math.cos(x+(y*y)); //testing
+//		return Math.cos(x+(y*y)); //testing messed up pattern
 //		return  ((x*x)+(y*y))/20.0;
 		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
 	}

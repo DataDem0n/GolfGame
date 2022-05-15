@@ -86,28 +86,3 @@ public class BotBasic {
     }
 
 }
-
-/*
- if((int)Math.signum(TargetX)==1&&(int)Math.signum(mylocation)==1){
-         return holeLocation[0] + myLocation[0];
-         }
-
-         else if((int)Math.signum(TargetX)==-1&&(int)Math.signum(mylocation)==-1){
-         return holeLocation[0] + myLocation[0];
-         }
-
-         else if((int)Math.signum(TargetX)==-1&&(int)Math.signum(mylocation)==1){
-         return holeLocation[0] - myLocation[0];
-         }
-
-         else if((int)Math.signum(TargetX)==1&&(int)Math.signum(mylocation)==-1){
-         return (holeLocation[0]*-1) - myLocation[0];
-         }
-
-         else if((int)Math.signum(TargetX)==1&&(int)Math.signum(mylocation)==0){
-         return holeLocation[0];
-         }
-
-         else if((int)Math.signum(TargetX)==-1&&(int)Math.signum(mylocation)==0){
-         return holeLocation[0];
-         }*/

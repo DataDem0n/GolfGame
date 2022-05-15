@@ -1,6 +1,11 @@
 package com.mygdx.game.main;
 
+import Bots.AI;
+import Bots.AdjacencyField;
+import Bots.SlopeField;
 import com.badlogic.gdx.Gdx;
+import solvers.RungeKutta2;
+import solvers.RungeKutta4;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WindowMain{
     JLabel counter;
@@ -35,14 +41,32 @@ public class WindowMain{
     // Push Button
     JButton pushButton = new JButton("PUTT!");
     BotBasic Charley = new BotBasic();
+    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{}, new double[]{}, 3, new double[]{}, new double[]{}, new double[]{}, new double[]{});
+    SlopeField b = new SlopeField(1,DataField.terrain);
 
+    AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
+    List<List> vel;
     //solver
     JLabel selectedSolver = new JLabel("Solver: ");
-
     WindowMain(){
         initC = new JButton("Start Bot");
         initC.addActionListener(e -> {
-            Charley.start();
+            DataField.velocityX = new ArrayList<>();
+            DataField.velocityY = new ArrayList<>();
+            vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
+
+            for (int i = 0; i<vel.get(0).size();i++) {
+                DataField.velocityX.add((Double) vel.get(0).get(i));
+                DataField.velocityY.add((Double) vel.get(1).get(i));
+            }
+
+            DataField.GUI = false;
+
+            Timer t = new Timer(100, e1 -> {
+                DataField.GUI = true;
+            });
+
+
         });
 
         pushButton.addActionListener (e -> {
@@ -211,6 +235,8 @@ public class WindowMain{
         gc.gridy = 18;
         gc.gridwidth = 2;
         panel.add(imgL, gc);
+
+        panel.add(initC);
 
         frame.add(sideMenu);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
