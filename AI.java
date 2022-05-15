@@ -15,9 +15,9 @@ public class AI extends Simulations
         this.adjacency = adjacency;
     }
 
-    public boolean endReached()
+    public boolean endReached(double ballCoorX1, double ballcoorY1)
     {
-        if((ballCoorX < holeCoorX+holeRadius && ballCoorX > holeCoorX-holeRadius) && (ballCoorY < holeCoorY+holeRadius && ballCoorY > holeCoorY-holeRadius))
+        if((ballCoorX1 < holeCoorX+holeRadius && ballCoorX1 > holeCoorX-holeRadius) && (ballcoorY1 < holeCoorY+holeRadius && ballcoorY1 > holeCoorY-holeRadius))
         {
             return true;
         }
@@ -25,7 +25,7 @@ public class AI extends Simulations
     }
     
 
-    public List<List> getAllVelocities()
+    public List<List> getAllVelocities(double ballCoorX1, double ballcoorY1)
     {
         ArrayList<List> allVelocities = new ArrayList<List>();
         allVelocities.add(new ArrayList<Double>());
@@ -33,19 +33,23 @@ public class AI extends Simulations
 
 
          
-        while(!endReached())
+        while(!endReached(ballCoorX1,ballcoorY1))
         {            
-            Simulations correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX, ballCoorY, sFriction, kFriction);              //changed correctpos to bestshot
-            double[] gIV = correctVel.getInitialVel();
-            double[] usedVelocity = correctVel.simulate(gIV[0], gIV[1]);
+            System.out.println("ballcoorX: " + ballCoorX);
+            System.out.println("ballcoorY: " + ballCoorY);
+            Simulations correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction);              //changed correctpos to bestshot
+            double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1);
+            double[] usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1);
+            // System.out.println("x: "+ correctVel.coordinatesAndVelocity[0]);
+            // System.out.println("y: "+ correctVel.coordinatesAndVelocity[1]);
             
             allVelocities.get(0).add(usedVelocity[0]);
             allVelocities.get(1).add(usedVelocity[1]);
             
             
             
-            ballCoorX = coordinatesAndVelocity[0];
-            ballCoorY = coordinatesAndVelocity[1];
+            ballCoorX1 = correctVel.coordinatesAndVelocity[0];
+            ballcoorY1 = correctVel.coordinatesAndVelocity[1];
         }
 
         return allVelocities;
@@ -60,14 +64,14 @@ public class AI extends Simulations
     public static void main(String[] args) 
     {
         BiFunction<Double,Double,Double> terrain = (x,y)->(double)(1);
-        double[] coorTX = {};       //x-coordinates of the trees
-        double[] coorTY = {};         //y-coordinates of the trees
+        double[] coorTX = {15};       //x-coordinates of the trees
+        double[] coorTY = {15};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = 13;
-        double holeCoory = 13;
-        double holeRadius = 2;
-        double ballCoorX = 0;
-        double ballCoorY = 0;
+        double holeCoorx = -10;
+        double holeCoory = -10;
+        double holeRadius = 1;
+        double ballCoorX = 10;
+        double ballCoorY = 10;
         double sFriction = 0.2;
         double kFriction = 0.05;
         double radius = 3;                                  //radius of all trees      
@@ -79,12 +83,15 @@ public class AI extends Simulations
         AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);           
         SlopeField b = new SlopeField(interval,terrain);  
 
-        Simulations testing = new Simulations(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction);
+        
         AI newtonSlave = new AI(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, holeCoorx, holeCoory, holeRadius);
 
-        List<List> endtest = newtonSlave.getAllVelocities();
+        List<List> endtest = newtonSlave.getAllVelocities(ballCoorX,ballCoorY);
 
 
-        System.out.println(endtest.get(0).get(1));
+        System.out.println("velocityX1: "+endtest.get(0).get(0));
+        System.out.println("velocityY1: "+endtest.get(1).get(0));
+        System.out.println("velocityX2: "+endtest.get(0).get(1));
+        System.out.println("velocityY2: "+endtest.get(1).get(1));
     }
 }

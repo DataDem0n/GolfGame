@@ -220,15 +220,15 @@ public class PathCalculator {
             }
             pathX.add(minX);
             pathY.add(minY);
-            System.out.println("x: "+minX);
-            System.out.println("y: "+minY);
+            // System.out.println("x: "+minX);
+            // System.out.println("y: "+minY);
             //System.out.println(pathX.toString());
             xPos = minX;
             yPos = minY;
         }
 
 
-        System.out.println("PATH FOUND"); 
+        //System.out.println("PATH FOUND"); 
         getPath.add(pathX);
         getPath.add(pathY);
         return getPath;
@@ -316,8 +316,7 @@ public class PathCalculator {
     {
         BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.1*x+1);            //the terrain (so the ai detects water)
         double[] coorTX = {};       //x-coordinates of the trees
-        double[] coorTY = {};         //y-coordinates of the trees\
-
+        double[] coorTY = {};         //y-coordinates of the trees
         double ballCoorX = -2;
         double ballCoorY = -2;
         double interval = 1;
@@ -335,8 +334,8 @@ public class PathCalculator {
         PathCalculator path = new PathCalculator(a, b, ballCoorX, ballCoorY);
 
         int[] test = path.getBallPosition();
-        System.out.println(test[0]); 
-        System.out.println(test[1]); 
+        // System.out.println(test[0]); 
+        // System.out.println(test[1]); 
     }
 
 

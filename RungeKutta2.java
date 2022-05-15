@@ -84,7 +84,7 @@ public class RungeKutta2 extends Physics{
 
    public static void main(String[] args) 
    { 
-       double[] coordinatesAndVelocity = {0,0,3,3};
+       double[] coordinatesAndVelocity = {24,24,-4,-4};
        double stepsize = 0.000001;
        double kfriction = 0.05;
        double staticFriction = 0.2;

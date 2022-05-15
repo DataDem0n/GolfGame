@@ -41,13 +41,23 @@ public class AdjacencyField
         double coordinateX = holeCoordinates[0];
         double coordinateY = holeCoordinates[1];
 
-        if(coordinateX > 0)
+        if(coordinateX >= 0)
         {
         coordinateX += 25;
         }
-        if(coordinateY > 0)
+        else
+        {
+        double temp = 25 - (coordinateX*-1.0);
+        coordinateX = temp;
+        }
+        if(coordinateY >= 0)
         {
         coordinateY += 25;
+        }
+        else
+        {
+            double temp = 25 - (coordinateY*-1.0);
+            coordinateY = temp;
         }
         
         arrayPosition[0] = (int)( coordinateX/interval);
@@ -272,8 +282,8 @@ public class AdjacencyField
         double[] coorTX = {15};       //x-coordinates of the trees
         double[] coorTY = {15};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = 20;
-        double holeCoory = 20;
+        double holeCoorx = 23;
+        double holeCoory = 23;
         double radius = 3;                                  //radius of all trees
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits
