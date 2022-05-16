@@ -53,10 +53,20 @@ public class BotBasic {
         double yt = Distance(holeLocation[0],holeLocation[0],holeLocation[1],myLocation[1]);
 
         double scale = Math.sqrt(Math.pow(xt,2)+Math.pow(yt,2));
-        xt = xt/scale;
-        yt= yt/scale;
-        xt = xt*5;
-        yt = yt*5;
+
+//        xt = xt/scale;
+//        yt= yt/scale;
+//
+//        if (xt>2&&xt<3||yt>2&&yt<3){
+//            xt = xt*2;
+//            yt = yt*2;
+//        }
+//        else if (xt>3||yt>3){
+//            xt = xt*5;
+//            yt = yt*5;
+//        }
+
+
 
         if(myLocation[0]>holeLocation[0])
             xt = -xt;

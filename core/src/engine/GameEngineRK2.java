@@ -33,7 +33,13 @@ public class GameEngineRK2 extends RungeKutta2 {
         }
 
         setCoordinates(DataField.x, DataField.y);
-        setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+
+        if(!DataField.velocityX.isEmpty())
+            setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+//        else{
+//            return;
+//        }
+
         setkFriction(DataField.kFriction);
         setsFriction(DataField.sFriction);
         setTargetRXY(DataField.targetRXY);//this should all be done in constructor?
@@ -41,18 +47,20 @@ public class GameEngineRK2 extends RungeKutta2 {
 
         setTerrain(DataField.terrain);
         int index = 1;
-
+        int silly = 0;
         // while ball is not in the target
-        while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
+        while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))      ||    silly != 0){
 
-            coordinatesAndVelocityUntilStop( 0.000001);//0.00000001 for smooth animation
+            coordinatesAndVelocityUntilStop( 0.000001);//0.000001 for smooth animation
 
             DataField.x = getXCoord();
             DataField.y = getYCoord();
 
-                if((Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 ))))
+                if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
                 {
                     System.out.println("YOU WON!");
+                    silly += 1;
+                    break;
                 }
                 else
                 {
@@ -62,12 +70,15 @@ public class GameEngineRK2 extends RungeKutta2 {
                     }
 
                     if(DataField.usingGui) {
-                        DataField.velocityX.remove(0);
-                        DataField.velocityY.remove(0);
+                        if(!DataField.velocityX.isEmpty()) {
+                            DataField.velocityX.remove(0);
+                            DataField.velocityY.remove(0);
+                        }
                         DataField.GUI = true;
                         game();
                     }
                     if(index!=DataField.velocityX.size()){
+
                         setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
                         index++;
                     }

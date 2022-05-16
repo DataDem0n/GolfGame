@@ -91,13 +91,17 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/40);//hill
+//		return (1/10.0)*(Math.sin(x+y)+1);//nice function
+//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/50);//hill
+//		return 1-(Math.abs(x*x+y*y)/20.0);
+		return -0.1+(x*x+y*y)/1000.0;
 //		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
 //		return (-Math.E*.5)*((-(x*x)-(y*y))/35.0);//hole
 //		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
 //		return Math.cos(x+(y*y)); //testing messed up pattern
 //		return  ((x*x)+(y*y))/20.0;
-		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
+//		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
+//		return (1.0/10.0)*(Math.sin(x+y))+1;
 	}
 
 	/**

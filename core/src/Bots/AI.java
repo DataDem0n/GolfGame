@@ -48,8 +48,6 @@ public class AI extends Simulations
             allVelocities.get(0).add(usedVelocity[0]);
             allVelocities.get(1).add(usedVelocity[1]);
             
-            
-            
             ballCoorX1 = correctVel.coordinatesAndVelocity[0];
             ballcoorY1 = correctVel.coordinatesAndVelocity[1];
         }
@@ -66,26 +64,26 @@ public class AI extends Simulations
     public static void main(String[] args) 
     {
         BiFunction<Double,Double,Double> terrain = (x,y)->(double)(1);
-        double[] coorTX = {0};       //x-coordinates of the trees
-        double[] coorTY = {0};         //y-coordinates of the trees
+        double[] coorTX = {7};       //x-coordinates of the trees
+        double[] coorTY = {7};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = -10;
-        double holeCoory = -10;
+        double holeCoorx = 10;
+        double holeCoory = 10;
         double holeRadius = 1;
-        double ballCoorX = 10;
-        double ballCoorY = 10;
+        double ballCoorX = 0;
+        double ballCoorY = 0;
         double sFriction = 0.2;
-        double kFriction = 0.05;
-        double radius = 3;                                  //radius of all trees      
+        double kFriction = 0.1;
+        double radius = 2;                                  //radius of all trees
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits
         double[] beginY = {};                    //begin y-coordinates for the sandpits
         double[] endY = {};                       //end y-coordinates for the sandpits
         int sandpitResentment = 0;
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);           
-        SlopeField b = new SlopeField(interval,terrain);  
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);
 
-        
+        SlopeField b = new SlopeField(interval,terrain);
+
         AI newtonSlave = new AI(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, holeCoorx, holeCoory, holeRadius);
 
         List<List> endtest = newtonSlave.getAllVelocities(ballCoorX,ballCoorY);

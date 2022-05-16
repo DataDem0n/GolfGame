@@ -21,7 +21,7 @@ public class RungeKutta2 extends Thread implements Solver{
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
-    private double[] coordinatesAndVelocity;
+    protected double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Forest f = DataField.gameForest;
@@ -67,7 +67,7 @@ public class RungeKutta2 extends Thread implements Solver{
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
 
-        coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
+        //coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
         while (!hasBallStopped.hasBallStopped(coordinatesAndVelocity,  DataField.sFriction,terrain, step)) {
             if (coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0) {
@@ -100,10 +100,11 @@ public class RungeKutta2 extends Thread implements Solver{
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
 
-            if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)){
-                System.out.println("You Won! yay");
-                return coordinatesAndVelocity;
-            }
+//            if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)){
+//                System.out.println("You Won! yay");//infinite loop;
+//                DataField.GUI=true;
+//                return coordinatesAndVelocity;
+//            }
 
 
 
@@ -121,7 +122,7 @@ public class RungeKutta2 extends Thread implements Solver{
             sandPits.change(coordinatesAndVelocity);
             DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
-        //System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 
         return coordinatesAndVelocity;
     }

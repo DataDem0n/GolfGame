@@ -47,13 +47,11 @@ public class Plot extends PathCalculator
         difference[0] = x1 - x0;
         difference[1] = y1-  y0;
         return difference;
-
     }
 
     public double unitCalc()                                                                    //doesnt work if x == 0, add another argument to shotplottable.
     {
         double differenceX = differenceCalc()[0];
-        //System.out.println(differenceX);
         double differenceY = differenceCalc()[1];
         if(differenceX == 0)
         {

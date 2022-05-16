@@ -6,7 +6,7 @@ public class Tree implements Obstacles {
 
     private double coordX;
     private double coordY;
-    private final double radius = 3;
+    private final double radius = 2;
 
     public Tree(double coordX, double coordY) {
         this.coordX = coordX;

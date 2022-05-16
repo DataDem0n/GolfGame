@@ -40,29 +40,32 @@ public class RungeKutta2 extends Physics{
         double tempcoory1;
 
 
-        while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, stepsize, kFriction) )     //|| (((coordinatesAndVelocity[0] > DataField.targetRXY[1] -DataField.targetRXY[0] && coordinatesAndVelocity[0] < DataField.targetRXY[1]+DataField.targetRXY[0]) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-DataField.targetRXY[0] && coordinatesAndVelocity[1] < DataField.targetRXY[2]+DataField.targetRXY[0])) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)
+        while(!hasBallStopped(coordinatesAndVelocity, DataField.sFriction, terrain, stepsize, DataField.kFriction) )     //|| (((coordinatesAndVelocity[0] > DataField.targetRXY[1] -DataField.targetRXY[0] && coordinatesAndVelocity[0] < DataField.targetRXY[1]+DataField.targetRXY[0]) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-DataField.targetRXY[0] && coordinatesAndVelocity[1] < DataField.targetRXY[2]+DataField.targetRXY[0])) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)
         {
-                tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;        //getting x-velocity using midpoint
-                // System.out.println("K1 = " + tempvelx1);
+            if (coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0) {
+                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
+                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
+            } else {
+                tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting x-velocity using midpoint
                 tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
                 tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
-                tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;      
-                // System.out.println("K2 = " + tempvelx2);                  
+                tempvelx3 = accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-
-                tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;        //getting y-velocity using midpoint
+                tempvely1 = accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting y-velocity using midpoint
                 tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
-                tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
+                tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
 
-
+//                System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
                 coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
-                // System.out.println("dX = " + 0.5*(tempvelx1+tempvelx3));    
-                // System.out.println("Xtot = " + coordinatesAndVelocity[2]);        
+//                System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
+
                 coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
-            //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
-            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
-            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
+
+
+            }
+            coordinatesAndVelocity[0] += coordinatesAndVelocity[2]*step;
+            coordinatesAndVelocity[1] += coordinatesAndVelocity[3]*step;
         //     try {
         //         Thread.sleep(1000);
         //     }
@@ -72,7 +75,7 @@ public class RungeKutta2 extends Physics{
 
 
             //testing purposes:
-            // System.out.println(" ACC:  " + accelerationX(coordinatesAndVelocity, terrain, kFriction));
+            // System.out.println(" ACC:  " + accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction));
             // System.out.println("   ---------   ");
             // System.out.println("  X:"+ coordinatesAndVelocity[0] + "  Y:" + coordinatesAndVelocity[1] + "   VelX:" + coordinatesAndVelocity[2] + "  VelY" + coordinatesAndVelocity[3]);
             //System.out.println((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0));
@@ -80,7 +83,7 @@ public class RungeKutta2 extends Physics{
         }
 
         
-        //System.out.println("FINAL ACC: " + accelerationX(coordinatesAndVelocity, terrain, kFriction));
+        //System.out.println("FINAL ACC: " + accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction));
         return coordinatesAndVelocity;
     }
 
@@ -90,16 +93,16 @@ public class RungeKutta2 extends Physics{
 
    public static void main(String[] args) 
    { 
-       double[] coordinatesAndVelocity = {24,24,-4,-4};
-       double stepsize = 0.000001;
-       double kfriction = 0.05;
-       double staticFriction = 0.2;
+       double[] coordinatesAndVelocity = {0,0,1,1};
+       double stepsize = 0.001;
+       double kFriction = 0.05;
+       double staticFriction = 0.1;
        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(1);
        //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
 
-       RungeKutta2 e = new RungeKutta2(terrain, coordinatesAndVelocity, kfriction, staticFriction, stepsize);
+       RungeKutta2 e = new RungeKutta2(terrain, coordinatesAndVelocity, DataField.kFriction, staticFriction, stepsize);
 //        for (int i = 0; i < 100; i++) {
            System.out.println(stepsize +", " + e.coordinatesAndVelocityUntilStop(stepsize)[0] + ", "+ e.coordinatesAndVelocityUntilStop(stepsize)[1]+", ");
            //step = step + 0.001;

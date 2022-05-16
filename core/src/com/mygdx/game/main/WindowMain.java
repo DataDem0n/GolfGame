@@ -41,11 +41,12 @@ public class WindowMain{
     // Push Button
     JButton pushButton = new JButton("PUTT!");
     BotBasic Charley = new BotBasic();
-    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{}, new double[]{}, 3, new double[]{}, new double[]{}, new double[]{}, new double[]{});
+    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{15}, new double[]{15}, 2, new double[]{}, new double[]{}, new double[]{}, new double[]{});
     SlopeField b = new SlopeField(1,DataField.terrain);
 
     AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
     List<List> vel;
+
     //solver
     JLabel selectedSolver = new JLabel("Solver: ");
     WindowMain(){
@@ -56,11 +57,16 @@ public class WindowMain{
             vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
 
             for (int i = 0; i<vel.get(0).size();i++) {
+                System.out.println((Double) vel.get(0).get(i));
+                System.out.println((Double) vel.get(1).get(i));
+
                 DataField.velocityX.add((Double) vel.get(0).get(i));
                 DataField.velocityY.add((Double) vel.get(1).get(i));
             }
 
-            DataField.GUI = false;
+            while(!DataField.velocityX.isEmpty()) {//TODO: addthis to solvers
+                DataField.GUI = false;
+            }
 
             Timer t = new Timer(100, e1 -> {
                 DataField.GUI = true;
