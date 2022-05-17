@@ -29,34 +29,39 @@ public class Plot extends PathCalculator
         pathX = getpath.get(0);
         pathY = getpath.get(1);
         
-        System.out.println(pathX.toString());
+        //System.out.println(pathX.toString());
         
 
        
     }
 
-    public double[] differenceCalc()                                                        //calculates the dx and dy of the shot
+    public double[] differenceCalc(double ballCoorX1, double ballCoorY1)                                                        //calculates the dx and dy of the shot
     {
         //pathCalculator(getBallPosition()[0], getBallPosition()[1]);
         double[] difference = new double[2];
-        double x0 = Math.abs(ballCoorX);
-        double x1 = Math.abs(pathX.get(pathX.size()-1));
-        double y0 = Math.abs(ballCoorY);
-        double y1 = Math.abs(pathY.get(pathY.size()-1));
+        double x0 = ballCoorX1;
+        double x1 = pathConverter(pathX.get(pathX.size()-1));
+        double y0 = ballCoorY1;
+        double y1 = pathConverter(pathY.get(pathY.size()-1));
 
-        difference[0] = x1 - x0;
-        difference[1] = y1-  y0;
+        difference[0] = Math.abs(x1 - x0);
+        difference[1] = Math.abs(y1-  y0);
         return difference;
+
     }
 
-    public double unitCalc()                                                                    //doesnt work if x == 0, add another argument to shotplottable.
+    public double unitCalc(double ballCoorX1, double ballCoorY1)                                                                    //doesnt work if x == 0, add another argument to shotplottable.
     {
-        double differenceX = differenceCalc()[0];
-        double differenceY = differenceCalc()[1];
-        if(differenceX == 0)
+        double[] difference = differenceCalc(ballCoorX1,ballCoorY1);
+        double differenceX = difference[0];
+        //System.out.println(differenceX);
+        double differenceY = difference[1];
+        if(differenceX < 0.1)
         {
             return -666;
         }
+        System.out.println("differenceX: "+differenceX);
+        System.out.println("differenceY: "+differenceY);
         double unit = (differenceY/differenceX);                            //fucks up if X is very small
         //System.out.println(unit);
         return unit;
@@ -67,27 +72,7 @@ public class Plot extends PathCalculator
         double vX = currentX;
         double vY = currentY;
         
-        // if(coordinateX >= 0)
-        // {
-        // coordinateX += 25;
-        // }
-        // else
-        // {
-        // double temp = 25 - (coordinateX*-1.0);
-        // coordinateX = temp;
-        // }
-        // if(coordinateY >= 0)
-        // {
-        // coordinateY += 25;
-        // }
-        // else
-        // {
-        //     double temp = 25 - (coordinateY*-1.0);
-        //     coordinateY = temp;
-        // }
-        
-        // arrayPosition[0] = (int)(coordinateX/adjacency.interval);
-        // arrayPosition[1] = (int)(coordinateY/adjacency.interval);
+
         if(vX >= 0)
         {
             vX += 25;
@@ -111,18 +96,9 @@ public class Plot extends PathCalculator
         // System.out.println("vX: " + (int)vX);
         // System.out.println("vY: " + (int)vY);
         
-        // try {
-        //     if(plain[(int) vX][(int) vY] < 0 || plain[(int) (vX+1)][(int) vY] < 0 || plain[(int) (vX+1)][(int) (vY+1)] < 0 || plain[(int) (vX)][(int) (vY+1)] < 0 || plain[(int) (vX-1)][(int) (vY+1)] < 0 || plain[(int) (vX+1)][(int) (vY-1)] < 0 || plain[(int) (vX-1)][(int) (vY)] < 0 || plain[(int) (vX)][(int) (vY-1)] < 0 ||  plain[(int) (vX-1)][(int) (vY-1)] < 0)
-        //     {
-        //         return true;
-        //     }
-            
-        // } catch (Exception e) 
-        // {
-        //     return true;                                //random try-catch to "ducktape" the out of bounds problem
-        // }
+
        
-        if(plain[(int) vX][(int) vY] < 0)            //if the above code causes problems, revert back to this one. (more accurate, but a bit less reliable)
+        if(plain[(int) vX][(int) vY] < 0)            
         {
             return true;
         }
@@ -142,11 +118,13 @@ public class Plot extends PathCalculator
 
         double xcoor = pathConverter(pathX.get(pathX.size()-1));
         double ycoor = pathConverter(pathY.get(pathY.size()-1));
-        System.out.println("xcoor: "+xcoor);
-        System.out.println("ycoor: "+ycoor);
+        System.out.println("endX: "+xcoor);
+        System.out.println("endY: "+ycoor);
+
         System.out.println();
         
-        double unitVec = unitCalc();
+        double unitVec = unitCalc(ballCoorX1, ballCoorY1);
+        System.out.println("unitcalc: "+unitVec);
         if(unitVec == -666 && currentY <= ycoor)
         {
             System.out.println("col1");
@@ -183,22 +161,25 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-        if(currentX < xcoor && currentY < ycoor)
+        if(currentX < xcoor && currentY <= ycoor)
         {
             System.out.println("col3");
             // System.out.println("pathX: " + pathX.get(pathX.size()-1));
             // System.out.println("pathY: " + pathY.get(pathY.size()-1));
-            while(currentX <= xcoor && currentY <= ycoor)
+            while(currentX <= xcoor || currentY <= ycoor)
             {
                             
                     if(checkWaterOrTree(currentX, currentY))
                     {
                         return false;
                     }
+                    System.out.println("trackX: "+currentX);
+                    System.out.println("trackY: "+currentY);
                     currentX += step;
                     currentY += step*unitVec;
                     // System.out.println("currentX: "+currentX);
                     // System.out.println("currentY: "+currentY);
+                    System.out.println("EXX: "+xcoor);
 
             }
             return true;
@@ -206,7 +187,7 @@ public class Plot extends PathCalculator
         if(currentX > xcoor && currentY > ycoor)
         {
             System.out.println("col4");
-            while(currentX >= xcoor && currentY >= ycoor)
+            while(currentX >= xcoor || currentY >= ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
                 {
@@ -220,7 +201,7 @@ public class Plot extends PathCalculator
         if(currentX > xcoor && currentY < ycoor)
         {
             System.out.println("col5");
-            while(currentX >= xcoor && currentY <= ycoor)
+            while(currentX >= xcoor || currentY <= ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
                 {
@@ -234,7 +215,7 @@ public class Plot extends PathCalculator
         if(currentX < xcoor && currentY > ycoor)
         {
             System.out.println("col6");
-            while(currentX <= xcoor && currentY >= ycoor)
+            while(currentX <= xcoor || currentY >= ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
                 {
@@ -256,6 +237,7 @@ public class Plot extends PathCalculator
 
         while(!shotPlottable(ballCoorX1,ballCoorY1))
         {
+            System.out.println("not plotted");                                                              //________________________________not reached
             pathX = (List) decreasePath(pathX, pathY).get(0);
             pathY = (List) decreasePath(pathX, pathY).get(1);
         }
@@ -307,12 +289,12 @@ public class Plot extends PathCalculator
 
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(1);            //the terrain (so the ai detects water)
-        double[] coorTX = {15};       //x-coordinates of the trees
-        double[] coorTY = {15};         //y-coordinates of the trees
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)-0.1+(x*x+y*y)/1000.0;            //the terrain (so the ai detects water)
+        double[] coorTX = {};       //x-coordinates of the trees
+        double[] coorTY = {};         //y-coordinates of the trees
         double interval = 1;
         double holeCoorx = 20;
-        double holeCoory = 20;
+        double holeCoory = 0;
         double radius = 3;                                  //radius of all trees
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits
@@ -325,11 +307,12 @@ public class Plot extends PathCalculator
 
 
 
-        Plot testing = new Plot(terrain,interval, a, b, 20, 11.55);
+        Plot testing = new Plot(terrain,interval, a, b, -20, 0);
         //System.out.println(testing.shotPlottable());                                                    //works
         // System.out.println();
-        System.out.println("x: "+testing.getCorrectShot(testing.pathX,testing.pathY,20.0,11.55)[0]);
-        System.out.println("y: "+testing.getCorrectShot(testing.pathX,testing.pathY,20.0,11.55)[1]);
+        double[] correctShot = testing.getCorrectShot(testing.pathX,testing.pathY,-20.0,0);
+        System.out.println("x: "+correctShot[0]);
+        System.out.println("y: "+correctShot[1]);
 
 
 

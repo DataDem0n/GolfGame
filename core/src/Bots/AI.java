@@ -40,8 +40,8 @@ public class AI extends Simulations
             System.out.println("ballcoorX: " + ballCoorX);
             System.out.println("ballcoorY: " + ballCoorY);
             Simulations correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction);              //changed correctpos to bestshot
-            double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1);
-            double[] usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1);
+            double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 6);                                                          //max velocity used to get initialvel  = simulationsRan
+            double[] usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20);                                     //counter is always 0, scaler = the change in velocity at each recusive call (in percentages)
             // System.out.println("x: "+ correctVel.coordinatesAndVelocity[0]);
             // System.out.println("y: "+ correctVel.coordinatesAndVelocity[1]);
             
@@ -50,8 +50,10 @@ public class AI extends Simulations
             
             ballCoorX1 = correctVel.coordinatesAndVelocity[0];
             ballcoorY1 = correctVel.coordinatesAndVelocity[1];
-        }
 
+        }
+        System.out.println("ballCoorX1"+ballCoorX1);
+        System.out.println("ballCoorY1"+ballcoorY1);
         return allVelocities;
     }
 

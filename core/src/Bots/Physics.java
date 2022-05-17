@@ -31,6 +31,20 @@ public class Physics{
         acc = -GRAVITY * derivativeYValue(terrain, coorx, coory) - friction * GRAVITY * ((vely)/(Math.sqrt((velx*velx + vely*vely))));
         return acc;
     }
+    public double accelerationX2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
+    {
+        double acc;
+
+        acc = -GRAVITY * derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) - friction * GRAVITY * (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])/(Math.sqrt((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) + derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])))));
+        return acc;
+    }
+
+    public double accelerationY2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
+    {
+        double acc;
+        acc = -GRAVITY * derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) - friction * GRAVITY * (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])/(Math.sqrt((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) + derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])))));
+        return acc;
+    }
 
     //returns result of plugging in function values to a partial derivative with respect to X
     static double derivativeXValue(BiFunction <Double, Double, Double> terrain, double xValue, double yValue) {
