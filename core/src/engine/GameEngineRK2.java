@@ -56,7 +56,7 @@ public class GameEngineRK2 extends RungeKutta2 {
             DataField.x = getXCoord();
             DataField.y = getYCoord();
 
-                if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
+                if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[2]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
                 {
                     System.out.println("YOU WON!");
                     silly += 1;
