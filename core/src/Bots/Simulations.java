@@ -696,17 +696,17 @@ public class Simulations extends Plot
 
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->1.0;
+        BiFunction<Double,Double,Double> terrain = (x,y)->0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));             //-0.1+(x*x+y*y)/1000.0
         ;
-        double[] coorTX = {15};       //x-coordinates of the trees
-        double[] coorTY = {15};         //y-coordinates of the trees
+        double[] coorTX = {};       //x-coordinates of the trees
+        double[] coorTY = {};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = 20;
-        double holeCoory = 20;
-        double ballCoorX = 0;
+        double holeCoorx = 4;
+        double holeCoory = 1;
+        double ballCoorX = -3;
         double ballCoorY = 0;
-        double sFriction = 0.2;
-        double kFriction = 0.1;
+        double sFriction = 0.9;
+        double kFriction = 0.5;
         double radius = 2;                                  //radius of all trees      
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits

@@ -331,9 +331,19 @@ public class AdjacencyField
         {
         coordinateX += 25;
         }
+        else
+        {
+         double temp = 25 - (coordinateX*-1.0);
+         coordinateX = temp;
+        }
         if(coordinateY >= 0)
         {
         coordinateY += 25;
+        }
+        else
+        {
+         double temp = 25 - (coordinateY*-1.0);
+         coordinateY = temp;
         }
         
 
@@ -351,12 +361,12 @@ public class AdjacencyField
   
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)1;            //the terrain (so the ai detects water)
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));            //the terrain (so the ai detects water)
         double[] coorTX = {};       //x-coordinates of the trees
         double[] coorTY = {};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = 20;
-        double holeCoory = 20;
+        double holeCoorx = -25;
+        double holeCoory = -25;
         double radius = 3;                                  //radius of all trees
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits
@@ -366,7 +376,7 @@ public class AdjacencyField
 
         AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);           
         SlopeField b = new SlopeField(interval,terrain);                                              
-        int[][] testing = a.floodFillUpdateSandpits();
+        int[][] testing = a.floodFillUpdateBall(3,2);
         System.out.println(a.queueSize);
     
 

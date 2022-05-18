@@ -3,18 +3,9 @@ package com.mygdx.game.main;
 import Bots.AI;
 import Bots.AdjacencyField;
 import Bots.SlopeField;
-import com.badlogic.gdx.Gdx;
-import solvers.RungeKutta2;
-import solvers.RungeKutta4;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
