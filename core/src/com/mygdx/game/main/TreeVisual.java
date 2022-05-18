@@ -28,7 +28,6 @@ public class TreeVisual {
     }
 
     /**
-     * @param PPM: pixel per meter for the rendering system
      * @param x: the center x-coordinate is set to this
      * @param y: the center y-coordinate is set to this
      * setHolePos() method sets the position of the whole on the terrain
@@ -36,8 +35,8 @@ public class TreeVisual {
     public void setTreePos(float x,float y) {
         this.x = x;
         this.y = y;
-        spriteLog.setPosition(x,y);
-        spriteLeaves.setPosition(x,y);
+        spriteLog.setPosition(x-.25f,y-.25f);
+        spriteLeaves.setPosition(x-.25f,y-.25f);
 
         treeHitBox.set(x,y+1.6f,8,5.8f);
         //spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));

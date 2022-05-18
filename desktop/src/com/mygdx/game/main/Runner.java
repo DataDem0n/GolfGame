@@ -243,7 +243,7 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = (x,y)->(double)-0.1+(x*x+y*y)/1000.0;
+        DataField.terrain = (x,y)->(double)(1/10.0)*(Math.sin(x+y)+1);
 
         if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];

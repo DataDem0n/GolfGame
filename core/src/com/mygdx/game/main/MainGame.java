@@ -45,7 +45,7 @@ public class MainGame extends ApplicationAdapter {
 
 		for (int i = 0;i<tree1.length;i++) {
 			tree1[i] = new TreeVisual();
-			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX(),(float) DataField.gameForest.getForest().get(i).getCoordY());
+			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX()*1.5f,(float) DataField.gameForest.getForest().get(i).getCoordY()*1.7f);
 
 		}
 
@@ -91,7 +91,7 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-//		return (1/10.0)*(Math.sin(x+y)+1);//nice function
+		return (1/10.0)*(Math.sin(x+y)+1);//nice function
 //		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/50);//hill
 //		return 1-(Math.abs(x*x+y*y)/20.0);
 //		return (1/30.0)*(Math.sin(x+y))+1;
@@ -100,7 +100,7 @@ public class MainGame extends ApplicationAdapter {
 //		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
 //		return Math.cos(x+(y*y)); //testing messed up pattern
 //		return  ((x*x)+(y*y))/20.0;
-		return -0.1+(x*x+y*y)/1000.0;
+//		return -0.1+(x*x+y*y)/1000.0;
 //		return 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));//-0.1+(x*x+y*y)/1000.0 lake
 //		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
 //		return (1.0/10.0)*(Math.sin(x+y))+1;
