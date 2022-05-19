@@ -31,6 +31,9 @@ public class WindowMain{
     //origin
     JLabel ballXCoord;
     JLabel ballYCoord;
+
+    //bot buttons
+    JButton ruleBotButton;
     JButton initC;
 
     // Push Button
@@ -67,7 +70,7 @@ public class WindowMain{
                 DataField.velocityY.add((Double) vel.get(1).get(i));
             }
 
-            while(!DataField.velocityX.isEmpty()) {//TODO: addthis to solvers
+            while(!DataField.velocityX.isEmpty()) {
                 DataField.GUI = false;
             }
 
@@ -83,7 +86,7 @@ public class WindowMain{
         pushButton.addActionListener (e -> {
             //counter updater
             c=c+1;
-            counter.setText("Storkes: " + c);
+            counter.setText("Strokes: " + c);
             System.out.println("No. of strokes: " + c);
 
             //receive velocities
@@ -191,49 +194,48 @@ public class WindowMain{
 
         //This adds a label for inputting the x-velocity of the ball
         gc.gridx = 0;
-        gc.gridy = 9;
+        gc.gridy = 1;
         gc.fill=GridBagConstraints.CENTER;
         gc.gridwidth = 1;
         panel.add(inputVelocityX, gc);
 
         //This adds a label for inputting the y-velocity of the ball
         gc.gridx = 1;
-        gc.gridy = 9;
+        gc.gridy = 1;
         gc.fill=GridBagConstraints.CENTER;
         gc.gridwidth = 1;
         panel.add(inputVelocityY, gc);
 
         //This adds a text box for inputting the x-velocity of the ball
         gc.gridx = 0;
-        gc.gridy = 10;
+        gc.gridy = 2;
         gc.fill=GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
         panel.add(velocityX, gc);
 
         //This adds a text box for inputting the y-velocity of the ball
         gc.gridx = 1;
-        gc.gridy = 10;
+        gc.gridy = 2;
         gc.fill=GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
         panel.add(velocityY, gc);
 
         //This adds the "PUTT!" button to the menu
         gc.gridx = 0;
-        gc.gridy = 14;
+        gc.gridy = 3;
         gc.gridwidth = 1;
         panel.add(pushButton, gc);
 
         //This adds the counter which represents the number of strokes made until now
         gc.gridx = 1;
-        gc.gridy = 14;
+        gc.gridy = 3;
         gc.fill=GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
         panel.add(counter, gc);
 
-
         //This adds the label for Elevation Depiction
         gc.gridx = 0;
-        gc.gridy = 16;
+        gc.gridy = 5;
         gc.fill=GridBagConstraints.CENTER;
         gc.anchor = GridBagConstraints.CENTER;
         gc.gridwidth = 2;
@@ -241,28 +243,37 @@ public class WindowMain{
 
         //This adds the label for the lower bound
         gc.gridx = 0;
-        gc.gridy = 17;
+        gc.gridy = 7;
         gc.gridwidth = 1;
         panel.add(lowElevationLabel, gc);
 
         //This adds the label for the upper bound
         gc.gridx = 1;
-        gc.gridy = 17;
+        gc.gridy = 7;
         gc.gridwidth = 1;
         panel.add(highElevationLabel, gc);
 
         //This adds the legend of the gradient in as a .jpg
         gc.gridx = 0;
-        gc.gridy = 18;
+        gc.gridy = 8;
         gc.gridwidth = 2;
         panel.add(imgL, gc);
 
-        panel.add(initC);
+        //this adds the bot buttons
+        gc.gridx = 0;
+        gc.gridy = 4;
+        gc.gridwidth = 1;
+        panel.add(initC, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 4;
+        gc.gridwidth = 1;
+        panel.add(ruleBotButton, gc);
 
         frame.add(sideMenu);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.setSize(320,500);
+        frame.setSize(340,600);
         frame.setVisible(true);
     }
 

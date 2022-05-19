@@ -274,7 +274,7 @@ public class settingsMenu{
         frameMain.add(panelMain);
         frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.setResizable(true);
-        frameMain.setSize(480,160);
+        frameMain.setSize(540,180);
         frameMain.setVisible(true);
     }
 
