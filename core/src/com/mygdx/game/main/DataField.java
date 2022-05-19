@@ -16,7 +16,7 @@ public class DataField
     public static double kFriction;
     public static double[] targetRXY;
     public static double[] coordinatesandVelocity;
-    public static double[] sandPit = {5,5,10,10};
+    public static double[] sandPit;
     public static double x;
     public static double y;
     public static Forest gameForest;

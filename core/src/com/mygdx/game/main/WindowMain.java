@@ -3,8 +3,12 @@ package com.mygdx.game.main;
 import Bots.AI;
 import Bots.AdjacencyField;
 import Bots.SlopeField;
+import Music.MusicControls;
+import obstacles.Forest;
+import obstacles.Tree;
 
 import javax.swing.*;
+import javax.swing.tree.TreeCellEditor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +35,10 @@ public class WindowMain{
 
     // Push Button
     JButton pushButton = new JButton("PUTT!");
+
+    //bot stuff
     BotBasic Charley = new BotBasic();
-    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{15}, new double[]{15}, 2, new double[]{}, new double[]{}, new double[]{}, new double[]{});
+    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 50, DataField.terrain, new double[]{15}, new double[]{15}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
     SlopeField b = new SlopeField(1,DataField.terrain);
 
     AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
@@ -41,7 +47,13 @@ public class WindowMain{
     //solver
     JLabel selectedSolver = new JLabel("Solver: ");
     WindowMain(){
-        initC = new JButton("Start Bot");
+        initC = new JButton("Start Path Finding Bot");
+        ruleBotButton = new JButton("Start rule Bot");
+
+        ruleBotButton.addActionListener(e -> {
+            Charley.start();
+        });
+
         initC.addActionListener(e -> {
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
@@ -65,6 +77,8 @@ public class WindowMain{
 
 
         });
+
+
 
         pushButton.addActionListener (e -> {
             //counter updater
@@ -138,9 +152,19 @@ public class WindowMain{
                 System.exit(0);
             }
         });
+
+        //create a music object
+        MusicControls control = new MusicControls();
+        control.setVisible(false);
         //extras tab buttons
-//        JMenuItem music = new JMenuItem("Music????");
-//        extrasTab.add(music);
+        JMenuItem music = new JMenuItem("Music");
+        extrasTab.add(music);
+            music.addActionListener(e -> {
+                if(e.getSource()==music){
+                    System.out.println("music button pressed");
+                    control.setVisible(true);
+                }
+            });
 
         frame.setJMenuBar(menuBar);
         menuBar.setVisible(true);

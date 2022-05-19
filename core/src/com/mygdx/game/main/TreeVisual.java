@@ -39,7 +39,6 @@ public class TreeVisual {
         spriteLeaves.setPosition(x-.25f,y-.25f);
 
         treeHitBox.set(x,y+1.6f,8,5.8f);
-        //spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));
     }
 
     public void setOpac(boolean s){

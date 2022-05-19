@@ -40,13 +40,11 @@ public class MainGame extends ApplicationAdapter {
 		myHole = new Hole();
 		batch = new SpriteBatch();
 		gBall= new Ball();
-		//TODO implement trees for each tree: draw tree.
 		tree1 = new TreeVisual[DataField.gameForest.getForest().size()];
 
 		for (int i = 0;i<tree1.length;i++) {
 			tree1[i] = new TreeVisual();
-			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX()*1.5f,(float) DataField.gameForest.getForest().get(i).getCoordY()*1.7f);
-
+			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX(),(float) DataField.gameForest.getForest().get(i).getCoordY());
 		}
 
 		s = new ShapeRenderer();
@@ -91,7 +89,7 @@ public class MainGame extends ApplicationAdapter {
 	 */
 	public double calcHeight(double x,double y){
 //		return 0;
-		return (1/10.0)*(Math.sin(x+y)+1);//nice function
+		return DataField.terrain.apply(x,y);//nice function(1/10.0)*(Math.sin(x+y)+1)
 //		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/50);//hill
 //		return 1-(Math.abs(x*x+y*y)/20.0);
 //		return (1/30.0)*(Math.sin(x+y))+1;
@@ -147,10 +145,6 @@ public class MainGame extends ApplicationAdapter {
 
 //		s.rect(tree.treeHitBox.x, tree.treeHitBox.y,8,5.8f ); hitboxes
 //		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
-		s.setColor(Color.GRAY);
-		for (int i = 0;i<tree1.length;i++) {
-			s.rect(tree1[i].x,tree1[i].y,2,2);
-		}
 
 		s.end();
 

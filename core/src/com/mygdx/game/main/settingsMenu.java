@@ -1,6 +1,7 @@
 package com.mygdx.game.main;
 
 import obstacles.Forest;
+import obstacles.Tree;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,7 @@ public class settingsMenu{
     JLabel sandpitCoordText;
 
     //solvers drop down
-    String[] solvers = {"Choose solver", "Euler's Method", "Runge-Kutta 2", "Runge-Kutta 4", "Adams-Moulton"};
+    String[] solvers = {"Choose solver", "Euler's Method", "Runge-Kutta 2", "Runge-Kutta 4"};
     JComboBox<String> chooseSolvers = new JComboBox<>(solvers);
 
     //frictions
@@ -42,6 +43,19 @@ public class settingsMenu{
     //function
     JLabel funcField;
     JTextField function;
+
+    //Hole
+    JLabel holeXLabel;
+    JTextField holeX;
+    JLabel holeYLabel;
+    JTextField holeY;
+    JLabel holeRLabel;
+    JTextField holeR;
+
+    //preset buttons
+    JButton test1;
+    JButton test2;
+    JButton test3;
 
     //set button
     JButton setButton = new JButton("Set!");
@@ -58,7 +72,6 @@ public class settingsMenu{
         sandpitCoordsY1 = new JTextField("y1");
         sandpitCoordsX2 = new JTextField("x2");
         sandpitCoordsY2 = new JTextField("y2");
-
 
         sandpitCoordText = new JLabel("Enter Coords:");
 
@@ -81,7 +94,71 @@ public class settingsMenu{
         funcField = new JLabel("Enter Function:");
         function = new JTextField();
 
-        setButton.addActionListener(e->{
+        holeXLabel = new JLabel("Hole X:");
+        holeX = new JTextField("X");
+        holeX.setColumns(5);
+
+        holeYLabel = new JLabel("Hole Y:");
+        holeY = new JTextField("Y");
+        holeY.setColumns(5);
+
+        holeRLabel = new JLabel("Hole radius:");
+        holeR = new JTextField("Radius");
+        holeR.setColumns(5);
+
+        test1 = new JButton("Preset 1 (Tree)");
+        test2 = new JButton("Preset 2 (Lake)");
+        test3 = new JButton("Preset 3 (sandpit)");
+
+        test1.addActionListener(e ->{
+            DataField.x = -3;
+            DataField.y = 0;
+            DataField.targetRXY = new double[]{0.15,4,1};
+            DataField.gameForest = new Forest(0);
+            DataField.gameForest.getForest().add(new Tree(15,15));
+            DataField.kFriction = 0.08;
+            DataField.sFriction = 0.2;
+            DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
+            chooseSolvers.setSelectedIndex(2);
+            settingsMenu.finished = false;
+            DataField.sandPit = new double[]{40,40,40,40};
+
+            frameMain.setVisible(false);
+        });
+
+
+        test2.addActionListener(e ->{
+            DataField.x = -3;
+            DataField.y = 0;
+            DataField.targetRXY = new double[]{0.5,4,1};
+            DataField.gameForest = new Forest(0);
+            DataField.kFriction = 0.08;
+            DataField.sFriction = 0.3;//TODO: fix this with saman
+            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
+            chooseSolvers.setSelectedIndex(2);
+            DataField.sandPit = new double[]{40,40,40,40};
+            settingsMenu.finished = false;
+
+            frameMain.setVisible(false);//{5,5,10,10}
+        });
+
+        test3.addActionListener(e ->{
+            DataField.x = 0;
+            DataField.y = 0;
+            DataField.targetRXY = new double[]{0.5,18,18};
+            DataField.gameForest = new Forest(0);
+            DataField.kFriction = 0.1;
+            DataField.sFriction = 0.2;
+            DataField.terrain = (x,y)->1.0;
+            DataField.sandPit = new double[]{5,5,10,10};
+            chooseSolvers.setSelectedIndex(2);
+            settingsMenu.finished = false;
+            frameMain.setVisible(false);
+        });
+
+
+
+        setButton.addActionListener(y->{
 
             if(chooseSolvers.getSelectedIndex()==0){
                 JOptionPane.showMessageDialog(null, "Please select a solver.", "Invalid solver choice", JOptionPane.ERROR_MESSAGE);
@@ -89,7 +166,11 @@ public class settingsMenu{
             else if(Double.parseDouble(sfric.getText())<=0 || Double.parseDouble(kfric.getText()) <= 0){
                 JOptionPane.showMessageDialog(null, "Please select proper friction values.", "Invalid friction values", JOptionPane.ERROR_MESSAGE);
             }
+            else if(holeY.getText().equals("Y") ||holeX.getText().equals("X")||holeR.getText().equals("Radius")&&Double.parseDouble(holeX.getText())<-25.0 || Double.parseDouble(holeX.getText())>25.0 ||Double.parseDouble(holeY.getText())<-25.0 || Double.parseDouble(holeY.getText())>25.0 ){
+                JOptionPane.showMessageDialog(null, "Please select correct Hole coordinates", "Invalid Hole Coords", JOptionPane.ERROR_MESSAGE);
+            }
             else {
+                DataField.targetRXY= new double[]{Double.parseDouble(holeR.getText()),Double.parseDouble(holeX.getText()),Double.parseDouble(holeY.getText())};
 
                 double[] coordSP = new double[]{40.0, 40.0, 40.0, 40.0};
 
@@ -100,7 +181,7 @@ public class settingsMenu{
                     coordSP[2] = Double.parseDouble(sandpitCoordsX2.getText());
                     coordSP[3] = Double.parseDouble(sandpitCoordsY2.getText());
 
-                    System.out.println(Arrays.toString(coordSP));
+
                     DataField.sandPit = coordSP.clone();
                 }
 
@@ -114,7 +195,6 @@ public class settingsMenu{
 
                 //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
                 DataField.sandPit = coordSP.clone();
-                System.out.println(Arrays.toString(DataField.sandPit));
                 settingsMenu.finished = false;
                 frameMain.setVisible(false);
             }
@@ -166,12 +246,29 @@ public class settingsMenu{
         panelMain.add(kfricLabel);
         panelMain.add(kfric);
 
-        panelMain.add(funcField);
-        panelMain.add(function);
-        function.setColumns(16);
+//        panelMain.add(funcField);
+//        panelMain.add(function);
+//        function.setColumns(16);
 
         panelMain.add(chooseSolvers);
 
+        //hole coords
+        panelMain.add(holeXLabel);
+        panelMain.add(holeX);
+
+        panelMain.add(holeYLabel);
+        panelMain.add(holeY);
+
+        panelMain.add(holeRLabel);
+        panelMain.add(holeR);
+
+        //preset buttons contain predetermined values
+        panelMain.add(test1);
+        panelMain.add(test2);
+        panelMain.add(test3);
+
+
+        //adds the set button. Confirms all the user inputted values
         panelMain.add(setButton);
 
         frameMain.add(panelMain);
@@ -180,4 +277,5 @@ public class settingsMenu{
         frameMain.setSize(480,160);
         frameMain.setVisible(true);
     }
+
 }

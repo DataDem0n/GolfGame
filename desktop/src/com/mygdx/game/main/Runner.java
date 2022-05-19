@@ -243,7 +243,7 @@ public class Runner extends Thread
         DataField.GUI = true;
         DataField.usingGui = true;
 
-        DataField.terrain = (x,y)->(double)(1/10.0)*(Math.sin(x+y)+1);
+        DataField.terrain = (x,y)->(double)1;
 
         if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];
@@ -254,8 +254,6 @@ public class Runner extends Thread
             DataField.GUI = false;
             DataField.usingGui = false;//TODO 2d array for trees
         }
-
-        System.out.println(Arrays.toString(DataField.targetRXY));
 
         settingsMenu pregame = new settingsMenu();
 
