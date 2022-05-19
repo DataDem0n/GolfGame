@@ -113,7 +113,7 @@ public class settingsMenu{
         test1.addActionListener(e ->{
             DataField.x = -3;
             DataField.y = 0;
-            DataField.targetRXY = new double[]{0.15,4,1};
+            DataField.targetRXY = new double[]{0.15,20,20};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(15,15));
             DataField.kFriction = 0.08;
