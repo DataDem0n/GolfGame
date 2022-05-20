@@ -119,16 +119,10 @@ public class PathCalculator {
             }
             pathX.add(minX);
             pathY.add(minY);
-            // System.out.println("x: "+minX);
-            // System.out.println("y: "+minY);
-             System.out.println(pathX.toString());
-             System.out.println(pathY.toString());
+
             xPos = minX;
             yPos = minY;
         }
-
-
-        //System.out.println("PATH FOUND"); 
         getPath.add(pathX);
         getPath.add(pathY);
         return getPath;

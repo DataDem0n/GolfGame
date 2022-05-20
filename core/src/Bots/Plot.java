@@ -11,8 +11,6 @@ public class Plot extends PathCalculator
     double interval;
     double step;
     AdjacencyField adjacency;
-    SlopeField slope;
-    double ballCoorX, ballCoorY;
     int[][] plain;
 
 
@@ -29,15 +27,12 @@ public class Plot extends PathCalculator
         pathX = getpath.get(0);
         pathY = getpath.get(1);
         
-        //System.out.println(pathX.toString());
-        
 
        
     }
 
     public double[] differenceCalc(double ballCoorX1, double ballCoorY1)                                                        //calculates the dx and dy of the shot
     {
-        //pathCalculator(getBallPosition()[0], getBallPosition()[1]);
         double[] difference = new double[2];
         double x0 = ballCoorX1;
         double x1 = pathConverter(pathX.get(pathX.size()-1));
@@ -54,16 +49,14 @@ public class Plot extends PathCalculator
     {
         double[] difference = differenceCalc(ballCoorX1,ballCoorY1);
         double differenceX = difference[0];
-        //System.out.println(differenceX);
         double differenceY = difference[1];
         if(differenceX <= 0.1)
         {
             return -666;
         }
-        System.out.println("differenceX: "+differenceX);
-        System.out.println("differenceY: "+differenceY);
+
         double unit = (differenceY/differenceX);                            //fucks up if X is very small
-        //System.out.println(unit);
+
         return unit;
     }
 
@@ -93,8 +86,7 @@ public class Plot extends PathCalculator
         }
         vX /= interval;
         vY /= interval;
-        // System.out.println("vX: " + (int)vX);
-        // System.out.println("vY: " + (int)vY);
+
         
 
        
@@ -113,20 +105,16 @@ public class Plot extends PathCalculator
     {
         double currentX = ballCoorX1;
         double currentY = ballCoorY1;
-        System.out.println();
-        System.out.println();
-        System.out.println("currentX: "+currentX);
-        System.out.println("currentY: "+currentY);
+
 
         double xcoor = pathConverter(pathX.get(pathX.size()-1));
         double ycoor = pathConverter(pathY.get(pathY.size()-1));
-        System.out.println("endX: "+xcoor);
-        System.out.println("endY: "+ycoor);
+
 
     
         
         double unitVec = unitCalc(ballCoorX1, ballCoorY1);
-        System.out.println("unitcalc: "+unitVec);
+
         
         
         
@@ -135,7 +123,7 @@ public class Plot extends PathCalculator
         if(unitVec == -666 && currentY < ycoor)                                        //valid
         {
 
-            System.out.println("col1");
+
             while(currentY < ycoor)
             {
 
@@ -143,12 +131,10 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
+
                     currentX += 0;
                     currentY += step;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
+
 
             }
             return true;
@@ -163,7 +149,7 @@ public class Plot extends PathCalculator
 
         if(unitVec == -666 && currentY > ycoor)                                         //valid
         {
-            System.out.println("col2");
+
             while(currentY > ycoor)
             {
                             
@@ -171,12 +157,10 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
+
                     currentX += 0;
                     currentY -= step;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
+
 
             }
             return true;
@@ -191,9 +175,7 @@ public class Plot extends PathCalculator
         //coor = endcoor
         if(currentX < xcoor && currentY <= ycoor)
         {
-            System.out.println("col3");
-            // System.out.println("pathX: " + pathX.get(pathX.size()-1));
-            // System.out.println("pathY: " + pathY.get(pathY.size()-1));
+
             while(currentX < xcoor || currentY < ycoor)
             {
                             
@@ -201,13 +183,10 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
+
                     currentX += step;
                     currentY += step*unitVec;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
-                    System.out.println("EXX: "+xcoor);
+
 
             }
             return true;
@@ -215,15 +194,14 @@ public class Plot extends PathCalculator
 
         if(currentX < xcoor && currentY > ycoor)
         {
-            System.out.println("col4");
+
             while(currentX < xcoor || currentY > ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
                 {
                     return false;
                 }
-                System.out.println("trackX: "+currentX);
-                System.out.println("trackY: "+currentY);
+
                 currentX += step;
                 currentY -= step*unitVec;
             }
@@ -242,7 +220,6 @@ public class Plot extends PathCalculator
         
         if(currentX > xcoor && currentY > ycoor)
         {
-            System.out.println("col5");
             while(currentX > xcoor || currentY > ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
@@ -267,7 +244,7 @@ public class Plot extends PathCalculator
         
         if(currentX > xcoor && currentY <= ycoor)
         {
-            System.out.println("col6");
+
             while(currentX > xcoor || currentY < ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
@@ -299,7 +276,7 @@ public class Plot extends PathCalculator
 
         while(!shotPlottable(ballCoorX1,ballCoorY1))
         {
-            System.out.println("not plotted");                                                              //________________________________not reached
+
             pathX = (List) decreasePath(pathX, pathY).get(0);
             pathY = (List) decreasePath(pathX, pathY).get(1);
         }
@@ -307,8 +284,7 @@ public class Plot extends PathCalculator
             correctPos[0] = pathConverter((int) pathX.get(pathX.size()-1));
             correctPos[1] = pathConverter((int) pathY.get(pathY.size()-1));
           
-        // System.out.println("correctX: "+ correctPos[0]);
-        // System.out.println("correctY: "+ correctPos[1]);
+
         return correctPos;
         
     }
