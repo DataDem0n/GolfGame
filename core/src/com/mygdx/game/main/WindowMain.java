@@ -97,7 +97,7 @@ public class WindowMain{
             });
         });
 
-        frame = new JFrame("Golf controls");
+        frame = new JFrame("Control Panel");
         Image frameIcon = new ImageIcon("Icon.png").getImage();
         frame.setIconImage(frameIcon);
         panel = new JPanel();

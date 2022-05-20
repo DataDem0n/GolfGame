@@ -42,20 +42,19 @@ public class BotBasic {
     }
 
     private WeightedVector calcV(){
-        double xt = Distance(myLocation[0],holeLocation[0],myLocation[1],myLocation[1]);
-        double yt = Distance(holeLocation[0],holeLocation[0],holeLocation[1],myLocation[1]);
-
-        double scale = Math.sqrt(Math.pow(xt,2)+Math.pow(yt,2));
+        double xt = Distance(myLocation[0],holeLocation[0]);
+        double yt = Distance(holeLocation[1],myLocation[1]);
 
         if(myLocation[0]>holeLocation[0])
             xt = -xt;
         if(myLocation[1]>holeLocation[1])
             yt = -yt;
+
         return new WeightedVector(xt,yt);
     }
 
-    private double Distance(double x1, double x2, double y1, double y2){
-        return Math.sqrt(Math.pow((x2-x1) ,2)+Math.pow((y2-y1),2));
+    private double Distance(double x1, double x2){
+        return Math.sqrt(Math.pow((x2-x1) ,2));
     }
 
     class WeightedVector{
