@@ -141,17 +141,9 @@ public class RungeKutta4 extends Thread implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-//        if(kFriction > 0.1){
-//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-//            DataField.kFriction = 0.1;
-//        }
-//        else if(kFriction < 0.05){
-//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-//            DataField.kFriction = 0.05;
-//        }
-//        else{
+
             DataField.kFriction = kFriction;
-//        }
+
     };
 
     /**

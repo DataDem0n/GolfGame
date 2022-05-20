@@ -150,6 +150,7 @@ public class MainGame extends ApplicationAdapter {
 	/**
 	 * The pointGenerator method creates all the points on which the tiles are drawn.
 	 */
+
 	public void pointGenerator(){
 
 		coordsX = new ArrayList<Float>();

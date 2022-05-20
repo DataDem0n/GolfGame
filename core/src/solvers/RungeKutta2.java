@@ -100,8 +100,9 @@ public class RungeKutta2 extends Thread implements Solver{
             sandPits.change(coordinatesAndVelocity);
             DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
-        //System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-
+        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        System.out.println("accx: " + coordinatesAndVelocity[2]);
+        System.out.println("accy: " + coordinatesAndVelocity[3]);
         return coordinatesAndVelocity;
     }
 
