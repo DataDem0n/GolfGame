@@ -14,7 +14,6 @@ public class Forest implements Obstacles{
             forest.add(new Tree(x,y));
 
         }
-//        forest.add(new Tree(5,5));
 
     }
 

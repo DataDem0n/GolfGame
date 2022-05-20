@@ -7,7 +7,6 @@ import physics.HasBallStopped;
 import physics.MaxSpeed;
 
 import java.util.function.BiFunction;
-//new
 
 public class RungeKutta2 extends Thread implements Solver{
 
@@ -15,15 +14,13 @@ public class RungeKutta2 extends Thread implements Solver{
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();
 
-    private double counter = 0;
-    private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
     protected double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
-    private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+    private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
     private Forest f = DataField.gameForest;
     private Water water = new Water();
 
@@ -67,7 +64,9 @@ public class RungeKutta2 extends Thread implements Solver{
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
 
-        //coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
+        if(!DataField.aiRunning)
+            coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
+
 
         while (!hasBallStopped.hasBallStopped(coordinatesAndVelocity,  DataField.sFriction,terrain, step)) {
             if (coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0) {
@@ -83,40 +82,19 @@ public class RungeKutta2 extends Thread implements Solver{
                 tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
                 tempvely3 = acceleration.accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
-
-//                System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
+                
                 coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
-//                System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
 
                 coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
             }
-
 
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            counter += 1;
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
 
-//            if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[1]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0)){
-//                System.out.println("You Won! yay");//infinite loop;
-//                DataField.GUI=true;
-//                return coordinatesAndVelocity;
-//            }
-
-
-
-            //checking if the ball has fallen into water
-//            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
-//                System.out.println("YOU'RE IN THE WATER!!");
-//                coordinatesAndVelocity[0] = tempCoordinates[0];
-//                coordinatesAndVelocity[1] = tempCoordinates[1];
-////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//
-//                return coordinatesAndVelocity;
-//            }
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
@@ -138,17 +116,7 @@ public class RungeKutta2 extends Thread implements Solver{
      */
     @Override
     public void setkFriction(double kFriction){
-//        if(kFriction > 0.1){
-//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-//            DataField.kFriction = 0.1;
-//        }
-//        else if(kFriction < 0.05){
-//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-//            DataField.kFriction = 0.05;
-//        }
-//        else{
             DataField.kFriction = kFriction;
-        //}
     };
 
     /**
@@ -157,17 +125,7 @@ public class RungeKutta2 extends Thread implements Solver{
      */
     @Override
     public void setsFriction(double sFriction){
-//        if(sFriction > 0.2){
-//            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-//            DataField.sFriction = 0.2;
-//        }
-//        else if(sFriction < 0.1){
-//            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-//            DataField.sFriction = 0.1;
-//        }
-//        else{
             DataField.sFriction = sFriction;
-//        }
     }
 
     /**
@@ -224,64 +182,4 @@ public class RungeKutta2 extends Thread implements Solver{
      */
     @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
-
-//    /**
-//     * A getter for the X-velocity of the ball
-//     * @return the X-velocity of the ball
-//     */
-//    public double getXVel() {
-//        return this.coordinatesAndVelocity[2];
-//    }
-//
-//    /**
-//     * A getter for the Y-velocity of the ball
-//     * @return the Y-velocity of the ball
-//     */
-//    public double getYVel() {
-//        return this.coordinatesAndVelocity[3];
-//    }
-//
-//    /**
-//     * A getter for target's radius
-//     * @return the target's radius
-//     */
-//    public double getTRadius() {
-//        return this.targetRXY[0];
-//    }
-//
-//    /**
-//     * A getter for target's x-coordinate
-//     * @return the target's x-coordinate
-//     */
-//    public double getXTarget() {
-//        return this.targetRXY[1];
-//    }
-//
-//    /**
-//     * A getter for target's y-coordinate
-//     * @return the target's y-coordinate
-//     */
-//    public double getYTarget() {
-//        return targetRXY[2];
-//    }
-
-//    public static void main(String[] args) { testing
-//        double[] coordinatesAndVelocity = {0,0,2,0};
-//        double[] target = {1,4,4};
-//        double kfriction = 0.05;
-//        double staticFriction = 0.2;
-//        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.1*x+1);
-//        //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
-//       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-//       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-//        double step = 0.0000000001;
-//        EulerSolver e = new EulerSolver(terrain, coordinatesAndVelocity, kfriction, staticFriction, target);
-////        for (int i = 0; i < 100; i++) {
-//            System.out.println(step +", " + e.coordinatesAndVelocityUntilStop(step)[0] + ", "+ e.coordinatesAndVelocityUntilStop(step)[1]+", ");
-//            //step = step + 0.001;
-//       //}
-//
-//    }
 }
-
-//test

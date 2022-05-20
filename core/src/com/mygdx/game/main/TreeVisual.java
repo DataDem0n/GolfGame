@@ -19,7 +19,6 @@ public class TreeVisual {
         /**
          * Tree log sprite and textures
          */
-        //TODO: make sprites for logs and leaves
         log = new Texture("Log.png");
         spriteLog = new Sprite(log);
         treeHitBox = new Rectangle();
@@ -49,23 +48,6 @@ public class TreeVisual {
             spriteLeaves.setAlpha(1);
             spriteLog.setAlpha(1);
         }
-    }
-
-
-    /**
-     * This method gets the center x-coordinate of the ball
-     * @return the center x-coordinate of the ball
-     */
-    public float getCenterX(){
-        return spriteLeaves.getX()+spriteLeaves.getWidth();
-    }
-
-    /**
-     * This method gets the center y-coordinate of the ball
-     * @return the center y-coordinate of the ball
-     */
-    public float getCenterY(){
-        return spriteLeaves.getY()+spriteLeaves.getHeight()/2;
     }
 
     /**

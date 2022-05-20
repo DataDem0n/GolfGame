@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class settingsMenu{
     static boolean finished = true;
 
-    //ball stuff ;))
+    //Ball swing text fields and labels
     JTextField originX ;
     JLabel originXText;
     JTextField originY;
@@ -55,12 +55,13 @@ public class settingsMenu{
     //preset buttons
     JButton test1;
     JButton test2;
-    JButton test3;
+
 
     //set button
     JButton setButton = new JButton("Set!");
 
     settingsMenu(){
+        amountOfTree.setSelectedIndex(1);
         JPanel panelMain= new JPanel();
         JFrame frameMain= new JFrame("Pre-game settings");
         Image frameIcon = new ImageIcon("Icon.png").getImage();
@@ -108,15 +109,14 @@ public class settingsMenu{
 
         test1 = new JButton("Preset 1 (Tree)");
         test2 = new JButton("Preset 2 (Lake)");
-        test3 = new JButton("Preset 3 (sandpit)");
 
         test1.addActionListener(e ->{
-            DataField.x = -3;
+            DataField.x = 0;
             DataField.y = 0;
             DataField.targetRXY = new double[]{0.15,20,20};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(15,15));
-            DataField.kFriction = 0.08;
+            DataField.kFriction = 0.1;
             DataField.sFriction = 0.2;
             DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
             chooseSolvers.setSelectedIndex(2);
@@ -132,27 +132,14 @@ public class settingsMenu{
             DataField.y = 0;
             DataField.targetRXY = new double[]{0.5,4,1};
             DataField.gameForest = new Forest(0);
-            DataField.kFriction = 0.08;
+            DataField.gameForest.getForest().add(new Tree(100,100));
+            DataField.kFriction = 0.2;
             DataField.sFriction = 0.3;//TODO: fix this with saman
             DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
             chooseSolvers.setSelectedIndex(2);
             DataField.sandPit = new double[]{40,40,40,40};
             settingsMenu.finished = false;
 
-            frameMain.setVisible(false);//{5,5,10,10}
-        });
-
-        test3.addActionListener(e ->{
-            DataField.x = 0;
-            DataField.y = 0;
-            DataField.targetRXY = new double[]{0.5,18,18};
-            DataField.gameForest = new Forest(0);
-            DataField.kFriction = 0.1;
-            DataField.sFriction = 0.2;
-            DataField.terrain = (x,y)->1.0;
-            DataField.sandPit = new double[]{5,5,10,10};
-            chooseSolvers.setSelectedIndex(2);
-            settingsMenu.finished = false;
             frameMain.setVisible(false);
         });
 
@@ -191,8 +178,8 @@ public class settingsMenu{
                 DataField.x = Double.parseDouble(originX.getText());
                 DataField.y = Double.parseDouble(originY.getText());
 
-                DataField.gameForest = new Forest(amountOfTree.getSelectedIndex());
-
+                DataField.gameForest = new Forest(0);
+                DataField.gameForest.getForest().add(new Tree(100,100));
                 //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
                 DataField.sandPit = coordSP.clone();
                 settingsMenu.finished = false;
@@ -223,9 +210,9 @@ public class settingsMenu{
         panelMain.add(setButton);
         panelMain.setLayout(new FlowLayout());
 
-        //adding tree related components
-        panelMain.add(treeAmount);
-        panelMain.add(amountOfTree);
+        //Adding tree related components - phase 3
+//        panelMain.add(treeAmount);
+//        panelMain.add(amountOfTree);
 
         //adding sandpit related components
         panelMain.add(sandpitCoordText);
@@ -246,10 +233,7 @@ public class settingsMenu{
         panelMain.add(kfricLabel);
         panelMain.add(kfric);
 
-//        panelMain.add(funcField);
-//        panelMain.add(function);
-//        function.setColumns(16);
-
+        //Adding the solver drop down
         panelMain.add(chooseSolvers);
 
         //hole coords
@@ -265,7 +249,6 @@ public class settingsMenu{
         //preset buttons contain predetermined values
         panelMain.add(test1);
         panelMain.add(test2);
-        panelMain.add(test3);
 
 
         //adds the set button. Confirms all the user inputted values

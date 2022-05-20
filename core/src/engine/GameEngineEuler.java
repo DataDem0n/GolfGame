@@ -1,12 +1,10 @@
 package engine;
 import com.mygdx.game.main.DataField;
 import solvers.Euler;
-import java.util.Scanner;
 import java.util.function.BiFunction;
 
 public class GameEngineEuler extends Euler {
 
-    Scanner s = new Scanner(System.in);
     /**
      * A constructor for the GameEngine class that initializes all instance fields, also in the superclass
      * @param terrain the function of two variables describing the terrain surface
@@ -36,7 +34,7 @@ public class GameEngineEuler extends Euler {
 
         setTerrain(DataField.terrain);
         int index = 1;
-
+        int silly =0;
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
@@ -45,10 +43,12 @@ public class GameEngineEuler extends Euler {
             DataField.x = getXCoord();
             DataField.y = getYCoord();
 
-                if((Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 ))))
-                {
-                    System.out.println("YOU WON!");
-                }
+            if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[2]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
+            {
+                System.out.println("YOU WON!");
+                silly += 1;
+                break;
+            }
                 else
                 {
 

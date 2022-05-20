@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 
 public class DataField 
 {
+    public static boolean aiRunning;
     public static boolean GUI;
     public static boolean usingGui;
     public static BiFunction<Double, Double, Double> terrain;

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Ball extends Sprite {
     Sprite sMain;
     Texture tex;
@@ -35,28 +34,9 @@ public class Ball extends Sprite {
     }
 
     /**
-     * This method gets the center x-coordinate of the ball
-     * @return: returns the center x-coordinate of the ball
-     */
-
-    public float getCenterX(){
-        return sMain.getX()+sMain.getWidth()/2;
-    }
-
-    /**
-     * This method gets the center y-coordinate of the ball
-     * @return: returns the center y-coordinate of the ball
-     */
-    public float getCenterY(){
-        return sMain.getY()+sMain.getHeight()/2;
-    }
-
-
-    /**
      * This method draws the ball on the terrain.
      * @param Bat: is the spritebatch used to render the texture of the ball inside the render method of MainGame
      */
-    //
     public void draw(SpriteBatch Bat){
         sMain.setSize((tex.getWidth())/200f,(tex.getHeight())/200f);
         sMain.draw(Bat);

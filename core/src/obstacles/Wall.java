@@ -1,6 +1,5 @@
 package obstacles;
 
-import obstacles.Obstacles;
 
 public class Wall implements Obstacles {
 

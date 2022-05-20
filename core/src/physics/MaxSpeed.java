@@ -1,6 +1,7 @@
 package physics;
 
 public class MaxSpeed {
+
     /**
      * Method that checks whether the MAX_SPEED is exceeded, if so then it prevserves the direction of the resultant vector but shortens it to MAX_LENGTH
      * @param coordinatesAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions

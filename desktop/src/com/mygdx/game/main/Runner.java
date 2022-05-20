@@ -219,24 +219,6 @@ public class Runner extends Thread
         System.out.println("file writing failed");
     }
 
-        //testing
-//        System.out.println("x-coor: " + coordinatesAndVelocity[0]);
-//        System.out.println("y-coor: " + coordinatesAndVelocity[1]);
-//        System.out.println("x-vel: " + coordinatesAndVelocity[2]);
-//        System.out.println("y-velr: " + coordinatesAndVelocity[3]);
-//        System.out.println("sfriction: " + staticFriction);
-//        System.out.println("kfriction: " + staticFriction);
-//    	System.out.println(targetRXY[0]);
-//        System.out.println(targetRXY[1]);
-//        System.out.println(targetRXY[2]);
-//
-//        for(int i = 0; i < velx.size(); i++)
-//        {
-//            System.out.println(velx.get(i));
-//            System.out.println(vely.get(i));
-//
-//        }
-
         DataField.targetRXY = targetRXY;
         DataField.sFriction = staticFriction;
         DataField.kFriction = kineticFriction;
@@ -253,6 +235,7 @@ public class Runner extends Thread
             DataField.velocityY = vely;
             DataField.GUI = false;
             DataField.usingGui = false;//TODO 2d array for trees
+            DataField.aiRunning = false;
         }
 
         settingsMenu pregame = new settingsMenu();

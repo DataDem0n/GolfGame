@@ -29,6 +29,7 @@ public class MainGame extends ApplicationAdapter {
 
 	float holeX= (float) DataField.targetRXY[1];
 	float holeY= (float) DataField.targetRXY[2];
+
 	@Override
 	public void create (){
 		System.out.println(Arrays.toString(DataField.sandPit));
@@ -88,20 +89,7 @@ public class MainGame extends ApplicationAdapter {
 	 * @return
 	 */
 	public double calcHeight(double x,double y){
-//		return 0;
-		return DataField.terrain.apply(x,y);//nice function(1/10.0)*(Math.sin(x+y)+1)
-//		return Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/50);//hill
-//		return 1-(Math.abs(x*x+y*y)/20.0);
-//		return (1/30.0)*(Math.sin(x+y))+1;
-//		return Math.pow(Math.E,(-(((x*x)+(y*y))/40)));
-//		return (-Math.E*.5)*((-(x*x)-(y*y))/35.0);//hole
-//		return 0.05*((x*x)+(ath.pow(Math.E,(x*2+y*2)/40)y*y));
-//		return Math.cos(x+(y*y)); //testing messed up pattern
-//		return  ((x*x)+(y*y))/20.0;
-//		return -0.1+(x*x+y*y)/1000.0;
-//		return 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));//-0.1+(x*x+y*y)/1000.0 lake
-//		return Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
-//		return (1.0/10.0)*(Math.sin(x+y))+1;
+		return DataField.terrain.apply(x,y);
 	}
 
 	/**
@@ -113,9 +101,8 @@ public class MainGame extends ApplicationAdapter {
 		s.setProjectionMatrix(viewport.getCamera().combined);
 		s.begin(ShapeRenderer.ShapeType.Filled);
 
-
-
 		gBall.setPos(((float)DataField.x)*1.8f,((float)DataField.y)*1.8f,PPM);
+
 		//draws lines based on the height at the coord that the line is drawn at
 		for (int i = 0; i < coordsX.size(); i++) {
 			for (int j = 0; j < coordsY.size(); j++) {
@@ -132,23 +119,13 @@ public class MainGame extends ApplicationAdapter {
 				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
 					s.rectLine(new Vector2(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f),new Vector2(coordsX.get(i+1)*2.5f,coordsY.get(j)*2.5f),2f);
 
-
-
-//				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
-//					s.line(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f,coordsX.get(i)*2.5f,coordsY.get(j+1)*2.5f);
-//
-//				if (i + 1 < coordsX.size() && j + 1 < coordsY.size())
-//					s.line(coordsX.get(i)*2.5f,coordsY.get(j)*2.5f,coordsX.get(i+1)*2.5f,coordsY.get(j)*2.5f);
-
 			}
 		}
-
-//		s.rect(tree.treeHitBox.x, tree.treeHitBox.y,8,5.8f ); hitboxes
-//		s.rect(gBall.ballHitBox.x, gBall.ballHitBox.y,1,1 );
 
 		s.end();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
+
 		batch.begin();
 
 		for (int i = 0;i<tree1.length;i++) {
@@ -170,7 +147,6 @@ public class MainGame extends ApplicationAdapter {
 
 	}
 
-
 	/**
 	 * The pointGenerator method creates all the points on which the tiles are drawn.
 	 */
@@ -179,7 +155,7 @@ public class MainGame extends ApplicationAdapter {
 		coordsX = new ArrayList<Float>();
 		coordsY = new ArrayList<Float>();
 
-		for (float i = -(25); i <= (25); i= i+.18f) {//TODO fix zoom offset on non reoccurring formula. based on .25
+		for (float i = -(25); i <= (25); i= i+.18f) {
 			//this for loop dertermines which points are painted on the screen, the use above starts from -(pointAmount)/2f
 			// and then loops through the whole array which isnt ideal. we need to make the array smaller with out losing definition.
 				coordsX.add(i);//generates coords from -pointA/2 to +pointA/2(eg screen size =10 its results in [-5...+5])

@@ -16,7 +16,6 @@ public class Hole {
     public Hole(){
         tex = new Texture("Hole.png");
         spriteHole = new Sprite(tex);
-        //spriteHole.setCenter(spriteHole.getHeight()/2f,spriteHole.getWidth()/2f);
     }
 
     /**
@@ -30,23 +29,6 @@ public class Hole {
         this.y = y;
 
         spriteHole.setPosition(x-(.25f*holeradius), y-(.25f*holeradius));
-    }
-
-
-    /**
-     * This method gets the center x-coordinate of the ball
-     * @return the center x-coordinate of the ball
-     */
-    public float getCenterX(){
-        return spriteHole.getX()+spriteHole.getWidth()/2;
-    }
-
-    /**
-     * This method gets the center y-coordinate of the ball
-     * @return the center y-coordinate of the ball
-     */
-    public float getCenterY(){
-        return spriteHole.getY()+spriteHole.getHeight()/2;
     }
 
     /**

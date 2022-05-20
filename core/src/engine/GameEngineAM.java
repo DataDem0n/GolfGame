@@ -10,7 +10,6 @@ import java.util.zip.Adler32;
 
 public class GameEngineAM extends AdamsMoulton {
 
-    Scanner s = new Scanner(System.in);
     /**
      * A constructor for the GameEngine class that initializes all instance fields, also in the superclass
      * @param terrain the function of two variables describing the terrain surface

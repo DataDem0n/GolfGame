@@ -1,16 +1,13 @@
 package engine;
 
 import com.mygdx.game.main.DataField;
-import solvers.Euler;
 import solvers.RungeKutta2;
-import solvers.RungeKutta4;
 
 import java.util.Scanner;
 import java.util.function.BiFunction;
 
 public class GameEngineRK2 extends RungeKutta2 {
 
-    Scanner s = new Scanner(System.in);
     /**
      * A constructor for the GameEngine class that initializes all instance fields, also in the superclass
      * @param terrain the function of two variables describing the terrain surface
@@ -19,6 +16,7 @@ public class GameEngineRK2 extends RungeKutta2 {
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
+
     public GameEngineRK2(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         super(terrain, coordinatesAndVelocity, kFriction, sFriction, targetRXY);
     }
@@ -26,6 +24,7 @@ public class GameEngineRK2 extends RungeKutta2 {
     /**
      * A method that manages the game
      */
+
     public void game() throws InterruptedException {
 
         while(DataField.GUI){
@@ -36,18 +35,15 @@ public class GameEngineRK2 extends RungeKutta2 {
 
         if(!DataField.velocityX.isEmpty())
             setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
-//        else{
-//            return;
-//        }
 
         setkFriction(DataField.kFriction);
         setsFriction(DataField.sFriction);
-        setTargetRXY(DataField.targetRXY);//this should all be done in constructor?
-
-
+        setTargetRXY(DataField.targetRXY);
         setTerrain(DataField.terrain);
+
         int index = 1;
         int silly = 0;
+
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))      ||    silly != 0){
 

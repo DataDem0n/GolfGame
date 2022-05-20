@@ -9,7 +9,6 @@ import java.util.function.BiFunction;
 
 public class GameEngineRK4 extends RungeKutta4 {
 
-    Scanner s = new Scanner(System.in);
     /**
      * A constructor for the GameEngine class that initializes all instance fields, also in the superclass
      * @param terrain the function of two variables describing the terrain surface
@@ -39,8 +38,9 @@ public class GameEngineRK4 extends RungeKutta4 {
         setTargetRXY(DataField.targetRXY);
 
         setTerrain(DataField.terrain);
-        int index = 1;
 
+        int index = 1;
+        int silly = 0;
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
 
@@ -49,9 +49,11 @@ public class GameEngineRK4 extends RungeKutta4 {
             DataField.x = getXCoord();
             DataField.y = getYCoord();
 
-                if((Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 ))))
+                if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[2]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
                 {
                     System.out.println("YOU WON!");
+                    silly += 1;
+                    break;
                 }
                 else
                 {
@@ -66,10 +68,7 @@ public class GameEngineRK4 extends RungeKutta4 {
                         DataField.GUI = true;
                         game();
                     }
-//                    if(index!=DataField.velocityX.size()){
-//                        setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
-//                        index++;
-//                    }
+
                     else{
                         System.out.println("You did not win, better luck next time.\nPlease restart with a new file input.");
                         break;

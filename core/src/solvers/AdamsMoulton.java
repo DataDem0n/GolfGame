@@ -27,21 +27,21 @@ public class AdamsMoulton extends Thread implements Solver{
     private double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
-//
-//    // Overview of what is stored in the coordinatedAndVelocity array:
-//    // [0] - coordinateX
-//    // [1] - coordinateY
-//    // [2] - velocityX
-//    // [3] - velocityY
-//
-//    /**
-//     * Constructor for the EulerSolver class initializing instance variables
-//     * @param terrain the function of two variables describing the terrain surface
-//     * @param coordinatesAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
-//     * @param kFriction the kinetic friction acting upon a ball
-//     * @param sFriction the static friction acting upon a ball
-//     * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
-//     */
+
+    // Overview of what is stored in the coordinatedAndVelocity array:
+    // [0] - coordinateX
+    // [1] - coordinateY
+    // [2] - velocityX
+    // [3] - velocityY
+
+    /**
+     * Constructor for the EulerSolver class initializing instance variables
+     * @param terrain the function of two variables describing the terrain surface
+     * @param coordinatesAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     * @param kFriction the kinetic friction acting upon a ball
+     * @param sFriction the static friction acting upon a ball
+     * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
+     */
     public AdamsMoulton(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         this.terrain = terrain;
         this.coordinatesAndVelocity = coordinatesAndVelocity;

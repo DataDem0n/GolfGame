@@ -19,11 +19,6 @@ public class BotBasic {
     }
 
     public boolean start(){
-        
-//        if(holeLocation[0]-myLocation[0]<radius&&holeLocation[1]-myLocation[1]<radius){
-//            System.out.println("target");
-//            return false;
-//        }
 
         myLocation[0] = DataField.x;
         myLocation[1] = DataField.y;
@@ -36,8 +31,6 @@ public class BotBasic {
         DataField.velocityX = xc;
         yc.add(temp.y);
         DataField.velocityY = yc;
-
-
 
         DataField.GUI = false;
 
@@ -53,20 +46,6 @@ public class BotBasic {
         double yt = Distance(holeLocation[0],holeLocation[0],holeLocation[1],myLocation[1]);
 
         double scale = Math.sqrt(Math.pow(xt,2)+Math.pow(yt,2));
-
-//        xt = xt/scale;
-//        yt= yt/scale;
-//
-//        if (xt>2&&xt<3||yt>2&&yt<3){
-//            xt = xt*2;
-//            yt = yt*2;
-//        }
-//        else if (xt>3||yt>3){
-//            xt = xt*5;
-//            yt = yt*5;
-//        }
-
-
 
         if(myLocation[0]>holeLocation[0])
             xt = -xt;

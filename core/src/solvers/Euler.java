@@ -15,13 +15,12 @@ public class Euler extends Thread implements Solver {
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();
-    private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
-    private double[] coordinatesAndVelocity;
+    public double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
@@ -59,7 +58,9 @@ public class Euler extends Thread implements Solver {
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
-        coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
+
+        if(!DataField.aiRunning)
+            coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
         while(!hasBallStopped.hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
 
@@ -76,29 +77,9 @@ public class Euler extends Thread implements Solver {
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            counter+= step;
-
-//            if(counter>=1/fps) {
-//                try {
-//                    Thread.sleep(0,2);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                counter = 0.0;
-//            }
-
             DataField.x = (float)coordinatesAndVelocity[0];
             DataField.y = (float)coordinatesAndVelocity[1];
 
-            //checking if the ball has fallen into water
-//            if(terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
-//                System.out.println("YOU'RE IN THE WATER!!");
-//                coordinatesAndVelocity[0] = tempCoordinates[0];
-//                coordinatesAndVelocity[1] = tempCoordinates[1];
-////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//
-//                return coordinatesAndVelocity;
-//            }
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);

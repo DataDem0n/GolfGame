@@ -1,6 +1,5 @@
 package obstacles;
 
-import obstacles.Obstacles;
 
 public class Tree implements Obstacles {
 
@@ -18,10 +17,8 @@ public class Tree implements Obstacles {
         if(((coordsAndVelocity[0]-coordX)*(coordsAndVelocity[0]-coordX))+((coordsAndVelocity[1]-coordY)*(coordsAndVelocity[1]-coordY))<=radius*radius) {
         coordsAndVelocity[0]=tempCoords[0];
         coordsAndVelocity[1]=tempCoords[1];
-        //TODO: we think setting this = 0 causes error when dividing.
         coordsAndVelocity[2]=(double) 0.000000001;
         coordsAndVelocity[3]=(double) 0.000000001;
-
         }
         return coordsAndVelocity;
     }
