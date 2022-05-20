@@ -18,16 +18,13 @@ public class RungeKutta4 extends Thread implements Solver {
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();
-
-    private double counter = 0;
     private int fps = 120;
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
     public double[] tempCoordinates = new double [2];
-    private double[] coordinatesAndVelocity;
+    public double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
-    //private Tree tree = new Tree(5,5);
     private Water water = new Water();
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -66,7 +63,8 @@ public class RungeKutta4 extends Thread implements Solver {
         double tempvelx1,tempvely1,tempvelx2, tempvely2, tempvelx3, tempvely3, tempvelx4, tempvely4, tempvelx5, tempvely5, tempvely6, tempvelx6, tempvelx7, tempvely7;
         double tempcoorx1, tempcoory1, tempcoorx2, tempcoory2, tempcoorx3, tempcoory3;
 
-        coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
+        if(!DataField.aiRunning)
+            coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
         while(!hasBallStopped.hasBallStopped(coordinatesAndVelocity, DataField.sFriction, terrain, step)) {
 
@@ -78,15 +76,11 @@ public class RungeKutta4 extends Thread implements Solver {
             else
             {
                 tempvelx1 = acceleration.accelerationrungeX(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;     //k1
-                //System.out.println("K1 = " + tempvelx1);
-                //___________________________
 
                 tempvelx2 = coordinatesAndVelocity[2] + 0.5 * tempvelx1;
                 tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2 * step * 0.5;
                 tempvelx3 = acceleration.accelerationrungeX(tempcoorx1, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;    //k2
                 //System.out.println("K2 = " + tempvelx3);
-
-                //____________________________
 
                 tempvelx4 = coordinatesAndVelocity[2] + 0.5 * tempvelx3;
                 tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4 * step * 0.5;
@@ -116,53 +110,17 @@ public class RungeKutta4 extends Thread implements Solver {
 
                 //IMPLEMENT 1,3,5,7
 
-                coordinatesAndVelocity[2] += (tempvelx1 + 2 * tempvelx3 + 2 * tempvelx5 + tempvelx7) / 6;        //(0.166666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666667)
-                //System.out.println("dX = " + (tempvelx1+2*tempvelx3+2*tempvelx5+tempvelx7)/6);
-                //System.out.println("Xtot = " + coordinatesAndVelocity[2]);
+                coordinatesAndVelocity[2] += (tempvelx1 + 2 * tempvelx3 + 2 * tempvelx5 + tempvelx7) / 6;
                 coordinatesAndVelocity[3] += (tempvely1 + 2 * tempvely3 + 2 * tempvely5 + tempvely7) / 6;
             }
-
-            // System.out.println("velocityX = " + coordinatesAndVelocity[2]);
-            // System.out.println("velocityY = " + coordinatesAndVelocity[3]);
-            // try {
-            //         Thread.sleep(1000);
-            //     }
-            // catch (Exception e)
-            // {
-            // }
 
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2] * step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3] * step;
 
-
-//            //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
-//            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
-//            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
-
-            counter += step;
-
-//            if(counter>=1/fps) {
-//                try {
-//                    Thread.sleep(0,2);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                counter = 0.0;
-//            }
-
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
 
-            //checking if the ball has fallen into water
-//            if (terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0) {
-//                System.out.println("YOU'RE IN THE WATER!!");
-//                coordinatesAndVelocity[0] = tempCoordinates[0];
-//                coordinatesAndVelocity[1] = tempCoordinates[1];
-////                System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//
-//                return coordinatesAndVelocity;
-//            }
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
