@@ -14,29 +14,29 @@ public class WindowMain{
     JLabel counter;
     int c = 0;//counter integer for strokes
 
-    //window
+    //Window elements
     JFrame frame;
     JPanel panel;
     JPanel sideMenu;
 
-    //velocity
+    //Velocity swing text fields and labels
     JTextField velocityX;
     JTextField velocityY;
     JLabel inputVelocityX;
     JLabel inputVelocityY;
 
-    //origin
+    //Origin swing labels
     JLabel ballXCoord;
     JLabel ballYCoord;
 
-    //bot buttons
+    //Bot buttons
     JButton ruleBotButton;
-    JButton initC;
+    JButton pathBot;
 
-    // Push Button
+    //Push Button
     JButton pushButton = new JButton("PUTT!");
 
-    //bot stuff
+    //initialising bot elements
     BotBasic Charley = new BotBasic();
     AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
     SlopeField b = new SlopeField(1,DataField.terrain);
@@ -44,17 +44,18 @@ public class WindowMain{
     AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
     List<List> vel;
 
-    //solver
-    JLabel selectedSolver = new JLabel("Solver: ");
+    //solver label
+    //JLabel selectedSolver = new JLabel("Solver: ");   will be used in phase 3
     WindowMain(){
-        initC = new JButton("Start Path Finding Bot");
+        pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
 
         ruleBotButton.addActionListener(e -> {
             Charley.start();
         });
 
-        initC.addActionListener(e -> {
+        pathBot.addActionListener(e -> {
+            DataField.aiRunning = true;
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
             vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
@@ -75,10 +76,7 @@ public class WindowMain{
                 DataField.GUI = true;
             });
 
-
         });
-
-
 
         pushButton.addActionListener (e -> {
             //counter updater
@@ -115,8 +113,6 @@ public class WindowMain{
         inputVelocityY = new JLabel("Velocity Y axis");
 
         //origin coordinates visual elements
-
-
         ballXCoord = new JLabel("Ball X coord: "+ DataField.y);
 
         ballXCoord.setText("Ball X coord:" + DataField.x);
@@ -132,18 +128,18 @@ public class WindowMain{
         JLabel highElevationLabel = new JLabel("10");
         JLabel lowElevationLabel = new JLabel("-10");
 
-        //imgL.set
+        //Adding the image to the control window
         ImageIcon gradientImage = new ImageIcon("gradient_chart.jpg");
         JLabel imgL = new JLabel(gradientImage);
         frame.add(imgL);
 
-        //menubar items
+        //Adding menu bar items
         JMenu fileTab = new JMenu("File");
         JMenu extrasTab = new JMenu("Extras");
         menuBar.add(fileTab);
         menuBar.add(extrasTab);
 
-        //file tab buttons
+        //"File" tab buttons
         JMenuItem exit = new JMenuItem("Exit");
         fileTab.add(exit);
 
@@ -156,7 +152,8 @@ public class WindowMain{
         //create a music object
         MusicControls control = new MusicControls();
         control.setVisible(false);
-        //extras tab buttons
+
+        //"Extras" tab buttons
         JMenuItem music = new JMenuItem("Music");
         extrasTab.add(music);
             music.addActionListener(e -> {
@@ -174,7 +171,6 @@ public class WindowMain{
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints(); // init constraints
         gc.insets = new Insets(2, 2, 5, 2);
-
 
         //This adds a label for the input of the initial x-coordinate of the ball.
         gc.gridx = 0;
@@ -256,17 +252,18 @@ public class WindowMain{
         gc.gridwidth = 2;
         panel.add(imgL, gc);
 
-        //this adds the bot buttons
+        //This adds the bot buttons
         gc.gridx = 0;
         gc.gridy = 4;
         gc.gridwidth = 1;
-        panel.add(initC, gc);
+        panel.add(pathBot, gc);
 
         gc.gridx = 1;
         gc.gridy = 4;
         gc.gridwidth = 1;
         panel.add(ruleBotButton, gc);
 
+        //Swing frame settings
         frame.add(sideMenu);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(true);
@@ -274,6 +271,9 @@ public class WindowMain{
         frame.setVisible(true);
     }
 
+    /**
+     *This method retrieves the ball's coordinates and updates them as the ball is moving
+     */
     public void update(){
         ballXCoord.setText("Ball X coord: " + Math.round(DataField.x*100000.0)/100000.0);//this rounds the output
         ballYCoord.setText("Ball Y coord: " + Math.round(DataField.y*100000.0)/100000.0);//to 5 d.p

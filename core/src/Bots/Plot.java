@@ -138,7 +138,7 @@ public class Plot extends PathCalculator
             System.out.println("col1");
             while(currentY < ycoor)
             {
-                            
+
                     if(checkWaterOrTree(currentX, currentY))
                     {
                         return false;
@@ -153,14 +153,14 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         if(unitVec == -666 && currentY > ycoor)                                         //valid
         {
             System.out.println("col2");

@@ -5,9 +5,9 @@ import obstacles.Tree;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
 
 public class settingsMenu{
     static boolean finished = true;
@@ -18,33 +18,33 @@ public class settingsMenu{
     JTextField originY;
     JLabel originYText;
 
-    //tree amount
+    //Tree amount dropdown menu
     String[] option = {"0", "1", "2", "3", "4", "5"};
     JComboBox<String> amountOfTree = new JComboBox<>(option);
     JLabel treeAmount;
 
-    //Sandpit
+    //Sandpit swing text fields and labels
     JTextField sandpitCoordsX1;
     JTextField sandpitCoordsY1;
     JTextField sandpitCoordsX2;
     JTextField sandpitCoordsY2;
     JLabel sandpitCoordText;
 
-    //solvers drop down
+    //Solvers drop down menu
     String[] solvers = {"Choose solver", "Euler's Method", "Runge-Kutta 2", "Runge-Kutta 4"};
     JComboBox<String> chooseSolvers = new JComboBox<>(solvers);
 
-    //frictions
+    //Friction swing text fields and labels
     JLabel sfricLabel;
     JTextField sfric;
     JLabel kfricLabel;
     JTextField kfric;
 
-    //function
+    //Function swing text fields and labels
     JLabel funcField;
     JTextField function;
 
-    //Hole
+    //Hole position and radius swing text fields and labels
     JLabel holeXLabel;
     JTextField holeX;
     JLabel holeYLabel;
@@ -52,12 +52,12 @@ public class settingsMenu{
     JLabel holeRLabel;
     JTextField holeR;
 
-    //preset buttons
+    //Preset buttons
     JButton test1;
     JButton test2;
 
 
-    //set button
+    //Set button
     JButton setButton = new JButton("Set!");
 
     settingsMenu(){
@@ -110,6 +110,7 @@ public class settingsMenu{
         test1 = new JButton("Preset 1 (Tree)");
         test2 = new JButton("Preset 2 (Lake)");
 
+        //initialising preset 1
         test1.addActionListener(e ->{
             DataField.x = 0;
             DataField.y = 0;
@@ -126,7 +127,7 @@ public class settingsMenu{
             frameMain.setVisible(false);
         });
 
-
+        //initialising preset 2
         test2.addActionListener(e ->{
             DataField.x = -3;
             DataField.y = 0;
@@ -143,10 +144,11 @@ public class settingsMenu{
             frameMain.setVisible(false);
         });
 
-
-
+        /**
+        implementing "Set" button functionality - This confirms all the user-inserted values and parses them on to DataField.java
+         */
         setButton.addActionListener(y->{
-
+            //adding error messages for missed elements
             if(chooseSolvers.getSelectedIndex()==0){
                 JOptionPane.showMessageDialog(null, "Please select a solver.", "Invalid solver choice", JOptionPane.ERROR_MESSAGE);
             }
@@ -167,7 +169,6 @@ public class settingsMenu{
                     coordSP[1] = Double.parseDouble(sandpitCoordsY1.getText());
                     coordSP[2] = Double.parseDouble(sandpitCoordsX2.getText());
                     coordSP[3] = Double.parseDouble(sandpitCoordsY2.getText());
-
 
                     DataField.sandPit = coordSP.clone();
                 }
@@ -207,27 +208,26 @@ public class settingsMenu{
          end of referenced code
          */
 
-        panelMain.add(setButton);
         panelMain.setLayout(new FlowLayout());
 
         //Adding tree related components - phase 3
 //        panelMain.add(treeAmount);
 //        panelMain.add(amountOfTree);
 
-        //adding sandpit related components
+        //Adding sandpit related components
         panelMain.add(sandpitCoordText);
         panelMain.add(sandpitCoordsX1);
         panelMain.add(sandpitCoordsY1);
         panelMain.add(sandpitCoordsX2);
         panelMain.add(sandpitCoordsY2);
 
-        //adding ball related components
+        //Adding ball related components
         panelMain.add(originXText);
         panelMain.add(originX);
         panelMain.add(originYText);
         panelMain.add(originY);
 
-        //add friction and function elements
+        //Add friction and function elements
         panelMain.add(sfricLabel);
         panelMain.add(sfric);
         panelMain.add(kfricLabel);
@@ -236,7 +236,7 @@ public class settingsMenu{
         //Adding the solver drop down
         panelMain.add(chooseSolvers);
 
-        //hole coords
+        //Hole coordinate elements
         panelMain.add(holeXLabel);
         panelMain.add(holeX);
 
@@ -246,14 +246,14 @@ public class settingsMenu{
         panelMain.add(holeRLabel);
         panelMain.add(holeR);
 
-        //preset buttons contain predetermined values
+        //Preset buttons contain predetermined values
         panelMain.add(test1);
         panelMain.add(test2);
 
-
-        //adds the set button. Confirms all the user inputted values
+        //Adding the set button. Confirms all the user inputted values
         panelMain.add(setButton);
 
+        //Swing frame options
         frameMain.add(panelMain);
         frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.setResizable(true);

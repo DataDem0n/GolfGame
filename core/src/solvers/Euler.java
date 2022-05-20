@@ -103,17 +103,7 @@ public class Euler extends Thread implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-//        if(kFriction > 0.1){
-//            System.out.println("THE KINETIC FRICTION TOO HIGH, I SET IT TO 0.1");
-//            DataField.kFriction = 0.1;
-//        }
-//        else if(kFriction < 0.05){
-//            System.out.println("THE KINETIC FRICTION TOO LOW, I SET IT TO 0.05");
-//            DataField.kFriction = 0.05;
-//        }
-//        else{
             DataField.kFriction = kFriction;
-//        }
     };
 
     /**
@@ -122,17 +112,7 @@ public class Euler extends Thread implements Solver {
      */
     @Override
     public void setsFriction(double sFriction){
-//        if(sFriction > 0.2){
-//            System.out.println("THE STATIC FRICTION TOO HIGH, I SET IT TO 0.2");
-//            DataField.sFriction = 0.2;
-//        }
-//        else if(sFriction < 0.1){
-//            System.out.println("THE STATIC FRICTION TOO LOW, I SET IT TO 0.1");
-//            DataField.sFriction = 0.1;
-//        }
-//        else{
             DataField.sFriction = sFriction;
-//        }
     }
 
     /**
@@ -189,65 +169,4 @@ public class Euler extends Thread implements Solver {
      */
     @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
-
-//    /**
-//     * A getter for the X-velocity of the ball
-//     * @return the X-velocity of the ball
-//     */
-//
-//    public double getXVel() {
-//        return this.coordinatesAndVelocity[2];
-//    }
-//
-//    /**
-//     * A getter for the Y-velocity of the ball
-//     * @return the Y-velocity of the ball
-//     */
-//    public double getYVel() {
-//        return this.coordinatesAndVelocity[3];
-//    }
-//
-//    /**
-//     * A getter for target's radius
-//     * @return the target's radius
-//     */
-//    public double getTRadius() {
-//        return this.targetRXY[0];
-//    }
-//
-//    /**
-//     * A getter for target's x-coordinate
-//     * @return the target's x-coordinate
-//     */
-//    public double getXTarget() {
-//        return this.targetRXY[1];
-//    }
-//
-//    /**
-//     * A getter for target's y-coordinate
-//     * @return the target's y-coordinate
-//     */
-//    public double getYTarget() {
-//        return targetRXY[2];
-//    }
-
-//    public static void main(String[] args) { testing
-//        double[] coordinatesAndVelocity = {0,0,2,0};
-//        double[] target = {1,4,4};
-//        double kfriction = 0.05;
-//        double staticFriction = 0.2;
-//        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.1*x+1);
-//        //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
-//       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-//       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-//        double step = 0.0000000001;
-//        EulerSolver e = new EulerSolver(terrain, coordinatesAndVelocity, kfriction, staticFriction, target);
-////        for (int i = 0; i < 100; i++) {
-//            System.out.println(step +", " + e.coordinatesAndVelocityUntilStop(step)[0] + ", "+ e.coordinatesAndVelocityUntilStop(step)[1]+", ");
-//            //step = step + 0.001;
-//       //}
-//
-//    }
 }
-
-//test

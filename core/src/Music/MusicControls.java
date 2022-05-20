@@ -11,9 +11,12 @@ public class MusicControls {
     JFrame frame;
 
     JLabel selectGroove;
-    JLabel credit;
-    //String[] grooveTypes = {"chill", "not chill"};
+    //String[] grooveTypes = {"song 1", "song 2"};
     JComboBox<String> groove;
+    //Declaring a credit label to the artist
+    JLabel credit;
+
+    //Swing music controls
     JButton play;
     JButton stop;
     JSlider volumeSlider;
@@ -59,32 +62,44 @@ public class MusicControls {
             }
         });
 
+        //Adding a change listener to the volume slider
+        //The slider only updates once the slider knob is released
         volumeSlider.addChangeListener (e -> {
             if(e.getSource()==volumeSlider){
 
                 play1.volume.setValue((20f * (float) Math.log10((float)volumeSlider.getValue()/100f)));
 
                 volumeInt.setText("vol: "+ volumeSlider.getValue());
-
             }
         });
 
+        //adding all the swing elements
         panel.add(play);
         panel.add(stop);
         panel.add(volumeSlider);
         panel.add(volumeInt);
         panel.add(credit);
 
+        //Swing frame settings
         frame.add(panel);
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         frame.setResizable(true);
         frame.setSize(300,200);
         frame.setVisible(true);
     }
+
+    /**
+     * @param musicVolume receives the current value from the slider
+     * @return returns the new selected value from the slider
+     */
     public float getVolume(float musicVolume){
         return volumeSlider.getValue();
     }
 
+    /**
+     * @param bool is a true/false value to either show or not the music control tab
+     * @return returns the selected boolean value
+     */
     public boolean setVisible(boolean bool){
         frame.setVisible(bool);
         return bool;
