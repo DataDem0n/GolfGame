@@ -21,6 +21,17 @@ public class Simulations extends Plot
     double[] correctShot;
     double holeCoorx, holeCoory;
 
+    /**
+     *
+     * @param terrain terrain
+     * @param interval
+     * @param adjacency
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     * @param sFriction
+     * @param kFriction
+     */
     public Simulations(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction)
     {
         super(terrain, interval, adjacency, slope, ballCoorX, ballCoorY);
@@ -42,7 +53,13 @@ public class Simulations extends Plot
     }
 
 
-    
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param getCorrectShot
+     * @return
+     */
 
     public double getEuclideanDistance(double x1, double y1, double[] getCorrectShot)
     {
@@ -54,7 +71,13 @@ public class Simulations extends Plot
     }
 
 
-
+    /**
+     *
+     * @param ballcoorX1
+     * @param ballcoorY1
+     * @param simulationlength
+     * @return
+     */
 
     
     public double[] getInitialVel(double ballcoorX1, double ballcoorY1, int simulationlength)
@@ -364,7 +387,16 @@ public class Simulations extends Plot
     }
 
 
-
+    /**
+     *
+     * @param moddedXVel
+     * @param moddedYVel
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @param counter
+     * @param scaler
+     * @return
+     */
 
 
     public double[] simulate(double moddedXVel, double moddedYVel, double ballCoorX1, double ballCoorY1, int counter, double scaler)
@@ -446,9 +478,12 @@ public class Simulations extends Plot
     }
 
 
-
-
-
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
 
 
     public double[] increaseBoth(double[] correctVel, double scaler)
@@ -473,7 +508,13 @@ public class Simulations extends Plot
 
         return correctVel;
     }
-    
+
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] decreaseBoth(double[] correctVel, double scaler)
     {
 
@@ -511,10 +552,14 @@ public class Simulations extends Plot
 
         return correctVel;
     }
-    
-    
-    
-    
+
+
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     
     public double[] decreaseX(double[] correctVel, double scaler)
     {
@@ -529,8 +574,13 @@ public class Simulations extends Plot
 
         return correctVel;
     }
-    
-    
+
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     
     public double[] increaseY(double[] correctVel, double scaler)
     {
@@ -546,7 +596,12 @@ public class Simulations extends Plot
         return correctVel;
     }
 
-
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
 
     public double[] decreaseY(double[] correctVel, double scaler)
     {
@@ -561,7 +616,13 @@ public class Simulations extends Plot
         
         return correctVel;
     }
-    
+
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] increaseXDecreaseY(double[] correctVel, double scaler)
     {
 

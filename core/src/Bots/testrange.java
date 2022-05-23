@@ -2,6 +2,10 @@ package Bots;
 
 public class testrange
 {
+    /**
+     *  main to test the range
+     * @param args
+     */
     public static void main(String[] args) 
     {
         int range = 12;

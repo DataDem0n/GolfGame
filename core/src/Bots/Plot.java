@@ -13,7 +13,15 @@ public class Plot extends PathCalculator
     AdjacencyField adjacency;
     int[][] plain;
 
-
+    /**
+     * A constructor made to create the plot
+     * @param terrain this is the terrain function
+     * @param interval
+     * @param adjacency this adds the adjacency field
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     */
     public Plot(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
     {
         super(adjacency, slope, ballCoorX, ballCoorY);
@@ -31,6 +39,12 @@ public class Plot extends PathCalculator
        
     }
 
+    /**
+     * A method to calculate the difference between
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return the difference
+     */
     public double[] differenceCalc(double ballCoorX1, double ballCoorY1)                                                        //calculates the dx and dy of the shot
     {
         double[] difference = new double[2];
@@ -45,6 +59,12 @@ public class Plot extends PathCalculator
 
     }
 
+    /**
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
     public double unitCalc(double ballCoorX1, double ballCoorY1)                                                                    //doesnt work if x == 0, add another argument to shotplottable.
     {
         double[] difference = differenceCalc(ballCoorX1,ballCoorY1);
@@ -60,6 +80,12 @@ public class Plot extends PathCalculator
         return unit;
     }
 
+    /**
+     *
+     * @param currentX
+     * @param currentY
+     * @return
+     */
     public boolean checkWaterOrTree(double currentX, double currentY)
     {
         double vX = currentX;
@@ -99,34 +125,26 @@ public class Plot extends PathCalculator
         
     }
 
-
+    /**
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
 
     public boolean shotPlottable(double ballCoorX1, double ballCoorY1)                                                                                             
     {
         double currentX = ballCoorX1;
         double currentY = ballCoorY1;
-
-
         double xcoor = pathConverter(pathX.get(pathX.size()-1));
         double ycoor = pathConverter(pathY.get(pathY.size()-1));
-
-
-    
-        
         double unitVec = unitCalc(ballCoorX1, ballCoorY1);
 
-        
-        
-        
-        
-        
         if(unitVec == -666 && currentY < ycoor)                                        //valid
         {
 
-
             while(currentY < ycoor)
             {
-
                     if(checkWaterOrTree(currentX, currentY))
                     {
                         return false;
@@ -135,17 +153,9 @@ public class Plot extends PathCalculator
                     currentX += 0;
                     currentY += step;
 
-
             }
             return true;
         }
-
-
-
-
-
-
-
 
         if(unitVec == -666 && currentY > ycoor)                                         //valid
         {
@@ -166,13 +176,7 @@ public class Plot extends PathCalculator
             return true;
         }
         
-        
-        
-        
-        
-        
-        
-        //coor = endcoor
+
         if(currentX < xcoor && currentY <= ycoor)
         {
 
@@ -208,16 +212,7 @@ public class Plot extends PathCalculator
             return true;
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         if(currentX > xcoor && currentY > ycoor)
         {
             while(currentX > xcoor || currentY > ycoor)
@@ -232,15 +227,7 @@ public class Plot extends PathCalculator
             return true;
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         if(currentX > xcoor && currentY <= ycoor)
         {
@@ -256,20 +243,19 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
 
         
        return true;
     }
 
-    
+    /**
+     *
+     * @param pathX
+     * @param pathY
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
     public double[] getCorrectShot(List pathX, List pathY, double ballCoorX1, double ballCoorY1)
     {
         double[] correctPos = new double[2];
@@ -288,6 +274,12 @@ public class Plot extends PathCalculator
         return correctPos;
         
     }
+
+    /**
+     *
+     * @param path
+     * @return
+     */
     public double pathConverter(int path)
     {
         if(path*1.0*interval > 25)
@@ -324,7 +316,10 @@ public class Plot extends PathCalculator
     // }
 
 
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) 
     {
         BiFunction<Double,Double,Double> terrain = (x,y)->(double)0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));            //the terrain (so the ai detects water)

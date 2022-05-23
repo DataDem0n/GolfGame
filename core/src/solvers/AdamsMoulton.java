@@ -10,9 +10,10 @@ import javax.xml.crypto.Data;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.function.BiFunction;
-
+//NOT FINISHED METHOD ODE SOLVER
+// WE DECIDE IT TO KEEP IT IN THE PROJECT SO WE CAN WORK  ON IT DURING PHASE 3
 public class AdamsMoulton extends Thread implements Solver{
-    //TODO MaxSpeed
+
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();

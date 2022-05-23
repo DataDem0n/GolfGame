@@ -4,6 +4,7 @@ import physics.Acceleration;
 import physics.HasBallStopped;
 
 import java.util.function.BiFunction;
+//TEMPORARY ODE SOLVER HANDLING ONLY FOR PHASE 2
 
 public class RungeKutta2 extends Physics{
 

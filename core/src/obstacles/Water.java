@@ -7,6 +7,13 @@ public class Water implements Obstacles {
     public  Water(){
 
     }
+
+    /**
+     *  Method that checks if the ball fell into water
+     * @param coordinatesAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     * @param tempCoords an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     * @return an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     */
     @Override
     public double[] collide(double[] coordinatesAndVelocity, double [] tempCoords) {
 

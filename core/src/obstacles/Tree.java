@@ -11,6 +11,12 @@ public class Tree implements Obstacles {
         this.coordX = coordX;
         this.coordY = coordY;
     }
+
+    /**
+     * @param coordsAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     * @param tempCoords temporary coordinates of the ball stored in the beginning of the shot
+     * @return returns updated array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
+     */
     @Override
     public double[] collide(double[] coordsAndVelocity, double [] tempCoords) {
 
@@ -23,6 +29,10 @@ public class Tree implements Obstacles {
         return coordsAndVelocity;
     }
 
+    /**
+     * getter for the tree's X coordinate
+     * @return X coordinate of the tree's centre
+     */
     public double getCoordX() {
         return coordX;
     }
@@ -31,6 +41,10 @@ public class Tree implements Obstacles {
         return coordY;
     }
 
+    /**
+     * getter for the radius of the tree
+     * @return Readius of the tree that is fixed
+     */
     public double getRadius() {
         return radius;
     }

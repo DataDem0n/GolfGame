@@ -21,7 +21,13 @@ public class PathCalculator {
     List<Integer> pathX;
     List<Integer> pathY;
 
-
+    /**
+     * Constructer for calculating a path
+     * @param adjacency Adjacency field that was generated for current function
+     * @param slope Slope field not implemented yet. a slope field that was generated for current fucntion
+     * @param ballCoorX balls current xpostition
+     * @param ballCoorY balls current ypostition
+     */
     public PathCalculator(AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
     {
         this.adjacency = adjacency;
@@ -32,6 +38,10 @@ public class PathCalculator {
         pathY = new LinkedList<Integer>();
     }
 
+    /**
+     * gets the balls position 
+     * @return ball position in integer array 
+     */
     public int[] getBallPosition()
     {
         int[] arrayPosition = new int[2];
@@ -66,7 +76,12 @@ public class PathCalculator {
         return arrayPosition;
     }
 
-
+    /**
+     * calculates path to target
+     * @param xPos ball x
+     * @param yPos ball y
+     * @return
+     */
 
     public List<List> pathCalculator(int xPos, int yPos)                    //pathcalculator x-path priority
     {
@@ -206,6 +221,12 @@ public class PathCalculator {
     //     return getPath;
     // }
 
+    /**
+     * unused 
+     * @param path1
+     * @param path2
+     * @return
+     */
     public List decreasePath(List path1, List path2)
     {
         ArrayList getPath = new ArrayList<List>();
@@ -217,9 +238,10 @@ public class PathCalculator {
     }
 
 
-
-
-
+    /**
+     * testing purposes
+     * @param args -
+     */
     
     
     public static void main(String[] args) 

@@ -17,6 +17,12 @@ public class AI extends Simulations
         this.adjacency = adjacency;
     }
 
+    /**
+     * A method to check if the ball has reached its target
+     * @param ballCoorX1 the ball's current X position
+     * @param ballcoorY1 the ball's current Y position
+     * @return true if the ball has reached the target
+     */
     public boolean endReached(double ballCoorX1, double ballcoorY1)
     {
         if((ballCoorX1 < holeCoorX+holeRadius && ballCoorX1 > holeCoorX-holeRadius) && (ballcoorY1 < holeCoorY+holeRadius && ballcoorY1 > holeCoorY-holeRadius))
@@ -25,8 +31,13 @@ public class AI extends Simulations
         }
         return false;
     }
-    
 
+    /**
+     * A getter method that receives all of the ball's velocities
+     * @param ballCoorX1 the ball's current X position
+     * @param ballcoorY1 the ball's current Y position
+     * @return all velocities that the ball has currently
+     */
     public List<List> getAllVelocities(double ballCoorX1, double ballcoorY1)
     {
         ArrayList<List> allVelocities = new ArrayList<List>();
@@ -55,10 +66,9 @@ public class AI extends Simulations
     }
 
 
-
-
-    
-
+    /**
+     * A testing method with pre-determined values
+     */
 
     public static void main(String[] args) 
     {

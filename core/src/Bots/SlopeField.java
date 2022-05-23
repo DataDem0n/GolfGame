@@ -67,7 +67,11 @@ public class SlopeField
         }
         return field;
     }
-    
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) 
     {
         BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
