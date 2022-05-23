@@ -62,6 +62,13 @@ public class AI extends Simulations
 
         }
 
+        for(int i = 0; i<allVelocities.get(0).size();i++)
+        {
+            System.out.println("Shot "+(i+1));
+            System.out.println("X velocity: "+ allVelocities.get(0).get(i));
+            System.out.println("Y velocity: "+ allVelocities.get(1).get(i));
+            System.out.println();
+        }
         return allVelocities;
     }
 
