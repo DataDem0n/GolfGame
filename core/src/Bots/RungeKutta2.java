@@ -24,7 +24,6 @@ public class RungeKutta2 extends Physics{
         this.sFriction = sFriction;
         this.stepsize = stepsize;
         this.coordinatesAndVelocity = coordinatesAndVelocity;
-
   
     }
 
@@ -66,10 +65,5 @@ public class RungeKutta2 extends Physics{
         }
         return coordinatesAndVelocity;
     }
-
-    
-
-    
-
  
 }

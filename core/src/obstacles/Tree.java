@@ -37,6 +37,10 @@ public class Tree implements Obstacles {
         return coordX;
     }
 
+    /**
+     * getter for the tree's Y coordinate
+     * @return Y coordinate of the tree's centre
+     */
     public double getCoordY() {
         return coordY;
     }

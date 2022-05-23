@@ -18,6 +18,10 @@ public class BotBasic {
         wVectors = new ArrayList<>();
     }
 
+    /**
+     * This method starts the bot upon GUI button press
+     * @return false if the bot succeeds
+     */
     public boolean start(){
 
         myLocation[0] = DataField.x;
@@ -41,6 +45,9 @@ public class BotBasic {
         return false;
     }
 
+    /**
+     * @return a weighted vector based on the ball's position and the hole's position
+     */
     private WeightedVector calcV(){
         double xt = Distance(myLocation[0],holeLocation[0]);
         double yt = Distance(holeLocation[1],myLocation[1]);
@@ -53,6 +60,11 @@ public class BotBasic {
         return new WeightedVector(xt,yt);
     }
 
+    /**
+     * @param x1 represents coordinate point x1
+     * @param x2 represents coordinate point x2
+     * @return the distance from point x1 to point x2
+     */
     private double Distance(double x1, double x2){
         return Math.sqrt(Math.pow((x2-x1) ,2));
     }

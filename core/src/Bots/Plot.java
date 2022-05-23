@@ -34,9 +34,7 @@ public class Plot extends PathCalculator
         List<List> getpath = pathCalculator(ballPos[0], ballPos[1]);
         pathX = getpath.get(0);
         pathY = getpath.get(1);
-        
 
-       
     }
 
     /**
@@ -75,7 +73,7 @@ public class Plot extends PathCalculator
             return -666;
         }
 
-        double unit = (differenceY/differenceX);                            //fucks up if X is very small
+        double unit = (differenceY/differenceX);                            //messes up if X is very small
 
         return unit;
     }
@@ -112,8 +110,6 @@ public class Plot extends PathCalculator
         }
         vX /= interval;
         vY /= interval;
-
-        
 
        
         if(plain[(int) vX][(int) vY] < 0)            
@@ -293,9 +289,6 @@ public class Plot extends PathCalculator
     }
 
 
-
-
-
     // public double getCorrectVelocity()
     // {
     //     int ballCoordinatesX = path.getBallPosition()[0];
@@ -348,11 +341,6 @@ public class Plot extends PathCalculator
         double[] correctShot = testing.getCorrectShot(testing.pathX,testing.pathY,ballCoorX,ballCoorY);
         System.out.println("x: "+correctShot[0]);
         System.out.println("y: "+correctShot[1]);
-
-
-
-        
     }
-
 
 }

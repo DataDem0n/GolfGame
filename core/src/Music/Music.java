@@ -47,12 +47,12 @@ public class Music {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-
+//will be used in phase 3
 //  public void playWin(){
 //        if (clip.isRunning()) {
 //            clip.stop();
 //            clip.start();
-//        }                 //will be used in phase 3
+//        }
 //    }
 
     /**

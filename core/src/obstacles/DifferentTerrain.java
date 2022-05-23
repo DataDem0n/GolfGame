@@ -1,7 +1,5 @@
 package obstacles;
 
-
-
 public interface DifferentTerrain {
     /**INTERFACE USED FOR OBSTACLES
      *Method used to handle the collision with obstacles

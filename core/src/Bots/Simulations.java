@@ -646,6 +646,13 @@ public class Simulations extends Plot
         }
         return correctVel;
     }
+
+    /**
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] decreaseXIncreaseY(double[] correctVel, double scaler)
     {
         if(correctVel[0] < 0)
@@ -670,33 +677,6 @@ public class Simulations extends Plot
         }
         return correctVel;
     }
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //main is for testing purposes

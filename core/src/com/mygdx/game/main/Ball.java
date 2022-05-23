@@ -19,7 +19,6 @@ public class Ball extends Sprite {
         sMain.setCenter(sMain.getHeight()/2,sMain.getWidth()/2);
     }
 
-
     /**
      * setPos() method sets the position of the ball on the terrain.
      * @param x: the center x-coordinate of the ball

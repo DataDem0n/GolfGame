@@ -9,7 +9,12 @@ public class SlopeField
 {
     double interval;
     BiFunction<Double,Double,Double> terrain;
-    
+
+    /**
+     *
+     * @param interval scaler distances
+     * @param terrain   terrain from teh main game.
+     */
     public SlopeField(double interval, BiFunction<Double,Double,Double> terrain)     //interval = trade-off between accuracy and speed.
     {
         this.terrain = terrain;
@@ -17,6 +22,10 @@ public class SlopeField
         
     }
 
+    /**
+     * generates a field 2 array
+     * @return 2d array of double
+     */
     public double[][] Field()
     {
        
@@ -32,7 +41,10 @@ public class SlopeField
         return field;
     }
 
-
+    /**
+     *calculates slope for x vals
+     * @return
+     */
     public double[][] slopeXCalculator()
     {
         double[][] field = Field();
@@ -50,7 +62,11 @@ public class SlopeField
         return field;
     }
 
-    
+    /**
+     *Calculates
+     * slops for y values
+     * @return
+     */
     public double[][] slopeYCalculator()
     {
         double[][] field = Field();

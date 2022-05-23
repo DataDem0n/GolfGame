@@ -3,7 +3,6 @@ package Music;
 import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class MusicControls {
     int playCounter = 0;
