@@ -140,6 +140,11 @@ public class Runner extends Thread
     static FileWriter fr;
     public static void main(String[] args) throws FileNotFoundException {
 
+
+    Scanner s = new Scanner(System.in);
+        System.out.println("Would you like to use GUI instead of a file to play? y/n");
+    String choice = s.next();
+
     //variables used by the GUI and PhysicsEngine
     double[] coordinatesAndVelocity = new double[4];
     double staticFriction;
@@ -219,19 +224,18 @@ public class Runner extends Thread
         DataField.kFriction = kineticFriction;
         DataField.GUI = true;
         DataField.usingGui = true;
+        DataField.terrain = (x,y)->1.0;
 
-        DataField.terrain = (x,y)->(double)1;
-
-
+        if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
             DataField.coordinatesandVelocity = coordinatesAndVelocity;
             DataField.velocityX = velx;
             DataField.velocityY = vely;
             DataField.GUI = false;
-            DataField.usingGui = false;//TODO 2d array for trees
+            DataField.usingGui = false;
             DataField.aiRunning = false;
-
+        }
 
         settingsMenu pregame = new settingsMenu();
 

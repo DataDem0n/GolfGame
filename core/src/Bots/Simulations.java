@@ -1,5 +1,7 @@
 package Bots;
 
+import com.mygdx.game.main.DataField;
+
 import java.util.function.BiFunction;
 
 /**
@@ -24,7 +26,7 @@ public class Simulations extends Plot
         super(terrain, interval, adjacency, slope, ballCoorX, ballCoorY);
         this.sFriction = sFriction;
         this.kFriction = kFriction;
-        proximity = interval*0.5;
+        proximity = DataField.targetRXY[0];
         coordinatesAndVelocity[0] = ballCoorX;  
         coordinatesAndVelocity[1] = ballCoorY;
 

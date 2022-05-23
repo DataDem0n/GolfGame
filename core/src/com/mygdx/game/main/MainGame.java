@@ -33,7 +33,7 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void create (){
 		System.out.println(Arrays.toString(DataField.sandPit));
-		if(DataField.GUI){WM = new WindowMain();}
+		WM = new WindowMain();
 		pointGenerator();
 		viewport = new ScreenViewport();
 		viewport.setUnitsPerPixel(1/PPM);
@@ -45,7 +45,7 @@ public class MainGame extends ApplicationAdapter {
 
 		for (int i = 0;i<tree1.length;i++) {
 			tree1[i] = new TreeVisual();
-			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX(),(float) DataField.gameForest.getForest().get(i).getCoordY());
+			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX()*1.4f,(float) DataField.gameForest.getForest().get(i).getCoordY()*1.7f);
 		}
 
 		s = new ShapeRenderer();

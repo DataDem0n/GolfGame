@@ -117,8 +117,8 @@ public class settingsMenu{
             DataField.targetRXY = new double[]{0.15,20,20};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(15,15));
-            DataField.kFriction = 0.1;
-            DataField.sFriction = 0.2;
+            DataField.kFriction = 0.2;
+            DataField.sFriction = 0.3;
             DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
             chooseSolvers.setSelectedIndex(2);
             settingsMenu.finished = false;
@@ -183,6 +183,8 @@ public class settingsMenu{
                 DataField.gameForest.getForest().add(new Tree(100,100));
                 //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
                 DataField.sandPit = coordSP.clone();
+                DataField.kFriction = 0.2;
+                DataField.sFriction = 0.3;
                 settingsMenu.finished = false;
                 frameMain.setVisible(false);
             }

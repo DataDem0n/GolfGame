@@ -18,8 +18,7 @@ public class AdjacencyField
     BiFunction<Double,Double,Double> terrain;
     double[] coorTX,coorTY,beginX,endX,beginY,endY;
     double radius;
-    
-    
+
     
     public AdjacencyField(double interval, double holeCoorx, double holeCoory, int sandpitResentment, BiFunction<Double,Double,Double> terrain, double[] coorTX, double[] coorTY, double radius, double[] beginX, double[] endX, double[] beginY, double[] endY)     //interval = trade-off between accuracy and speed.
     {

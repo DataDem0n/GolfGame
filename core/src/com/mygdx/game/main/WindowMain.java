@@ -61,9 +61,6 @@ public class WindowMain{
             vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
 
             for (int i = 0; i<vel.get(0).size();i++) {
-                System.out.println((Double) vel.get(0).get(i));
-                System.out.println((Double) vel.get(1).get(i));
-
                 DataField.velocityX.add((Double) vel.get(0).get(i));
                 DataField.velocityY.add((Double) vel.get(1).get(i));
             }
