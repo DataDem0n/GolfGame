@@ -1,13 +1,8 @@
 package engine;
-
 import com.mygdx.game.main.DataField;
-import solvers.Euler;
-import solvers.RungeKutta4;
+import solvers.Solver;
 
-import java.util.Scanner;
-import java.util.function.BiFunction;
-
-public class GameEngineRK4 extends RungeKutta4 {
+public class GameEngine extends Thread {
 
     /**
      * A constructor for the GameEngine class that initializes all instance fields, also in the superclass
@@ -17,8 +12,9 @@ public class GameEngineRK4 extends RungeKutta4 {
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
-    public GameEngineRK4(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
-        super(terrain, coordinatesAndVelocity, kFriction, sFriction, targetRXY);
+    private Solver solver;
+    public GameEngine(Solver solver){
+        this.solver=solver;
     }
 
     /**
@@ -30,31 +26,29 @@ public class GameEngineRK4 extends RungeKutta4 {
             Thread.sleep(50);
         }
 
-        setCoordinates(DataField.x, DataField.y);
-        setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
-        setkFriction(DataField.kFriction);
-        setsFriction(DataField.sFriction);
+        solver.setCoordinates(DataField.x, DataField.y);
+        solver.setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+        solver.setkFriction(DataField.kFriction);
+        solver.setsFriction(DataField.sFriction);
+        solver.setTargetRXY(DataField.targetRXY);
 
-        setTargetRXY(DataField.targetRXY);
-
-        setTerrain(DataField.terrain);
-
+        solver.setTerrain(DataField.terrain);
         int index = 1;
-        int silly = 0;
+        int silly =0;
         // while ball is not in the target
-        while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((getYCoord()-DataField.targetRXY[2]), 2 )))){
+        while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((solver.getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((solver.getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            coordinatesAndVelocityUntilStop( 0.0000001);
+            solver.coordinatesAndVelocityUntilStop( 0.00001);
 
-            DataField.x = getXCoord();
-            DataField.y = getYCoord();
+            DataField.x = solver.getXCoord();
+            DataField.y = solver.getYCoord();
 
-                if((((coordinatesAndVelocity[0] > DataField.targetRXY[1]-0.5 && coordinatesAndVelocity[0] < DataField.targetRXY[1]+0.5) && (coordinatesAndVelocity[1] > DataField.targetRXY[2]-0.5 && coordinatesAndVelocity[1] < DataField.targetRXY[2]+0.5)) && coordinatesAndVelocity[2] <= 2.0 && coordinatesAndVelocity[3] <= 2.0))
-                {
-                    System.out.println("YOU WON!");
-                    silly += 1;
-                    break;
-                }
+            if((((solver.getXCoord() > DataField.targetRXY[1]-0.5 && solver.getXCoord() < DataField.targetRXY[1]+0.5) && (solver.getYCoord() > DataField.targetRXY[2]-0.5 && solver.getYCoord() < DataField.targetRXY[2]+0.5)) && solver.getXVelocity() <= 2.0 && solver.getYVelocity() <= 2.0))
+            {
+                System.out.println("YOU WON!");
+                silly += 1;
+                break;
+            }
                 else
                 {
 
@@ -68,7 +62,10 @@ public class GameEngineRK4 extends RungeKutta4 {
                         DataField.GUI = true;
                         game();
                     }
-
+                    if(index!=DataField.velocityX.size()){
+                        solver.setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
+                        index++;
+                    }
                     else{
                         System.out.println("You did not win, better luck next time.\nPlease restart with a new file input.");
                         break;

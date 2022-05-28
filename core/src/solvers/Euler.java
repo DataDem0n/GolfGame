@@ -11,7 +11,7 @@ import obstacles.Wall;
 
 import java.util.function.BiFunction;
 
-public class Euler extends Thread implements Solver {
+public class Euler implements Solver {
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();
@@ -169,4 +169,14 @@ public class Euler extends Thread implements Solver {
      */
     @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
+
+    @Override
+    public double getXVelocity() {
+        return coordinatesAndVelocity[2];
+    }
+
+    @Override
+    public double getYVelocity() {
+        return coordinatesAndVelocity[3];
+    }
 }

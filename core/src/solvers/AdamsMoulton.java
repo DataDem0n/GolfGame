@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.function.BiFunction;
 //NOT FINISHED METHOD ODE SOLVER
 // WE DECIDE IT TO KEEP IT IN THE PROJECT SO WE CAN WORK  ON IT DURING PHASE 3
-public class AdamsMoulton extends Thread implements Solver{
+public class AdamsMoulton implements Solver{
 
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
@@ -325,6 +325,15 @@ public class AdamsMoulton extends Thread implements Solver{
         results[0] = (tempvelx1+2.0*tempvelx3+2.0*tempvelx5+tempvelx7)/6.0;
         results[1] = (tempvely1+2.0*tempvely3+2.0*tempvely5+tempvely7)/6.0;
         return results;
+    }
+    @Override
+    public double getXVelocity() {
+        return coordinatesAndVelocity[2];
+    }
+
+    @Override
+    public double getYVelocity() {
+        return coordinatesAndVelocity[3];
     }
 
 

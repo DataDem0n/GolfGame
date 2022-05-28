@@ -1,13 +1,8 @@
 package com.mygdx.game.main;
 
- import engine.GameEngineAM;
- import engine.GameEngineRK2;
- import engine.GameEngineRK4;
- import org.mariuszgromada.math.mxparser.Argument;
- import org.mariuszgromada.math.mxparser.Expression;
- import engine.GameEngineEuler;
+ import engine.GameEngine;
+ import solvers.*;
 
- import java.util.Arrays;
  import java.util.function.BiFunction;
 
 import java.io.BufferedWriter;
@@ -253,21 +248,26 @@ public class Runner extends Thread
 
          switch(pregame.chooseSolvers.getSelectedIndex()) {
              case 1:
-                 GameEngineEuler g = new GameEngineEuler(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
+                 Solver euler = new Euler(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
+                 GameEngine g = new GameEngine(euler);
                  g.start();
                  break;
              case 2:
-                 GameEngineRK2 r2 = new GameEngineRK2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
-                 r2.start();
+                 Solver rk2 = new RungeKutta2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
+                 GameEngine g2 = new GameEngine(rk2);
+                 g2.start();
                  break;
              case 3:
-                 GameEngineRK4 r4 = new GameEngineRK4(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
-                 r4.start();
+                 Solver rk4 = new RungeKutta4(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
+                 GameEngine g3 = new GameEngine(rk4);
+                 g3.start();
                  break;
              case 4:
-                 GameEngineAM am = new GameEngineAM(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction, targetRXY);
-                 am.start();
+                 Solver am = new AdamsMoulton(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
+                 GameEngine g4 = new GameEngine(am);
+                 g4.start();
                  break;
          }
+
     }
 }

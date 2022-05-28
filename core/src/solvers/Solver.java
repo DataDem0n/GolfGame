@@ -57,4 +57,8 @@ public interface Solver {
      * @return Y coordinate of the ball
      */
     public double getYCoord();
+
+    public double getXVelocity();
+
+    public double getYVelocity();
 }
