@@ -7,7 +7,9 @@ public interface Solver {
      * @param step step size for ODE
      * @return coordinatef after the ball has stopped
      */
-    public double[] coordinatesAndVelocityUntilStop(double step);
+    public double getBestDistance();
+
+    public double[] coordinatesAndVelocityUntilStop(double step, boolean update);
 
     /**
      *  Method to set kFriction

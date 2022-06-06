@@ -24,6 +24,7 @@ public class RungeKutta2 implements Solver{
     private Forest f = DataField.gameForest;
     private Water water = new Water();
 
+
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
     // [1] - coordinateY
@@ -47,6 +48,11 @@ public class RungeKutta2 implements Solver{
         this.targetRXY = targetRXY;
     }
 
+    @Override
+    public double getBestDistance() {
+        return 0;
+    }
+
     /**
      * Method based on the Euler Method for solving differential equations that calculates the next velocities in the X-direction and Y-direction, after a certain step size
      * and calculates the next coordinates of the ball based on the resulting velocities, so that it tracks ball's movements
@@ -60,6 +66,8 @@ public class RungeKutta2 implements Solver{
 
         double tempcoorx1;
         double tempcoory1;
+        pathX=null;
+        pathY=null;
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
@@ -105,6 +113,7 @@ public class RungeKutta2 implements Solver{
 //        System.out.println("accy: " + coordinatesAndVelocity[3]);
         return coordinatesAndVelocity;
     }
+
 
 
     //SETTERS

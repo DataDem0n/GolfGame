@@ -10,12 +10,12 @@ public class DataField
     public static boolean aiRunning;
     public static boolean GUI;
     public static boolean usingGui;
-    public static BiFunction<Double, Double, Double> terrain;
+    public static BiFunction<Double, Double, Double> terrain = (x,y)->1.0;
     public static ArrayList<Double> velocityX;
     public static ArrayList<Double> velocityY;
-    public static double sFriction;
-    public static double kFriction;
-    public static double[] targetRXY;
+    public static double sFriction = 0.1;
+    public static double kFriction = 0.05;
+    public static double[] targetRXY = {0.0,5.0,5.0};
     public static double[] coordinatesandVelocity;
     public static double[] sandPit;
     public static double x;

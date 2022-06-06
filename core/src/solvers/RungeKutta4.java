@@ -131,7 +131,6 @@ public class RungeKutta4 implements Solver {
         return coordinatesAndVelocity;
     }
 
-    //SETTERS
 
     //0.05-0.1
     //Static friction (grass) µS 0.1-0.2

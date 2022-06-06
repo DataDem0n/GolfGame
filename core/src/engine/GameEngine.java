@@ -31,7 +31,6 @@ public class GameEngine extends Thread {
         solver.setkFriction(DataField.kFriction);
         solver.setsFriction(DataField.sFriction);
         solver.setTargetRXY(DataField.targetRXY);
-
         solver.setTerrain(DataField.terrain);
         int index = 1;
         int silly =0;
@@ -51,7 +50,6 @@ public class GameEngine extends Thread {
             }
                 else
                 {
-
                     while(DataField.GUI){
                         Thread.sleep(50);
                     }

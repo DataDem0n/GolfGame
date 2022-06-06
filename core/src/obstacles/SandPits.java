@@ -25,15 +25,17 @@ public class SandPits implements DifferentTerrain {
      *  Method that changes the friction of the ball depending on the fact if the ball is in the sand
      * @param coordsAndVelocity an array with coordinates X and Y on first two positions and velocities X and Y in 3,4 positions
      */
-    public void change(double [] coordsAndVelocity){
-
-        if(coordsAndVelocity[0] > DataField.sandPit[0] && coordsAndVelocity[0] < DataField.sandPit[2] &&
-                coordsAndVelocity[1] > DataField.sandPit[1] && coordsAndVelocity[1] < DataField.sandPit[3]) {
-            DataField.sFriction = sFrictionSand;
-            DataField.kFriction = kFrictionSand;
-        }else {
-            DataField.sFriction = tempSatatic;
-            DataField.kFriction = tempKinetic;
+    public void change(double[] coordsAndVelocity){
+        if(DataField.sandPit != null){
+            if(coordsAndVelocity[0] > DataField.sandPit[0] && coordsAndVelocity[0] < DataField.sandPit[2] &&
+                    coordsAndVelocity[1] > DataField.sandPit[1] && coordsAndVelocity[1] < DataField.sandPit[3]) {
+                DataField.sFriction = sFrictionSand;
+                DataField.kFriction = kFrictionSand;
+            }else {
+                DataField.sFriction = tempSatatic;
+                DataField.kFriction = tempKinetic;
+            }
         }
+
     }
 }

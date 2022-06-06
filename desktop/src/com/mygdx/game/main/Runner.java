@@ -262,11 +262,6 @@ public class Runner extends Thread
                  GameEngine g3 = new GameEngine(rk4);
                  g3.start();
                  break;
-             case 4:
-                 Solver am = new AdamsMoulton(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
-                 GameEngine g4 = new GameEngine(am);
-                 g4.start();
-                 break;
          }
 
     }

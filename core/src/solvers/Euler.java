@@ -20,7 +20,7 @@ public class Euler implements Solver {
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
-    public double[] coordinatesAndVelocity;
+    public double[] coordinatesAndVelocity=new double[4] ;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
@@ -179,4 +179,8 @@ public class Euler implements Solver {
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
     }
+
+    @Override
+    public double getBestDistance(){return 0;};
+
 }
