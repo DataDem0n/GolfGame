@@ -53,6 +53,11 @@ public class RungeKutta2 implements Solver{
         return 0;
     }
 
+    @Override
+    public double getBestFinalDistance() {
+        return bestFinalDistance;
+    }
+
     /**
      * Method based on the Euler Method for solving differential equations that calculates the next velocities in the X-direction and Y-direction, after a certain step size
      * and calculates the next coordinates of the ball based on the resulting velocities, so that it tracks ball's movements

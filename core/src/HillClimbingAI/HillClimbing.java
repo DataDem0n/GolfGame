@@ -10,69 +10,106 @@ import java.util.function.BiFunction;
 public class HillClimbing {
 
     private TestShot testShot;
-    private double bestFitness ;
-    private double[] bestVelocity ;
-    private Solver solver ;
+    private double bestFitness;
+    private double[] bestVelocity;
+    private Solver solver;
 
     public HillClimbing(Solver solver){
-        this.solver = solver ;
 
+        this.solver = solver ;
+        testShot = new TestShot(solver);
     }
 
-    //perfom 4 shots
+    public double [] getInitialDirection(BiFunction<Double,Double,Double> terrain, double [] coordsAndVel, double kFriction, double sFriction) {
+
+        double[][] velocities = {
+                {1, 0}, {0, 1}, {-1, 0},{0, -1},
+                {2, 0}, {0, 2}, {-2, 0},{0, -2},
+                {4, 0}, {0, 4}, {-4, 0},{0, -4},
+                {2,2}, {-2,2},{2,-2},{-2,-2},
+                {1,1}, {-1,1},{1,-1},{-1,-1}};
+        //more different values like 1 2 3 4
+        testShot.testshot(0.001, new double[]{velocities[0][0], velocities[0][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
+        double tempFit = testShot.getFitness();
+        double[] bestVel = {2, 0};
+
+        for (int i = 1; i < velocities.length; i++) {
+            testShot.testshot(0.001, new double[]{velocities[i][0], velocities[i][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
+            if (testShot.getFitness() < tempFit) {
+
+                tempFit = testShot.getFitness();
+                bestVel = new double[]{velocities[i][0], velocities[i][1]};
+
+            }
+        }
+        return bestVel;
+    }
+
     double stepSize = 0.1;
     double [][] directions= { {0,stepSize}, {stepSize,0}, {0,-stepSize}, {-stepSize,0}};
 
-    public double magnitude(double[] array){
-        return Math.sqrt(Math.pow(array[0], 2) + Math.pow(array[1], 2));
-    }
-    public double[] convertUnit(double[] array){
-        double magnitude = magnitude(array);
-        if (magnitude == 0 ){
-            return bestVelocity;
-        }
-        return new double[]{ array[0] / magnitude , array[1] / magnitude};
-    }
-    public double[] testDirection(BiFunction<Double,Double,Double> terrain, double [] coords, double kFriction, double sFriction) {
+//    public double magnitude(double[] array){
+//        return Math.sqrt(Math.pow(array[0], 2) + Math.pow(array[1], 2));
+//    }
+//    public double[] convertUnit(double[] array){
+//        double magnitude = magnitude(array);
+//        if (magnitude == 0 ){
+//            return bestVelocity;
+//        }
+//        return new double[]{ array[0] / magnitude , array[1] / magnitude};
+//    }
+
+
+    public double[] hillClimbing(double [] bestVel ,BiFunction<Double,Double,Double> terrain, double [] coords, double kFriction, double sFriction) {
         testShot = new TestShot(solver);
 
-        double[] bestDirect = new double[]{ -(DataField.targetRXY[1] - coords[0]), -(DataField.targetRXY[2] - coords[1])};
-//        if(magnitude(bestDirect) != 0){
-//            bestDirect = convertUnit(bestDirect);
-//        }
+        double [] bestDirect = getInitialDirection(terrain, new double[]{coords[0],coords[1],bestVel[0],bestVel[1]}, kFriction, sFriction);
         bestVelocity = bestDirect;
-        testShot.testshot(0.004, bestDirect, terrain, coords, kFriction, sFriction);
-        bestFitness = testShot.getFitness();
+        testShot.testshot(0.001, bestDirect, terrain, coords, kFriction, sFriction);
 
-        boolean isRunning = true ;
-        if(bestFitness == 0 ){
+        bestFitness = testShot.getFinalFitness();
+
+        double bestFinalFitness = testShot.getFinalFitness();
+
+        boolean isRunning = true;
+        if(bestFinalFitness == 0){
             isRunning = false;
         }
         outer:
         while (isRunning) {
-            double[] prevFitness = new double[4];
-            double[][] prevVelocities = new double[4][2];
-            double closestPoint = Integer.MAX_VALUE;
+            double[] currFitness = new double[4];
+            double[] currFinalFitness = new double[4];
+            double[][] currVelocities = new double[4][2];
+            double closestPoint = 999;
+            double closestFinalPoint = 999;
+            double [][]step = {{0.01,0},{0,0.01},{-0.01,0},{0,-0.01}};
 
             for (int i = 0; i < 4; i++) {
-                double[] testVelocity = new double[]{directions[i][0] + bestDirect[0], directions[i][1] + bestDirect[1]};
+                double[] testVelocity = new double[2];
+                testVelocity[0] = bestVelocity[0] + step[i][0];
+                testVelocity[1] = bestVelocity[1] + step[i][1];
+                if(fasterThan5(testVelocity)){
+                    testVelocity = bestVelocity;
+                }
                 testShot.testshot(0.001, testVelocity, terrain, coords, kFriction, sFriction);
-                closestPoint = testShot.getFitness();
-                prevVelocities[i] = testVelocity;
+                closestPoint = testShot.getFinalFitness();
+                closestFinalPoint = testShot.getFinalFitness();
+                currVelocities[i] = testVelocity;
+                currFitness[i] = closestPoint;
+                currFinalFitness[i] = closestFinalPoint;
 
-                prevFitness[i] = closestPoint;
-
-                if (closestPoint < DataField.targetRXY[0]) {
+                if (testShot.getFinalFitness() < DataField.targetRXY[0]) {
                     bestVelocity = testVelocity;
                     break outer;
+                  }
                 }
 
-            }
             isRunning = false;
-            for (int i = 0; i < prevFitness.length ; i++) {
-                if( prevFitness[i] < bestFitness ){
-                    bestVelocity = prevVelocities[i];
-                    bestFitness = prevFitness[i];
+            for (int i = 0; i < currFinalFitness.length ; i++) {
+
+                if( currFitness[i] < bestFitness ){
+                    bestVelocity = currVelocities[i];
+                    bestFitness = currFinalFitness[i];
                     isRunning = true ;
                 }
             }
@@ -80,8 +117,14 @@ public class HillClimbing {
       return bestVelocity;
     }
 
-    public static void main(String[] args) {
+    public boolean fasterThan5(double[] velocity){
+        return Math.sqrt(Math.pow(velocity[0], 2) + Math.pow(velocity[1], 2)) > 5;
+    }
 
+
+    public static void main(String[] args) {
+        long startTime = System.nanoTime();
+        double [] coordsAndVel = {1,1,0,0};
         double[] coords = {5.0 , 5.0 , Math.random()*10 - 5, Math.random()*10 - 5};
         BiFunction<Double, Double, Double> terrain = (x,y) -> (1.0);
         Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  new double[]{0.5, 10.0, 10.0});
@@ -89,9 +132,14 @@ public class HillClimbing {
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
         double[] coor= {10.0,10.0};
         HillClimbing h = new HillClimbing(solver1);
-        double[] one_velocity = h.testDirection(terrain, coor, 0.1,0.2);
-        System.out.println(Arrays.toString(one_velocity));
+        double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
+        System.out.println("Initial Direction: " + Arrays.toString(vel));
+        double[] best_velocity = h.hillClimbing(vel,terrain, coor, 0.1,0.2);
+        System.out.println("Hill Climbing: " + Arrays.toString(best_velocity));
+        solver1.coordinatesAndVelocityUntilStop(0.1, false);
+        long stopTime = System.nanoTime();
+        long timeElapsed = stopTime - startTime;
+        System.out.println("Time:  "+ timeElapsed);
     }
-
 
 }

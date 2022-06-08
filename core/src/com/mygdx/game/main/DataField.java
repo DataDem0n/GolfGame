@@ -10,7 +10,7 @@ public class DataField
     public static boolean aiRunning;
     public static boolean GUI;
     public static boolean usingGui;
-    public static BiFunction<Double, Double, Double> terrain = (x,y)->1.0;
+    public static BiFunction<Double, Double, Double> terrain = (x,y) -> ((Math.sin(x+y)/6.0));
     public static ArrayList<Double> velocityX;
     public static ArrayList<Double> velocityY;
     public static double sFriction = 0.1;

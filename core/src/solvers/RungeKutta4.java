@@ -121,8 +121,8 @@ public class RungeKutta4 implements Solver {
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            //tree.collide(coordinatesAndVelocity, tempCoordinates);
-            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+//            tree.collide(coordinatesAndVelocity, tempCoordinates);
+//            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
         System.out.println("accx: " + coordinatesAndVelocity[2]);

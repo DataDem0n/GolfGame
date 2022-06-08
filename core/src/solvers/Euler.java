@@ -181,6 +181,12 @@ public class Euler implements Solver {
     }
 
     @Override
-    public double getBestDistance(){return 0;};
+    public double getBestDistance(){return 0;}
+
+    @Override
+    public double getBestFinalDistance() {
+        return bestFinalDistance;
+    }
+
 
 }

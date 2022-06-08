@@ -35,7 +35,7 @@ public class TestShot {
        double velocityX = vel[0] ;
        double velocityY = vel[1] ;
        double [] coordsAndVel = {coordinates[0], coordinates[1], velocityX, velocityY};
-       solver=new RungeKutta4(terrain, coordsAndVel, kFriction, sFriction, DataField.targetRXY);
+       solver = new RungeKutta4(terrain, coordsAndVel, kFriction, sFriction, DataField.targetRXY);
        double [] result = solver.coordinatesAndVelocityUntilStop(step,false);
        bestDistance=solver.getBestDistance();
    }

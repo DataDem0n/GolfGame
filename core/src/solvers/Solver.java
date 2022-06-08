@@ -9,6 +9,8 @@ public interface Solver {
      */
     public double getBestDistance();
 
+    public double getBestFinalDistance();
+
     public double[] coordinatesAndVelocityUntilStop(double step, boolean update);
 
     /**
