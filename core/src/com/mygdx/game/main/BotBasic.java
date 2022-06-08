@@ -35,7 +35,8 @@ public class BotBasic {
         DataField.velocityX = xc;
         yc.add(temp.y);
         DataField.velocityY = yc;
-
+        System.out.println("x-vel:"+xc);
+        System.out.println("y-vel:"+yc);
         DataField.GUI = false;
 
         Timer t = new Timer(100, e1 -> {

@@ -1,11 +1,14 @@
 package com.mygdx.game.main;
 
-import Bots.AI;
-import Bots.AdjacencyField;
-import Bots.SlopeField;
+//import Bots.AI;
+//import Bots.AdjacencyField;
+//import Bots.SlopeField;
+import Bot_Work.CosineFinder;
+import Bot_Work.WeightedVector;
 import Music.MusicControls;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,11 @@ public class WindowMain{
     JButton pushButton = new JButton("PUTT!");
 
     //initialising bot elements
-    BotBasic Charley = new BotBasic();
-    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
-    SlopeField b = new SlopeField(1,DataField.terrain);
+    //BotBasic Charley = new BotBasic();
 
-    AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
+
+
+   // AI newtonSlave = new AI(DataField.terrain, 1, null, null, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
     List<List> vel;
 
     //solver label
@@ -50,28 +53,37 @@ public class WindowMain{
         pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
 
+
+        CosineFinder Frank = new CosineFinder();
+        ArrayList<WeightedVector> v = Frank.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
+        ArrayList<Double> xVel = new ArrayList<>();
+        ArrayList<Double> yVel = new ArrayList<>();
+        for (WeightedVector wv:v) {
+            xVel.add(wv.getX());
+            yVel.add(wv.getY());
+        }
         ruleBotButton.addActionListener(e -> {
             Charley.start();
         });
 
         pathBot.addActionListener(e -> {
-            DataField.aiRunning = true;
-            DataField.velocityX = new ArrayList<>();
-            DataField.velocityY = new ArrayList<>();
-            vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
-
-            for (int i = 0; i<vel.get(0).size();i++) {
-                DataField.velocityX.add((Double) vel.get(0).get(i));
-                DataField.velocityY.add((Double) vel.get(1).get(i));
-            }
-
-            while(!DataField.velocityX.isEmpty()) {
-                DataField.GUI = false;
-            }
-
-            Timer t = new Timer(100, e1 -> {
-                DataField.GUI = true;
-            });
+//            DataField.aiRunning = true;
+//            DataField.velocityX = new ArrayList<>();
+//            DataField.velocityY = new ArrayList<>();
+//            vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
+//
+//            for (int i = 0; i<vel.get(0).size();i++) {
+//                DataField.velocityX.add((Double) vel.get(0).get(i));
+//                DataField.velocityY.add((Double) vel.get(1).get(i));
+//            }
+//
+//            while(!DataField.velocityX.isEmpty()) {
+//                DataField.GUI = false;
+//            }
+//
+//            Timer t = new Timer(100, e1 -> {
+//                DataField.GUI = true;
+//            });
 
         });
 

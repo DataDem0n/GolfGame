@@ -27,7 +27,12 @@ public class GameEngine extends Thread {
         }
 
         solver.setCoordinates(DataField.x, DataField.y);
+        if(!DataField.velocityX.isEmpty()){
         solver.setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+        }
+        else{
+            return;
+        }
         solver.setkFriction(DataField.kFriction);
         solver.setsFriction(DataField.sFriction);
         solver.setTargetRXY(DataField.targetRXY);
@@ -59,10 +64,11 @@ public class GameEngine extends Thread {
                     if(DataField.usingGui) {
                         DataField.velocityX.remove(0);
                         DataField.velocityY.remove(0);
+
                         DataField.GUI = true;
                         game();
                     }
-                    if(index!=DataField.velocityX.size()){
+                    if(index!=DataField.velocityX.size()&&!DataField.velocityX.isEmpty()){
                         solver.setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
                         index++;
                     }
