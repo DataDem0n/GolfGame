@@ -3,6 +3,7 @@ package com.mygdx.game.main;
 //import Bots.AI;
 //import Bots.AdjacencyField;
 //import Bots.SlopeField;
+import Bot_Work.BruteStart;
 import Bot_Work.CosineFinder;
 import Bot_Work.WeightedVector;
 import Music.MusicControls;
@@ -41,10 +42,7 @@ public class WindowMain{
 
     //initialising bot elements
     //BotBasic Charley = new BotBasic();
-
-
-
-   // AI newtonSlave = new AI(DataField.terrain, 1, null, null, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
+    // AI newtonSlave = new AI(DataField.terrain, 1, null, null, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
     List<List> vel;
 
     //solver label
@@ -53,30 +51,20 @@ public class WindowMain{
         pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
 
-
-        CosineFinder Frank = new CosineFinder();
-        ArrayList<WeightedVector> v = Frank.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
-        ArrayList<Double> xVel = new ArrayList<>();
-        ArrayList<Double> yVel = new ArrayList<>();
-        for (WeightedVector wv:v) {
-            xVel.add(wv.getX());
-            yVel.add(wv.getY());
-        }
+//old implementation for the bruteforce bot
+//        CosineFinder Frank = new CosineFinder();
+//        ArrayList<WeightedVector> v = Frank.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
+//        ArrayList<Double> xVel = new ArrayList<>();
+//        ArrayList<Double> yVel = new ArrayList<>();
+//        for (WeightedVector wv:v) {
+//            xVel.add(wv.getX());
+//            yVel.add(wv.getY());
+//        }
+        BruteStart newbot = new BruteStart();
         ruleBotButton.addActionListener(e -> {
             //Charley.start();
 
-            DataField.velocityX = new ArrayList<>();
-            DataField.velocityY = new ArrayList<>();
-            DataField.x = 0;
-            DataField.y = 0;
-            DataField.velocityX.add(xVel.get(0));
-            DataField.velocityY.add(yVel.get(0));
-            xVel.remove(0);yVel.remove(0);
-            DataField.GUI = false;
-
-                    Timer t = new Timer(100, e1 -> {
-                        DataField.GUI = true;
-                    });
+            newbot.start();
 
 //                    while(!DataField.velocityX.isEmpty()) {
 //                DataField.GUI = false;

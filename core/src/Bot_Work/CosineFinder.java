@@ -56,15 +56,14 @@ public class CosineFinder implements VectorFinder{
         return wv;
     }
 
-
     private double Distance(double x1, double x2){
         return Math.sqrt(Math.pow((x2-x1) ,2));
     }
 
 //    //Distance between two points method (can use the return as a weight value if needed)
-//    private double DistanceBTP(double x1, double x2, double y1, double y2){
-//        return Math.sqrt(Math.pow((x2-x1) ,2) + Math.pow((y2-y1), 2));
-//    }
+    private double Euclidistance(double x1, double x2, double y1, double y2){
+        return Math.sqrt(Math.pow((x2-x1) ,2) + Math.pow((y2-y1), 2));
+    }
 
     public WeightedVector vectorToPoint(double ballX, double ballY, double holeX, double holeY){
         double xt = Distance(ballX,holeX);
@@ -78,9 +77,7 @@ public class CosineFinder implements VectorFinder{
         return new WeightedVector(xt,yt);
     }
 
-
-
-
+    //testing method
     public static void main(String[] args) {
         CosineFinder cf = new CosineFinder();
         ArrayList<WeightedVector> wv = cf.vectorFind(-3, -3, 1, 1);
