@@ -201,7 +201,6 @@ public class Plot extends PathCalculator
                 {
                     return false;
                 }
-
                 currentX += step;
                 currentY -= step*unitVec;
             }
@@ -227,7 +226,6 @@ public class Plot extends PathCalculator
         
         if(currentX > xcoor && currentY <= ycoor)
         {
-
             while(currentX > xcoor || currentY < ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
@@ -239,8 +237,6 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-
-        
        return true;
     }
 

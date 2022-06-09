@@ -6,6 +6,8 @@ import physics.Acceleration;
 import physics.HasBallStopped;
 import physics.MaxSpeed;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class RungeKutta2 implements Solver{
@@ -13,6 +15,8 @@ public class RungeKutta2 implements Solver{
     private MaxSpeed maxSpeed = new MaxSpeed();
     private Acceleration acceleration = new Acceleration();
     private HasBallStopped hasBallStopped = new HasBallStopped();
+    private ArrayList<Double> pathX = new ArrayList<Double>();
+    private ArrayList<Double> pathY = new ArrayList<Double>();
 
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
@@ -23,6 +27,7 @@ public class RungeKutta2 implements Solver{
     private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
     private Forest f = DataField.gameForest;
     private Water water = new Water();
+    private double bestFinalDistance = 100;
 
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -66,7 +71,7 @@ public class RungeKutta2 implements Solver{
      */
 
     @Override
-    public double[] coordinatesAndVelocityUntilStop(double step) {
+    public double[] coordinatesAndVelocityUntilStop(double step, boolean update) {
         double tempvelx1, tempvely1, tempvelx2, tempvely2, tempvelx3, tempvely3;
 
         double tempcoorx1;
@@ -105,8 +110,12 @@ public class RungeKutta2 implements Solver{
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            DataField.x = coordinatesAndVelocity[0];
-            DataField.y = coordinatesAndVelocity[1];
+            if(update) {
+                DataField.x = coordinatesAndVelocity[0];
+                DataField.y = coordinatesAndVelocity[1];
+            }
+            pathX.add(coordinatesAndVelocity[0]);
+            pathY.add(coordinatesAndVelocity[1]);
 
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
@@ -114,6 +123,8 @@ public class RungeKutta2 implements Solver{
             DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+        double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
+        bestFinalDistance = FINALDist;
 //        System.out.println("accx: " + coordinatesAndVelocity[2]);
 //        System.out.println("accy: " + coordinatesAndVelocity[3]);
         return coordinatesAndVelocity;

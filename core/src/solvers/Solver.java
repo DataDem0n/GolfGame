@@ -1,5 +1,6 @@
 package solvers;
 
+import java.util.ArrayList;
 import java.util.function.BiFunction;
 
 public interface Solver {

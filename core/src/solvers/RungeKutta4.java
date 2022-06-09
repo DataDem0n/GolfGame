@@ -9,7 +9,9 @@ import physics.HasBallStopped;
 import physics.MaxSpeed;
 import com.mygdx.game.main.DataField;
 import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.function.BiFunction;
 
@@ -26,6 +28,8 @@ public class RungeKutta4 implements Solver {
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
+   private double bestDistance =100;
+   private double bestFinalDistance = 100;
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -56,9 +60,11 @@ public class RungeKutta4 implements Solver {
      * @return an array with final coordinates and velocities of a ball that has stopped after a shot
      */
     @Override
-    public double[] coordinatesAndVelocityUntilStop(double step)  {
+    public double[] coordinatesAndVelocityUntilStop(double step, boolean update)  {
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
+        ArrayList<Double> pathXt = new ArrayList<Double>();
+        ArrayList<Double> pathYt = new ArrayList<Double>();
 
         double tempvelx1,tempvely1,tempvelx2, tempvely2, tempvelx3, tempvely3, tempvelx4, tempvely4, tempvelx5, tempvely5, tempvely6, tempvelx6, tempvelx7, tempvely7;
         double tempcoorx1, tempcoory1, tempcoorx2, tempcoory2, tempcoorx3, tempcoory3;
@@ -115,18 +121,31 @@ public class RungeKutta4 implements Solver {
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2] * step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3] * step;
 
-            DataField.x = coordinatesAndVelocity[0];
-            DataField.y = coordinatesAndVelocity[1];
+            if(update) {
+                DataField.x = coordinatesAndVelocity[0];
+                DataField.y = coordinatesAndVelocity[1];
+            }
 
-            water.collide(coordinatesAndVelocity, tempCoordinates);
+            double tempDist = Math.sqrt((Math.pow( (DataField.targetRXY[1]-coordinatesAndVelocity[0]) , 2) + ( Math.pow( (DataField.targetRXY[2]- coordinatesAndVelocity[1]), 2))));
+            if (tempDist < bestDistance){
+                bestDistance=tempDist;
+            }
+
+
+            if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
 //            tree.collide(coordinatesAndVelocity, tempCoordinates);
 //            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
-        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-        System.out.println("accx: " + coordinatesAndVelocity[2]);
-        System.out.println("accy: " + coordinatesAndVelocity[3]);
+        //System.out.println("RK$ Best distance:  " + bestDistance);
+
+        double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
+        bestFinalDistance = FINALDist;
+
+//        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+//        System.out.println("accx: " + coordinatesAndVelocity[2]);
+//        System.out.println("accy: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }
@@ -218,4 +237,18 @@ public class RungeKutta4 implements Solver {
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
     }
+
+    public double getBestDistance(){
+        return bestDistance;
+    }
+
+    @Override
+    public double getBestFinalDistance() {
+        return bestFinalDistance;
+    }
+
+    public static void main(String[] args) {
+
+    }
+
 }

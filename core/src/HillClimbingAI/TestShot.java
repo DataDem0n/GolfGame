@@ -17,15 +17,10 @@ public class TestShot {
     double targetX = DataField.targetRXY[1];
     double targetY = DataField.targetRXY[2];
     private double bestDistance;
-
+    private double bestFinalDistance;
 
 
    public TestShot(Solver solver){
-       this.solver = solver;
-       this.velocityX = velocityX;
-       this.velocityY = velocityY;
-   }
-   public TestShot(Solver solver , double velocityX , double velocityY){
        this.solver = solver;
        this.velocityX = velocityX;
        this.velocityY = velocityY;
@@ -38,11 +33,14 @@ public class TestShot {
        solver = new RungeKutta4(terrain, coordsAndVel, kFriction, sFriction, DataField.targetRXY);
        double [] result = solver.coordinatesAndVelocityUntilStop(step,false);
        bestDistance=solver.getBestDistance();
+       bestFinalDistance=solver.getBestFinalDistance();
+
    }
 
    public double getFitness(){
        return bestDistance;
    }
+   public  double getFinalFitness(){return bestFinalDistance; }
 
 
     public static void main(String[] args) {
@@ -51,10 +49,6 @@ public class TestShot {
         Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  new double[]{10.0, 10.0, 10.0});
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
-        System.out.println( solver1.getBestDistance());
-
-
-
 
     }
 

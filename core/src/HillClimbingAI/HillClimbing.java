@@ -113,7 +113,7 @@ public class HillClimbing {
                     isRunning = true ;
                 }
             }
-    }
+        }
       return bestVelocity;
     }
 
@@ -126,11 +126,11 @@ public class HillClimbing {
         long startTime = System.nanoTime();
         double [] coordsAndVel = {1,1,0,0};
         double[] coords = {5.0 , 5.0 , Math.random()*10 - 5, Math.random()*10 - 5};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> (1.0);
-        Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  new double[]{0.5, 10.0, 10.0});
+        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.1;//((Math.sin(x+y)/6.0));
+        Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  DataField.targetRXY);
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
-        double[] coor= {10.0,10.0};
+        double[] coor= {0,0};
         HillClimbing h = new HillClimbing(solver1);
         double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
         System.out.println("Initial Direction: " + Arrays.toString(vel));

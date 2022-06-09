@@ -9,6 +9,8 @@ import obstacles.SandPits;
 import obstacles.Tree;
 import obstacles.Wall;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class Euler implements Solver {
@@ -19,11 +21,16 @@ public class Euler implements Solver {
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
 
+
     public double[] tempCoordinates = new double [2];
     public double[] coordinatesAndVelocity=new double[4] ;
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
+    private ArrayList<Double> pathX = new ArrayList<Double>();
+    private ArrayList<Double> pathY = new ArrayList<Double>();
+    private double bestFinalDistance = 100;
+
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -54,10 +61,12 @@ public class Euler implements Solver {
      * @return an array with final coordinates and velocities of a ball that has stopped after a shot
      */
     @Override
-    public double[] coordinatesAndVelocityUntilStop(double step)  {
+    public double[] coordinatesAndVelocityUntilStop(double step, boolean update)  {
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
+        pathX=null;
+        pathY=null;
 
         if(!DataField.aiRunning)
             coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
@@ -77,8 +86,15 @@ public class Euler implements Solver {
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            DataField.x = (float)coordinatesAndVelocity[0];
-            DataField.y = (float)coordinatesAndVelocity[1];
+            if(update) {
+                DataField.x = coordinatesAndVelocity[0];
+                DataField.y = coordinatesAndVelocity[1];
+            }
+            double x = coordinatesAndVelocity[0];
+            double y = coordinatesAndVelocity[1];
+
+            pathX.add(coordinatesAndVelocity[0]);
+            pathY.add(coordinatesAndVelocity[1]);
 
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
@@ -90,6 +106,8 @@ public class Euler implements Solver {
         System.out.println("accx: " + coordinatesAndVelocity[2]);
         System.out.println("accy: " + coordinatesAndVelocity[3]);
 
+        double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
+        bestFinalDistance = FINALDist;
         return coordinatesAndVelocity;
     }
 
