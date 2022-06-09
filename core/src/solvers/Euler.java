@@ -199,6 +199,11 @@ public class Euler implements Solver {
     }
 
     @Override
+    public boolean getDidGoThroughWater() {
+        return false;
+    }
+
+    @Override
     public double getBestDistance(){return 0;}
 
     @Override

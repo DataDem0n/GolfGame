@@ -1,9 +1,7 @@
 package HillClimbingAI;
-
 import com.mygdx.game.main.DataField;
 import solvers.RungeKutta4;
 import solvers.Solver;
-
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
@@ -35,11 +33,16 @@ public class HillClimbing {
 
         for (int i = 1; i < velocities.length; i++) {
             testShot.testshot(0.001, new double[]{velocities[i][0], velocities[i][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
-            if (testShot.getFitness() < tempFit) {
+            double currentShot = testShot.getFitness();
 
-                tempFit = testShot.getFitness();
+            if(testShot.getDidGoThroughWater()){
+                System.out.println("TUTAK");
+                currentShot += 500;
+            }
+
+            if (currentShot < tempFit) {
+                tempFit = currentShot;
                 bestVel = new double[]{velocities[i][0], velocities[i][1]};
-
             }
         }
         return bestVel;
@@ -68,6 +71,9 @@ public class HillClimbing {
         testShot.testshot(0.001, bestDirect, terrain, coords, kFriction, sFriction);
 
         bestFitness = testShot.getFinalFitness();
+        if(testShot.getDidGoThroughWater()){
+            bestFitness += 500;
+        }
 
         double bestFinalFitness = testShot.getFinalFitness();
 
@@ -80,9 +86,9 @@ public class HillClimbing {
             double[] currFitness = new double[4];
             double[] currFinalFitness = new double[4];
             double[][] currVelocities = new double[4][2];
-            double closestPoint = 999;
-            double closestFinalPoint = 999;
-            double [][]step = {{0.01,0},{0,0.01},{-0.01,0},{0,-0.01}};
+            double closestPoint = 9999;
+            double closestFinalPoint = 9999;
+            double [][]step = { {0,stepSize}, {stepSize,0}, {0,-stepSize}, {-stepSize,0}};
 
             for (int i = 0; i < 4; i++) {
                 double[] testVelocity = new double[2];
@@ -101,8 +107,8 @@ public class HillClimbing {
                 if (testShot.getFinalFitness() < DataField.targetRXY[0]) {
                     bestVelocity = testVelocity;
                     break outer;
-                  }
                 }
+            }
 
             isRunning = false;
             for (int i = 0; i < currFinalFitness.length ; i++) {
@@ -124,13 +130,13 @@ public class HillClimbing {
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        double [] coordsAndVel = {1,1,0,0};
-        double[] coords = {5.0 , 5.0 , Math.random()*10 - 5, Math.random()*10 - 5};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.1;//((Math.sin(x+y)/6.0));
+        double [] coordsAndVel = {-3.0,0.0,0,0};
+        double[] coords = {-3.0 , 0.0 , 0.1, 0.1};
+        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
         Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  DataField.targetRXY);
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
-        double[] coor= {0,0};
+        double[] coor= {-3.0,0.0};
         HillClimbing h = new HillClimbing(solver1);
         double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
         System.out.println("Initial Direction: " + Arrays.toString(vel));

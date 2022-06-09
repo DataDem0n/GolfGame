@@ -19,6 +19,8 @@ public class TestShot {
     private double bestDistance;
     private double bestFinalDistance;
 
+    private boolean didGoThroughWater = false;
+
 
    public TestShot(Solver solver){
        this.solver = solver;
@@ -34,6 +36,8 @@ public class TestShot {
        double [] result = solver.coordinatesAndVelocityUntilStop(step,false);
        bestDistance=solver.getBestDistance();
        bestFinalDistance=solver.getBestFinalDistance();
+       didGoThroughWater = solver.getDidGoThroughWater();
+
 
    }
 
@@ -41,6 +45,10 @@ public class TestShot {
        return bestDistance;
    }
    public  double getFinalFitness(){return bestFinalDistance; }
+
+    public boolean getDidGoThroughWater(){
+       return didGoThroughWater;
+    }
 
 
     public static void main(String[] args) {

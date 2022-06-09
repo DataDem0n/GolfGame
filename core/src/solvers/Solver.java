@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 
 public interface Solver {
     /** INTERFACE USED FOR SOLVERS
-     * @param step step size for ODE
+     * //@param step step size for ODE
      * @return coordinatef after the ball has stopped
      */
     public double getBestDistance();

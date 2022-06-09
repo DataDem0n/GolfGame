@@ -51,6 +51,7 @@ public class RungeKutta4 implements Solver {
         DataField.kFriction = kFriction;
         DataField.sFriction = sFriction;
         this.targetRXY = targetRXY;
+        this.didGoThroughWater = false;
     }
 
     /**
@@ -120,6 +121,11 @@ public class RungeKutta4 implements Solver {
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2] * step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3] * step;
+
+            if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
+                //System.out.println("did go trhough water");
+                didGoThroughWater = true;
+            }
 
             if(update) {
                 DataField.x = coordinatesAndVelocity[0];
