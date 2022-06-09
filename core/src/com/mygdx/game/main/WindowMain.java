@@ -63,8 +63,31 @@ public class WindowMain{
             yVel.add(wv.getY());
         }
         ruleBotButton.addActionListener(e -> {
-            Charley.start();
-        });
+            //Charley.start();
+
+            DataField.velocityX = new ArrayList<>();
+            DataField.velocityY = new ArrayList<>();
+            DataField.x = 0;
+            DataField.y = 0;
+            DataField.velocityX.add(xVel.get(0));
+            DataField.velocityY.add(yVel.get(0));
+            xVel.remove(0);yVel.remove(0);
+            DataField.GUI = false;
+
+                    Timer t = new Timer(100, e1 -> {
+                        DataField.GUI = true;
+                    });
+
+//                    while(!DataField.velocityX.isEmpty()) {
+//                DataField.GUI = false;
+//            }
+//                    Timer t = new Timer(100, e1 -> {
+//                DataField.x = 0;
+//                        DataField.y = 0;
+//            });
+
+
+                    });
 
         pathBot.addActionListener(e -> {
 //            DataField.aiRunning = true;
