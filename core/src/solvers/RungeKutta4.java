@@ -30,6 +30,7 @@ public class RungeKutta4 implements Solver {
     private Water water = new Water();
    private double bestDistance =100;
    private double bestFinalDistance = 100;
+   private boolean didGoThroughWater;
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -251,6 +252,10 @@ public class RungeKutta4 implements Solver {
     @Override
     public double getBestFinalDistance() {
         return bestFinalDistance;
+    }
+
+    public boolean getDidGoThroughWater(){
+        return didGoThroughWater;
     }
 
     public static void main(String[] args) {

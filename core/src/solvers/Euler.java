@@ -30,6 +30,7 @@ public class Euler implements Solver {
     private ArrayList<Double> pathX = new ArrayList<Double>();
     private ArrayList<Double> pathY = new ArrayList<Double>();
     private double bestFinalDistance = 100;
+    private boolean didGoThroughWater = false;
 
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -210,6 +211,8 @@ public class Euler implements Solver {
     public double getBestFinalDistance() {
         return bestFinalDistance;
     }
+
+
 
 
 }

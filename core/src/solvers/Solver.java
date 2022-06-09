@@ -66,4 +66,6 @@ public interface Solver {
     public double getXVelocity();
 
     public double getYVelocity();
+
+    public boolean getDidGoThroughWater();
 }

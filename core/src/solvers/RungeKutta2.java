@@ -28,6 +28,7 @@ public class RungeKutta2 implements Solver{
     private Forest f = DataField.gameForest;
     private Water water = new Water();
     private double bestFinalDistance = 100;
+    private boolean didGoThroughWater = false;
 
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -217,4 +218,11 @@ public class RungeKutta2 implements Solver{
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
     }
+
+    @Override
+    public boolean getDidGoThroughWater() {
+        return didGoThroughWater;
+    }
+
+
 }

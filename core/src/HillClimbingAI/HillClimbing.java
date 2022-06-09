@@ -29,7 +29,11 @@ public class HillClimbing {
         //more different values like 1 2 3 4
         testShot.testshot(0.001, new double[]{velocities[0][0], velocities[0][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
         double tempFit = testShot.getFitness();
-        double[] bestVel = {2, 0};
+        if(testShot.getDidGoThroughWater()){
+            System.out.println("TUTAJ2");
+            tempFit += 500;
+        }
+        double[] bestVel = {1.0, 0.0};
 
         for (int i = 1; i < velocities.length; i++) {
             testShot.testshot(0.001, new double[]{velocities[i][0], velocities[i][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
@@ -48,20 +52,7 @@ public class HillClimbing {
         return bestVel;
     }
 
-    double stepSize = 0.1;
-    double [][] directions= { {0,stepSize}, {stepSize,0}, {0,-stepSize}, {-stepSize,0}};
-
-//    public double magnitude(double[] array){
-//        return Math.sqrt(Math.pow(array[0], 2) + Math.pow(array[1], 2));
-//    }
-//    public double[] convertUnit(double[] array){
-//        double magnitude = magnitude(array);
-//        if (magnitude == 0 ){
-//            return bestVelocity;
-//        }
-//        return new double[]{ array[0] / magnitude , array[1] / magnitude};
-//    }
-
+    double stepSize = 0.01;
 
     public double[] hillClimbing(double [] bestVel ,BiFunction<Double,Double,Double> terrain, double [] coords, double kFriction, double sFriction) {
         testShot = new TestShot(solver);
@@ -103,6 +94,10 @@ public class HillClimbing {
                 currVelocities[i] = testVelocity;
                 currFitness[i] = closestPoint;
                 currFinalFitness[i] = closestFinalPoint;
+                if(testShot.getDidGoThroughWater()){
+                   currFinalFitness[i] += 50;
+                   currFitness[i]+=50;
+                }
 
                 if (testShot.getFinalFitness() < DataField.targetRXY[0]) {
                     bestVelocity = testVelocity;
@@ -126,7 +121,6 @@ public class HillClimbing {
     public boolean fasterThan5(double[] velocity){
         return Math.sqrt(Math.pow(velocity[0], 2) + Math.pow(velocity[1], 2)) > 5;
     }
-
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
