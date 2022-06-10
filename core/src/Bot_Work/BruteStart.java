@@ -29,7 +29,9 @@ public class BruteStart {
 
         public void start(){
             ArrayList<WeightedVector> allshots = simulate(DataField.x,DataField.y);
+            System.out.println(allshots);
             ArrayList<WeightedVector> best10 = sort(allshots);
+            System.out.println(best10);
             TakeShot(best10);
         }
 
@@ -38,7 +40,7 @@ public class BruteStart {
             for (int j = 0;j < allshots.size(); j++) {
 
                 for (int i = 0; i < allshots.size(); i++) {
-                  if(allshots.get(i).getWeight()<allshots.get(i+1).getWeight()){ //godlike sorting almost O(1) ;)
+                  if(i+1<allshots.size()&&allshots.get(i).getWeight()>allshots.get(i+1).getWeight()){ //godlike sorting almost O(1) ;)
                       WeightedVector temp = allshots.get(i);
                       allshots.set(i,allshots.get(i+1));
                       allshots.set(i+1,temp);
@@ -69,9 +71,9 @@ public class BruteStart {
             return v;
         }
 
-        private void TakeShot(ArrayList<WeightedVector> v){
+        private void TakeShot(ArrayList<WeightedVector> v1){
 
-            for (WeightedVector wv:v) {
+            for (WeightedVector wv:v1) {
                 xVel.add(wv.getX());
                 yVel.add(wv.getY());
             }
