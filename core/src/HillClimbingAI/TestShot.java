@@ -41,6 +41,22 @@ public class TestShot {
 
    }
 
+    public double[] performShot(double step,double[] vel , BiFunction<Double,Double,Double> terrain, double []coordinates, double kFriction, double sFriction){
+        double velocityX = vel[0] ;
+        double velocityY = vel[1] ;
+        double [] coordsAndVel = {coordinates[0], coordinates[1], velocityX, velocityY};
+        solver = new RungeKutta4(terrain, coordsAndVel, kFriction, sFriction, DataField.targetRXY);
+        double [] result = solver.coordinatesAndVelocityUntilStop(step,true);
+        bestDistance=solver.getBestDistance();
+        bestFinalDistance=solver.getBestFinalDistance();
+        didGoThroughWater = solver.getDidGoThroughWater();
+        return result;
+
+
+    }
+
+
+
    public double getFitness(){
        return bestDistance;
    }

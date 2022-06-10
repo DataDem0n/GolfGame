@@ -24,6 +24,7 @@ public class HillClimbing {
                 {1, 0}, {0, 1}, {-1, 0},{0, -1},
                 {2, 0}, {0, 2}, {-2, 0},{0, -2},
                 {4, 0}, {0, 4}, {-4, 0},{0, -4},
+                {5, 0}, {0, 5}, {-5, 0},{0, -5},
                 {2,2}, {-2,2},{2,-2},{-2,-2},
                 {1,1}, {-1,1},{1,-1},{-1,-1}};
         //more different values like 1 2 3 4
@@ -52,7 +53,7 @@ public class HillClimbing {
         return bestVel;
     }
 
-    double stepSize = 0.01;
+    double stepSize = 0.1;
 
     public double[] hillClimbing(double [] bestVel ,BiFunction<Double,Double,Double> terrain, double [] coords, double kFriction, double sFriction) {
         testShot = new TestShot(solver);
@@ -100,6 +101,7 @@ public class HillClimbing {
                 }
 
                 if (testShot.getFinalFitness() < DataField.targetRXY[0]) {
+                    System.out.println("win");
                     bestVelocity = testVelocity;
                     break outer;
                 }
@@ -122,15 +124,20 @@ public class HillClimbing {
         return Math.sqrt(Math.pow(velocity[0], 2) + Math.pow(velocity[1], 2)) > 5;
     }
 
+    public double[] performShot(double step,double[] vel , BiFunction<Double,Double,Double> terrain, double []coordinates, double kFriction, double sFriction){
+       return testShot.performShot(step,vel,terrain,coordinates,kFriction,sFriction);
+    }
+
+
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        double [] coordsAndVel = {-3.0,0.0,0,0};
-        double[] coords = {-3.0 , 0.0 , 0.1, 0.1};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
-        Solver solver1 = new RungeKutta4(terrain, coords, 0.8,0.2,  DataField.targetRXY);
+        double [] coordsAndVel = {-3.0,0.0,0.1,0.1};
+        //double[] coords = {0.50165 , 0.47448 , 0.1, 0.1};
+        BiFunction<Double, Double, Double> terrain = (x,y) -> 1.0;//0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+        Solver solver1 = new RungeKutta4(terrain, coordsAndVel, 0.8,0.2,  DataField.targetRXY);
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
-        double[] coor= {-3.0,0.0};
+        //double[] coor= {0.50165 , 0.47448};
         HillClimbing h = new HillClimbing(solver1);
         double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
         System.out.println("Initial Direction: " + Arrays.toString(vel));
