@@ -168,6 +168,7 @@ public class MainGame extends ApplicationAdapter {
 	/**
 	 * This method disposes all the elements that were previously on the screen.
 	 */
+
 	@Override
 	public void dispose () {
 		s.dispose();

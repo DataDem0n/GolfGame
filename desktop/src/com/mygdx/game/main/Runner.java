@@ -253,9 +253,9 @@ public class Runner extends Thread
                  g.start();
                  break;
              case 2:
-                 Solver rk2 = new RungeKutta2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
-                 GameEngine g2 = new GameEngine(rk2);
-                 g2.start();
+//                 Solver rk2 = new RungeKutta2(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
+//                 GameEngine g2 = new GameEngine(rk2);
+//                 g2.start();
                  break;
              case 3:
                  Solver rk4 = new RungeKutta4(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
@@ -263,10 +263,8 @@ public class Runner extends Thread
                  g3.start();
                  break;
              case 4:
-                 Solver am = new AdamsMoulton(DataField.terrain, coordinatesAndVelocity, DataField.kFriction, DataField.sFriction,targetRXY);
-                 GameEngine g4 = new GameEngine(am);
-                 g4.start();
-                 break;
+                 System.out.println("exiting");
+                 System.exit(0);
          }
 
     }

@@ -1,13 +1,18 @@
 package solvers;
 
+import java.util.ArrayList;
 import java.util.function.BiFunction;
 
 public interface Solver {
     /** INTERFACE USED FOR SOLVERS
-     * @param step step size for ODE
+     * //@param step step size for ODE
      * @return coordinatef after the ball has stopped
      */
-    public double[] coordinatesAndVelocityUntilStop(double step);
+    public double getBestDistance();
+
+    public double getBestFinalDistance();
+
+    public double[] coordinatesAndVelocityUntilStop(double step, boolean update);
 
     /**
      *  Method to set kFriction
@@ -61,4 +66,6 @@ public interface Solver {
     public double getXVelocity();
 
     public double getYVelocity();
+
+    public boolean getDidGoThroughWater();
 }

@@ -51,16 +51,7 @@ public class WindowMain{
         pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
 
-//old implementation for the bruteforce bot
-//        CosineFinder Frank = new CosineFinder();
-//        ArrayList<WeightedVector> v = Frank.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
-//        ArrayList<Double> xVel = new ArrayList<>();
-//        ArrayList<Double> yVel = new ArrayList<>();
-//        for (WeightedVector wv:v) {
-//            xVel.add(wv.getX());
-//            yVel.add(wv.getY());
-//        }
-        BruteStart newbot = new BruteStart();
+        BruteStart FranklinTheThird = new BruteStart(DataField.x,DataField.y);
         ruleBotButton.addActionListener(e -> {
             //Charley.start();
 

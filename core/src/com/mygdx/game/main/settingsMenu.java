@@ -56,7 +56,6 @@ public class settingsMenu{
     JButton test1;
     JButton test2;
 
-
     //Set button
     JButton setButton = new JButton("Set!");
 
@@ -136,8 +135,8 @@ public class settingsMenu{
             DataField.gameForest.getForest().add(new Tree(100,100));
             DataField.kFriction = 0.2;
             DataField.sFriction = 0.3;//TODO: fix this with saman
-            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
-            chooseSolvers.setSelectedIndex(2);
+            DataField.terrain = (x,y)->1.0;//0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8))
+            chooseSolvers.setSelectedIndex(3);
             DataField.sandPit = new double[]{40,40,40,40};
             settingsMenu.finished = false;
 

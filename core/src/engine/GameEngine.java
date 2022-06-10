@@ -27,23 +27,17 @@ public class GameEngine extends Thread {
         }
 
         solver.setCoordinates(DataField.x, DataField.y);
-        if(!DataField.velocityX.isEmpty()){
         solver.setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
-        }
-        else{
-            return;
-        }
         solver.setkFriction(DataField.kFriction);
         solver.setsFriction(DataField.sFriction);
         solver.setTargetRXY(DataField.targetRXY);
-
         solver.setTerrain(DataField.terrain);
         int index = 1;
         int silly =0;
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((solver.getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((solver.getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            solver.coordinatesAndVelocityUntilStop( 0.00001);
+            solver.coordinatesAndVelocityUntilStop( 0.00001, false);
 
             DataField.x = solver.getXCoord();
             DataField.y = solver.getYCoord();
@@ -54,31 +48,29 @@ public class GameEngine extends Thread {
                 silly += 1;
                 break;
             }
-                else
-                {
+            else
+            {
+                while(DataField.GUI){
+                    Thread.sleep(50);
+                }
 
-                    while(DataField.GUI){
-                        Thread.sleep(50);
-                    }
-
-                    if(DataField.usingGui) {
-                        DataField.velocityX.remove(0);
-                        DataField.velocityY.remove(0);
-
-                        DataField.GUI = true;
-                        game();
-                    }
-                    if(index!=DataField.velocityX.size()&&!DataField.velocityX.isEmpty()){
-                        solver.setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
-                        index++;
-                    }
-                    else{
-                        System.out.println("You did not win, better luck next time.\nPlease restart with a new file input.");
-                        break;
-                    }
+                if(DataField.usingGui) {
+                    DataField.velocityX.remove(0);
+                    DataField.velocityY.remove(0);
+                    DataField.GUI = true;
+                    game();
+                }
+                if(index!=DataField.velocityX.size()){
+                    solver.setVelocity(DataField.velocityX.get(index), DataField.velocityY.get(index));
+                    index++;
+                }
+                else{
+                    System.out.println("You did not win, better luck next time.\nPlease restart with a new file input.");
+                    break;
                 }
             }
         }
+    }
 
 
     public void run() {
@@ -89,4 +81,3 @@ public class GameEngine extends Thread {
         }
     }
 }
-
