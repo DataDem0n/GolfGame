@@ -46,7 +46,6 @@ public class BruteStart {
                       allshots.set(i+1,temp);
                     }
                 }
-
             }
 
             ArrayList<WeightedVector> best10 = new ArrayList<>();
@@ -66,7 +65,7 @@ public class BruteStart {
                 double[] out = rk4.coordinatesAndVelocityUntilStop(0.0001,false);
                 wv.setWeight(rk4.getBestFinalDistance());
 
-                System.out.println("------------ wee woo wee woo weight incoming ------------" + wv.getWeight());
+                //System.out.println("------------ wee woo wee woo weight incoming ------------" + wv.getWeight());
             }
             return v;
         }
