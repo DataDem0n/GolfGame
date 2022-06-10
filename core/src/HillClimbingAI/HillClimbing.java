@@ -25,13 +25,13 @@ public class HillClimbing {
                 {2, 0}, {0, 2}, {-2, 0},{0, -2},
                 {4, 0}, {0, 4}, {-4, 0},{0, -4},
                 {5, 0}, {0, 5}, {-5, 0},{0, -5},
-                {2,2}, {-2,2},{2,-2},{-2,-2},
+                {2.4,2.4}, {-2.4,2.4},{2.4,-2.4},{-2.4,-2.4},
                 {1,1}, {-1,1},{1,-1},{-1,-1}};
         //more different values like 1 2 3 4
         testShot.testshot(0.001, new double[]{velocities[0][0], velocities[0][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
         double tempFit = testShot.getFitness();
         if(testShot.getDidGoThroughWater()){
-            System.out.println("TUTAJ2");
+          //  System.out.println("TUTAJ2");
             tempFit += 500;
         }
         double[] bestVel = {1.0, 0.0};
@@ -41,7 +41,7 @@ public class HillClimbing {
             double currentShot = testShot.getFitness();
 
             if(testShot.getDidGoThroughWater()){
-                System.out.println("TUTAK");
+               // System.out.println("TUTAK");
                 currentShot += 500;
             }
 
@@ -50,6 +50,7 @@ public class HillClimbing {
                 bestVel = new double[]{velocities[i][0], velocities[i][1]};
             }
         }
+        System.out.println(Arrays.toString(bestVel));
         return bestVel;
     }
 
@@ -64,7 +65,7 @@ public class HillClimbing {
 
         bestFitness = testShot.getFinalFitness();
         if(testShot.getDidGoThroughWater()){
-            bestFitness += 500;
+            bestFitness += 50;
         }
 
         double bestFinalFitness = testShot.getFinalFitness();
@@ -100,7 +101,7 @@ public class HillClimbing {
                    currFitness[i]+=50;
                 }
 
-                if (testShot.getFinalFitness() < DataField.targetRXY[0]) {
+                if (testShot.getFinalFitness() < DataField.targetRXY[0] && !testShot.getDidGoThroughWater()) {
                     System.out.println("win");
                     bestVelocity = testVelocity;
                     break outer;
@@ -111,6 +112,7 @@ public class HillClimbing {
             for (int i = 0; i < currFinalFitness.length ; i++) {
 
                 if( currFitness[i] < bestFitness ){
+                  //  System.out.println("hehehehe");
                     bestVelocity = currVelocities[i];
                     bestFitness = currFinalFitness[i];
                     isRunning = true ;
@@ -133,14 +135,14 @@ public class HillClimbing {
         long startTime = System.nanoTime();
         double [] coordsAndVel = {-3.0,0.0,0.1,0.1};
         //double[] coords = {0.50165 , 0.47448 , 0.1, 0.1};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> 1.0;//0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
         Solver solver1 = new RungeKutta4(terrain, coordsAndVel, 0.8,0.2,  DataField.targetRXY);
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
         //double[] coor= {0.50165 , 0.47448};
         HillClimbing h = new HillClimbing(solver1);
-        double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
-        System.out.println("Initial Direction: " + Arrays.toString(vel));
+        double [] vel = {3.3,1.5};//h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
+        //System.out.println("Initial Direction: " + Arrays.toString(vel));
         double[] best_velocity = h.hillClimbing(vel,terrain, new double[]{coordsAndVel[0],coordsAndVel[1]}, 0.1,0.2);
         System.out.println("Hill Climbing: " + Arrays.toString(best_velocity));
         solver1.coordinatesAndVelocityUntilStop(0.1, false);
@@ -148,5 +150,4 @@ public class HillClimbing {
         long timeElapsed = stopTime - startTime;
         System.out.println("Time:  "+ timeElapsed);
     }
-
 }

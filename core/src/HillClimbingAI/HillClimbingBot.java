@@ -40,38 +40,33 @@ public class HillClimbingBot {
         ArrayList<Double> yVelocities = new ArrayList<>();
 
 
-        while (!(Math.pow(targetRXY[0],2)>(Math.pow((coordsAndVel[0]-targetRXY[1]), 2 )+Math.pow((coordsAndVel[1]-targetRXY[2]), 2 )))){
-
+        while ((Math.pow(targetRXY[0],2)<(Math.pow((coordsAndVel[0]-targetRXY[1]), 2 )+Math.pow((coordsAndVel[1]-targetRXY[2]), 2 )))){
             double [] vel = hc.getInitialDirection(terrain, coordsAndVel, kFriction,sFriction);
            // System.out.println(Arrays.toString(vel));
             double[] best_velocity = hc.hillClimbing(vel,terrain, coordsAndVel, kFriction,sFriction);
             //System.out.println("WE ARE HERE" +Arrays.toString(coordsAndVel) + "best vel : " + Arrays.toString(best_velocity));
             coordsAndVel = new double[] {coordsAndVel[0],coordsAndVel[1], best_velocity[0],best_velocity[1]};
-             double[]  coords = {coordsAndVel[0],coordsAndVel[1]};
+            double[]  coords = {coordsAndVel[0],coordsAndVel[1]};
             //solver = new RungeKutta4(terrain, coordsAndVel, kFriction,sFriction, targetRXY);
-            System.out.println(Arrays.toString(coordsAndVel));
+           // System.out.println(Arrays.toString(coordsAndVel));
             double [] newCoor = hc.performShot(0.0001, best_velocity,terrain,coords,kFriction,sFriction);
              // System.out.println("after");
             xVelocities.add(best_velocity[0]);
             yVelocities.add(best_velocity[1]);
 
-           // solver.setVelocity(best_velocity[0],best_velocity[1]);
+            //solver.setVelocity(best_velocity[0],best_velocity[1]);
             coordsAndVel[0] = newCoor[0];//solver.coordinatesAndVelocityUntilStop(0.0000001,false)[0];
             coordsAndVel[1] = newCoor[1];//solver.coordinatesAndVelocityUntilStop(0.0000001,false)[1];
-           // System.out.println(Arrays.toString(coordsAndVel));
             coordsAndVel[2]=0.001;
             coordsAndVel[3]=0.001;
-
-            //System.out.println(Arrays.toString(coordsAndVel));
-            //System.out.println(Arrays.toString(coordsAndVel));
         }
-        //System.out.println("Hill Climbing xVel: " + xVelocities);
-        //System.out.println("Hill Climbing yVel: " + yVelocities);
+        System.out.println("Hill Climbing xVel: " + xVelocities);
+        System.out.println("Hill Climbing yVel: " + yVelocities);
     }
 
     public static void main(String[] args) {
         double [] coordsAndVel = {-3.0,0.0,0.1,0.1};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> 2.0;//0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
         Solver solver = new RungeKutta4(terrain, coordsAndVel, DataField.kFriction,DataField.sFriction,  DataField.targetRXY);
 
         HillClimbing h = new HillClimbing(solver);

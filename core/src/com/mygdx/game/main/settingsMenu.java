@@ -183,8 +183,6 @@ public class settingsMenu{
                 DataField.gameForest.getForest().add(new Tree(100,100));
                 //if no sandpit is desired, it just gets placed outside the view of the player considering the x and y constraints of [-25, 25]
                 DataField.sandPit = coordSP.clone();
-                DataField.kFriction = 0.2;
-                DataField.sFriction = 0.3;
                 settingsMenu.finished = false;
                 frameMain.setVisible(false);
             }

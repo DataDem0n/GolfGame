@@ -219,7 +219,7 @@ public class Runner extends Thread
         DataField.kFriction = kineticFriction;
         DataField.GUI = true;
         DataField.usingGui = true;
-        DataField.terrain = (x,y)->2.0;
+        DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
 
         if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];
