@@ -141,7 +141,7 @@ public class HillClimbing {
         HillClimbing h = new HillClimbing(solver1);
         double [] vel = h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
         System.out.println("Initial Direction: " + Arrays.toString(vel));
-        double[] best_velocity = h.hillClimbing(vel,terrain, coor, 0.1,0.2);
+        double[] best_velocity = h.hillClimbing(vel,terrain, new double[]{coordsAndVel[0],coordsAndVel[1]}, 0.1,0.2);
         System.out.println("Hill Climbing: " + Arrays.toString(best_velocity));
         solver1.coordinatesAndVelocityUntilStop(0.1, false);
         long stopTime = System.nanoTime();
