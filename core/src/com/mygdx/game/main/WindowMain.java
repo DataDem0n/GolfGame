@@ -55,7 +55,7 @@ public class WindowMain{
         ruleBotButton.addActionListener(e -> {
             //Charley.start();
 
-            newbot.start();
+            FranklinTheThird.start();
 
 //                    while(!DataField.velocityX.isEmpty()) {
 //                DataField.GUI = false;
@@ -64,8 +64,6 @@ public class WindowMain{
 //                DataField.x = 0;
 //                        DataField.y = 0;
 //            });
-
-
                     });
 
         pathBot.addActionListener(e -> {
