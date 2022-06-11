@@ -122,7 +122,7 @@ public class RungeKutta4 implements Solver {
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
             //tree.collide(coordinatesAndVelocity, tempCoordinates);
-            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+         //   DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
         System.out.println("accx: " + coordinatesAndVelocity[2]);
@@ -219,4 +219,18 @@ public class RungeKutta4 implements Solver {
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
     }
+
+    public static void main(String[] args) {
+       // BiFunction<Double,Double,Double> terrain = (x,y) -> Math.sin(x+y)+10;
+
+        BiFunction<Double,Double,Double> terrain = (x,y) -> ((x+y)/(10));
+        double [] coordinatesAndVel = {0,0,2,2};
+        double kFriction = 0.5;
+        double sFriction = 0.8;
+        double [] targetRXY = {0.1,100,100};
+        RungeKutta4 r = new RungeKutta4(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+       // System.out.println("hello");
+       r.coordinatesAndVelocityUntilStop(0.001);
+    }
+
 }
