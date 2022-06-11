@@ -21,10 +21,10 @@ public class RungeKutta2_Acceleration2 implements Solver{
 
     public double[] tempCoordinates = new double [2];
     protected double[] coordinatesAndVelocity;
-    private Wall wall = new Wall(25,25);
-    private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
-    private Forest f = DataField.gameForest;
-    private Water water = new Water();
+//    private Wall wall = new Wall(25,25);
+//    private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
+//    private Forest f = DataField.gameForest;
+//    private Water water = new Water();
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -96,11 +96,11 @@ public class RungeKutta2_Acceleration2 implements Solver{
 
             DataField.x = coordinatesAndVelocity[0];
             DataField.y = coordinatesAndVelocity[1];
-
-            water.collide(coordinatesAndVelocity, tempCoordinates);
-            wall.collide(coordinatesAndVelocity, new double[0]);
-            sandPits.change(coordinatesAndVelocity);
-            //DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+//
+//            water.collide(coordinatesAndVelocity, tempCoordinates);
+//            wall.collide(coordinatesAndVelocity, new double[0]);
+//            sandPits.change(coordinatesAndVelocity);
+//            //DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 //        System.out.println("accx: " + coordinatesAndVelocity[2]);
@@ -196,11 +196,11 @@ public class RungeKutta2_Acceleration2 implements Solver{
     }
 
     public static void main(String[] args) {
-        BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0+10;
-        double [] coordinatesAndVel = {0,0,4,0};
-        double kFriction = 0.1;
-        double sFriction = 0.5;
-        double [] targetRXY = {0.1,10,10};
+        BiFunction<Double,Double,Double> terrain = (x,y) -> ((x+y)/(2));
+        double [] coordinatesAndVel = {0,0,2,2};
+        double kFriction = 0.5;
+        double sFriction = 0.8;
+        double [] targetRXY = {0.1,100,100};
         RungeKutta2_Acceleration2 rungeKutta4 = new RungeKutta2_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
         // System.out.println("hello");
         System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001)));
