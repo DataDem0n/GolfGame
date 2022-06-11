@@ -183,7 +183,7 @@ import java.util.function.BiFunction;
         }
 
         public static void main(String[] args) {
-            BiFunction<Double,Double,Double> terrain = (x,y) -> x/50.0+10;
+            BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0+100;
             double [] coordinatesAndVel = {0,0,5,0};
             double kFriction = 0.1;
             double sFriction = 0.5;

@@ -182,13 +182,16 @@ public class Euler implements Solver {
     }
 
     public static void main(String[] args) {
-        BiFunction<Double,Double,Double> terrain = (x,y) -> x/50.0+10;
+        BiFunction<Double,Double,Double> terrain = (x,y) -> 1.0;//x/500.0+100;
         double [] coordinatesAndVel = {0,0,4,0};
         double kFriction = 0.1;
         double sFriction = 0.5;
         double [] targetRXY = {0.1,10,10};
-        Euler rungeKutta4 = new Euler(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
-        // System.out.println("hello");
-        System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001)));
+//        System.out.println("______EULER___________");
+//        Euler rungeKutta4 = new Euler(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+//        System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001)));
+//        System.out.println("______EULER2___________");
+        Euler_Acceleration2 r = new Euler_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        System.out.println(Arrays.toString(r.coordinatesAndVelocityUntilStop(0.001)));
     }
 }
