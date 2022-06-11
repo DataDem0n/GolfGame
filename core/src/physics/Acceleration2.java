@@ -16,7 +16,7 @@ public class Acceleration2 {
     //acceleration in the X-direction
     public double accelerationX(double [] coordinatesAndVelocity, BiFunction<Double, Double, Double> terrain, double friction){
         double acc;
-        acc = -((GRAVITY*derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]))/(1+Math.pow(derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2)+Math.pow(derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2))) -
+        acc = -((GRAVITY* derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]))/(1+Math.pow(derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2)+Math.pow(derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2))) -
                     ((friction*GRAVITY)/(Math.sqrt(1+Math.pow(derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2)+Math.pow(derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]),2)))) *
                             (coordinatesAndVelocity[2]/(Math.sqrt(Math.pow(coordinatesAndVelocity[2],2)+Math.pow(coordinatesAndVelocity[3],2)+(Math.pow(derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*coordinatesAndVelocity[2]+derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*coordinatesAndVelocity[3],2)))));
 
@@ -84,7 +84,6 @@ public class Acceleration2 {
     public double accelerationX2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
     {
         double acc;
-
         acc = -GRAVITY * derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) - friction * GRAVITY * (derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])/(Math.sqrt((derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivative.derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) + derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])*derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1])))));
         return acc;
     }
@@ -96,7 +95,6 @@ public class Acceleration2 {
      * @param friction the kinetic friction acting upon a ball
      * @return the acceleration in the Y direction
      */
-
     //accelerationY2 and accelerationY2 are used, when the total velocity is exactly 0
     public double accelerationY2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
     {

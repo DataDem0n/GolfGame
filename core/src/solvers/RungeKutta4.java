@@ -221,16 +221,17 @@ public class RungeKutta4 implements Solver {
     }
 
     public static void main(String[] args) {
-       // BiFunction<Double,Double,Double> terrain = (x,y) -> Math.sin(x+y)+10;
-
-        BiFunction<Double,Double,Double> terrain = (x,y) -> ((x+y)/(10));
-        double [] coordinatesAndVel = {0,0,2,2};
+        //BiFunction<Double,Double,Double> terrain = (x,y) -> Math.sin(x+y)+10;
+        BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0;
+        double [] coordinatesAndVel = {0,0,5,0};
         double kFriction = 0.5;
         double sFriction = 0.8;
         double [] targetRXY = {0.1,100,100};
-        RungeKutta4 r = new RungeKutta4(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        Solver r = new RungeKutta4(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        Solver r2 = new RungeKutta4_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
        // System.out.println("hello");
        r.coordinatesAndVelocityUntilStop(0.001);
+       //r2.coordinatesAndVelocityUntilStop(0.001);
     }
 
 }

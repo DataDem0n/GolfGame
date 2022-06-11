@@ -1,29 +1,29 @@
 package solvers;
 
 import com.mygdx.game.main.DataField;
-import obstacles.Water;
+import obstacles.*;
 import physics.Acceleration;
+import physics.Acceleration2;
 import physics.HasBallStopped;
 import physics.MaxSpeed;
-import obstacles.SandPits;
-import obstacles.Tree;
-import obstacles.Wall;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public class Euler implements Solver {
+public class RungeKutta2_Acceleration2 implements Solver{
+
     private MaxSpeed maxSpeed = new MaxSpeed();
-    private Acceleration acceleration = new Acceleration();
+    private Acceleration2 acceleration = new Acceleration2();
     private HasBallStopped hasBallStopped = new HasBallStopped();
-    private int fps = 120;
+
     private BiFunction<Double, Double, Double> terrain;
     double[] targetRXY;
 
     public double[] tempCoordinates = new double [2];
-    public double[] coordinatesAndVelocity;
+    protected double[] coordinatesAndVelocity;
     private Wall wall = new Wall(25,25);
-    private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
+    private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
+    private Forest f = DataField.gameForest;
     private Water water = new Water();
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -40,7 +40,8 @@ public class Euler implements Solver {
      * @param sFriction the static friction acting upon a ball
      * @param targetRXY an array that represents the target's radius on first position, target's X-coordinate on second and target's Y-coordinate
      */
-    public Euler(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
+
+    public RungeKutta2_Acceleration2(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double[] targetRXY){
         this.terrain = terrain;
         this.coordinatesAndVelocity = coordinatesAndVelocity;
         DataField.kFriction = kFriction;
@@ -54,8 +55,13 @@ public class Euler implements Solver {
      * @param step a step size in the Euler's method
      * @return an array with final coordinates and velocities of a ball that has stopped after a shot
      */
+
     @Override
-    public double[] coordinatesAndVelocityUntilStop(double step)  {
+    public double[] coordinatesAndVelocityUntilStop(double step) {
+        double tempvelx1, tempvely1, tempvelx2, tempvely2, tempvelx3, tempvely3;
+
+        double tempcoorx1;
+        double tempcoory1;
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
@@ -63,36 +69,45 @@ public class Euler implements Solver {
         if(!DataField.aiRunning)
             coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
 
-        while(!hasBallStopped.hasBallStopped(coordinatesAndVelocity,DataField.sFriction, terrain, step)){
 
-            if(coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0){
+        while (!hasBallStopped.hasBallStopped(coordinatesAndVelocity,  DataField.sFriction,terrain, step)) {
+            if (coordinatesAndVelocity[2] == 0 && coordinatesAndVelocity[3] == 0) {
                 coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * acceleration.accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
                 coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * acceleration.accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
-            }
-            else{
-                coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * acceleration.accelerationX(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
-                coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * acceleration.accelerationY(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
+            } else {
+                tempvelx1 = acceleration.accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting x-velocity using midpoint
+                tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
+                tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
+                tempvelx3 = acceleration.accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
+
+                tempvely1 = acceleration.accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting y-velocity using midpoint
+                tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
+                tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
+                tempvely3 = acceleration.accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
+
+                coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
+
+                coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
             }
 
             //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
-            DataField.x = (float)coordinatesAndVelocity[0];
-            DataField.y = (float)coordinatesAndVelocity[1];
-//
-//            water.collide(coordinatesAndVelocity, tempCoordinates);
-//            wall.collide(coordinatesAndVelocity, new double[0]);
-//            sandPits.change(coordinatesAndVelocity);
-//            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+            DataField.x = coordinatesAndVelocity[0];
+            DataField.y = coordinatesAndVelocity[1];
 
-       }
+            water.collide(coordinatesAndVelocity, tempCoordinates);
+            wall.collide(coordinatesAndVelocity, new double[0]);
+            sandPits.change(coordinatesAndVelocity);
+            //DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+        }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-        System.out.println("accx: " + coordinatesAndVelocity[2]);
-        System.out.println("accy: " + coordinatesAndVelocity[3]);
-
+//        System.out.println("accx: " + coordinatesAndVelocity[2]);
+//        System.out.println("accy: " + coordinatesAndVelocity[3]);
         return coordinatesAndVelocity;
     }
+
 
     //SETTERS
 
@@ -104,7 +119,7 @@ public class Euler implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-            DataField.kFriction = kFriction;
+        DataField.kFriction = kFriction;
     };
 
     /**
@@ -113,7 +128,7 @@ public class Euler implements Solver {
      */
     @Override
     public void setsFriction(double sFriction){
-            DataField.sFriction = sFriction;
+        DataField.sFriction = sFriction;
     }
 
     /**
@@ -170,7 +185,6 @@ public class Euler implements Solver {
      */
     @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
-
     @Override
     public double getXVelocity() {
         return coordinatesAndVelocity[2];
@@ -182,12 +196,12 @@ public class Euler implements Solver {
     }
 
     public static void main(String[] args) {
-        BiFunction<Double,Double,Double> terrain = (x,y) -> x/50.0+10;
+        BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0+10;
         double [] coordinatesAndVel = {0,0,4,0};
         double kFriction = 0.1;
         double sFriction = 0.5;
         double [] targetRXY = {0.1,10,10};
-        Euler rungeKutta4 = new Euler(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        RungeKutta2_Acceleration2 rungeKutta4 = new RungeKutta2_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
         // System.out.println("hello");
         System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001)));
     }

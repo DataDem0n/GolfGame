@@ -6,6 +6,7 @@ import physics.Acceleration;
 import physics.HasBallStopped;
 import physics.MaxSpeed;
 
+import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public class RungeKutta2 implements Solver{
@@ -98,7 +99,7 @@ public class RungeKutta2 implements Solver{
             water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+            //DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
 //        System.out.println("accx: " + coordinatesAndVelocity[2]);
@@ -191,5 +192,16 @@ public class RungeKutta2 implements Solver{
     @Override
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
+    }
+
+    public static void main(String[] args) {
+        BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0+10;
+        double [] coordinatesAndVel = {0,0,4,0};
+        double kFriction = 0.08;
+        double sFriction = 0.1;
+        double [] targetRXY = {0.1,10,10};
+        RungeKutta2 rungeKutta4 = new RungeKutta2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        // System.out.println("hello");
+        System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001)));
     }
 }

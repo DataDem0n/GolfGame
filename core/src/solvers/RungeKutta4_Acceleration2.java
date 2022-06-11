@@ -1,12 +1,17 @@
 package solvers;
 
 import obstacles.SandPits;
+import obstacles.Tree;
 import obstacles.Wall;
 import obstacles.Water;
+import physics.Acceleration;
 import physics.Acceleration2;
 import physics.HasBallStopped;
 import physics.MaxSpeed;
 import com.mygdx.game.main.DataField;
+import javax.xml.crypto.Data;
+import java.util.Arrays;
+import java.util.Timer;
 import java.util.function.BiFunction;
 
 public class RungeKutta4_Acceleration2 implements Solver {
@@ -118,7 +123,7 @@ public class RungeKutta4_Acceleration2 implements Solver {
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
             //tree.collide(coordinatesAndVelocity, tempCoordinates);
-            //DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+            //   DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
         System.out.println("accx: " + coordinatesAndVelocity[2]);
@@ -216,16 +221,17 @@ public class RungeKutta4_Acceleration2 implements Solver {
         return coordinatesAndVelocity[3];
     }
 
-
     public static void main(String[] args) {
-        //BiFunction<Double,Double,Double> terrain = (x,y) -> Math.sin(x+y)+10;
-        BiFunction<Double,Double,Double> terrain = (x,y) -> ((x+y)/(10));
-        double [] coordinatesAndVel = {0,0,2,2};
-        double kFriction = 0.5;
-        double sFriction = 0.8;
-        double [] targetRXY = {0.1,100,100};
-        RungeKutta4_Acceleration2 r = new RungeKutta4_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        BiFunction<Double,Double,Double> terrain = (x,y) -> x/5.0+10;
+        double [] coordinatesAndVel = {0,0,4,0};
+        double kFriction = 0.1;
+        double sFriction = 0.5;
+        double [] targetRXY = {0.1,10,10};
+        //Solver r = new RungeKutta4(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
+        Solver r2 = new RungeKutta4_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
         // System.out.println("hello");
-        r.coordinatesAndVelocityUntilStop(0.001);
+        //r.coordinatesAndVelocityUntilStop(0.001);
+        r2.coordinatesAndVelocityUntilStop(0.001);
     }
+
 }
