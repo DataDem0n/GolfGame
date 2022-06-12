@@ -37,7 +37,7 @@ public class GameEngine extends Thread {
         // while ball is not in the target
         while (!(Math.pow(DataField.targetRXY[0] ,2)>(Math.pow((solver.getXCoord()-DataField.targetRXY[1]), 2 )+Math.pow((solver.getYCoord()-DataField.targetRXY[2]), 2 )))){
 
-            solver.coordinatesAndVelocityUntilStop( 0.00001, false);
+            solver.coordinatesAndVelocityUntilStop( 0.00001, true);
 
             DataField.x = solver.getXCoord();
             DataField.y = solver.getYCoord();

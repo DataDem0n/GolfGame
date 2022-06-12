@@ -36,7 +36,7 @@ public class CosineFinder implements VectorFinder{
         ArrayList<WeightedVector> temp = reduceVectors(out,step);
         out.addAll(temp);
 
-        for (int i = 0; i < 5 ; i++) {
+        for (int i = 0; i < 20 ; i++) {
             ArrayList<WeightedVector> y = reduceVectors(temp,step);
             out.addAll(y);
             temp=y;
@@ -50,17 +50,17 @@ public class CosineFinder implements VectorFinder{
         ArrayList<WeightedVector> addition = new ArrayList<>();
 
         for (WeightedVector wv:out) {
-            if (Math.signum(wv.getY())==-step&&Math.signum(wv.getX())==-step){
-                addition.add(new WeightedVector(wv.getX()+.5,wv.getY()+.5));
+            if (Math.signum(wv.getY())==-1&&Math.signum(wv.getX())==-1){
+                addition.add(new WeightedVector(wv.getX()+step,wv.getY()+step));
             }
-            else if (Math.signum(wv.getY())==step&&Math.signum(wv.getX())==step){
-                addition.add(new WeightedVector(wv.getX()-.5,wv.getY()-.5));
+            else if (Math.signum(wv.getY())==1&&Math.signum(wv.getX())==1){
+                addition.add(new WeightedVector(wv.getX()-step,wv.getY()-step));
             }
-            else if (Math.signum(wv.getY())==step&&Math.signum(wv.getX())==-step){
-                addition.add(new WeightedVector(wv.getX()+.5,wv.getY()-.5));
+            else if (Math.signum(wv.getY())==1&&Math.signum(wv.getX())==-1){
+                addition.add(new WeightedVector(wv.getX()+step,wv.getY()-step));
             }
-            else if (Math.signum(wv.getY())==-step&&Math.signum(wv.getX())==step){
-                addition.add(new WeightedVector(wv.getX()-.5,wv.getY()+.5));
+            else if (Math.signum(wv.getY())==-1&&Math.signum(wv.getX())==1){
+                addition.add(new WeightedVector(wv.getX()-step,wv.getY()+step));
             }
         }
 

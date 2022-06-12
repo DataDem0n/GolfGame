@@ -27,10 +27,31 @@ public class BruteStart {
             yVel = new ArrayList<>();
         }
 
+//    public static void main(String[] args) {
+//        BruteStart b = new BruteStart(0,0);
+//        b.simulate(0,0);
+//    }
+
         public void start(){
             ArrayList<WeightedVector> allshots = simulate(DataField.x,DataField.y);
             System.out.println(allshots);
             ArrayList<WeightedVector> best10 = sort(allshots);
+            System.out.println(best10);
+            System.out.println("XY:"+DataField.x+" "+DataField.y);
+            TakeShot(best10);
+
+            v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
+
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("XY:"+DataField.x+" "+DataField.y);
+            allshots = simulate(DataField.x,DataField.y);
+            System.out.println(allshots);
+            best10 = sort(allshots);
             System.out.println(best10);
             TakeShot(best10);
         }
@@ -50,9 +71,10 @@ public class BruteStart {
 
             ArrayList<WeightedVector> best10 = new ArrayList<>();
 
-            for (int k = 0; k <= 10; k++) {
-                best10.add(allshots.get(k));
-            }
+//            for (int k = 0; k <= 10; k++) {
+//                best10.add(allshots.get(k));
+//            }
+            best10.add(allshots.get(0));
 
             return best10;
         }
@@ -65,6 +87,10 @@ public class BruteStart {
                 double[] out = rk4.coordinatesAndVelocityUntilStop(0.0001,false);
                 wv.setWeight(rk4.getBestFinalDistance());
 
+                if(rk4.getDidGoThroughWater()){
+                    wv.setWeight(100);
+                }
+
                 //System.out.println("------------ wee woo wee woo weight incoming ------------" + wv.getWeight());
             }
             return v;
@@ -76,9 +102,6 @@ public class BruteStart {
                 xVel.add(wv.getX());
                 yVel.add(wv.getY());
             }
-
-            DataField.x = initX;
-            DataField.y = initY;
 
             DataField.velocityX.add(xVel.get(0));
             DataField.velocityY.add(yVel.get(0));
