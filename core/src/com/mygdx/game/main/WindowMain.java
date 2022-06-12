@@ -38,10 +38,10 @@ public class WindowMain{
 
     //initialising bot elements
     BotBasic Charley = new BotBasic();
-    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
-    SlopeField b = new SlopeField(1,DataField.terrain);
+//    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
+//    SlopeField b = new SlopeField(1,DataField.terrain);
 
-    AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
+   // AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY[1], DataField.targetRXY[2], DataField.targetRXY[0]);
     List<List> vel;
 
     //solver label
@@ -58,7 +58,7 @@ public class WindowMain{
             DataField.aiRunning = true;
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
-            vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
+           // vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
 
             for (int i = 0; i<vel.get(0).size();i++) {
                 DataField.velocityX.add((Double) vel.get(0).get(i));

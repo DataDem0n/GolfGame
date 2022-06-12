@@ -145,7 +145,7 @@ public class Runner extends Thread
     double staticFriction;
     double kineticFriction;
     double[] targetRXY = new double[3];
-    BiFunction<Double, Double, Double> terrain; //= (x,y)->(double)(0);
+    BiFunction<Double, Double, Double> terrain;
     ArrayList<String> end = new ArrayList<String>();
     ArrayList<Double> velx = new ArrayList<Double>();
     ArrayList<Double> vely = new ArrayList<Double>();
@@ -205,21 +205,18 @@ public class Runner extends Thread
             out.print("end Coordinates " + p + "= ");
         }
         out.println(end.get(i));
-
     }
-
     }
     catch (IOException e)
     {
         System.out.println("file writing failed");
     }
-
         DataField.targetRXY = targetRXY;
         DataField.sFriction = staticFriction;
         DataField.kFriction = kineticFriction;
         DataField.GUI = true;
         DataField.usingGui = true;
-        DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+        DataField.terrain = (x,y)->(double)(0.2*(Math.sin(0.1*x)+ (1.0/2.0)*Math.cos(0.1*y)));//(1.0/10.0)*Math.cos(0.2*x));//(0.4*(0.9-Math.exp(-((x*x+y*y)/8.0))));
 
         if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];

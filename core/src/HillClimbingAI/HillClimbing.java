@@ -12,60 +12,76 @@ public class HillClimbing {
     private double[] bestVelocity;
     private Solver solver;
 
+    private final double stepSize = 0.01;
+
     public HillClimbing(Solver solver){
 
         this.solver = solver ;
         testShot = new TestShot(solver);
     }
 
-    public double [] getInitialDirection(BiFunction<Double,Double,Double> terrain, double [] coordsAndVel, double kFriction, double sFriction) {
+    public double [] getInitialDirection(double [] coordsAndVel) {
 
-        double[][] velocities = {
-                {1, 0}, {0, 1}, {-1, 0},{0, -1},
-                {2, 0}, {0, 2}, {-2, 0},{0, -2},
-                {4, 0}, {0, 4}, {-4, 0},{0, -4},
-                {5, 0}, {0, 5}, {-5, 0},{0, -5},
-                {2.4,2.4}, {-2.4,2.4},{2.4,-2.4},{-2.4,-2.4},
-                {1,1}, {-1,1},{1,-1},{-1,-1}};
-        //more different values like 1 2 3 4
-        testShot.testshot(0.001, new double[]{velocities[0][0], velocities[0][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
-        double tempFit = testShot.getFitness();
-        if(testShot.getDidGoThroughWater()){
-          //  System.out.println("TUTAJ2");
-            tempFit += 500;
-        }
-        double[] bestVel = {1.0, 0.0};
+        double[] initVel = {-1.0*DataField.targetRXY[1], -1.0*DataField.targetRXY[2]};
+        double[] oppositeVel = convertUnit(initVel);
 
-        for (int i = 1; i < velocities.length; i++) {
-            testShot.testshot(0.001, new double[]{velocities[i][0], velocities[i][1]}, terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, kFriction, sFriction);
-            double currentShot = testShot.getFitness();
+        testShot.testshot(0.001, oppositeVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
+        double tempFit = testShot.getFinalFitness();
+
+        double[] bestVel = oppositeVel;
+        double amount = 360;
+
+        for (int i = 0; i < amount; i++) {
+            double[] nextVel = convertUnit(rotateVector(1.0,oppositeVel));
+            oppositeVel = nextVel;
+            testShot.testshot(0.001, nextVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
+            double currentShot = testShot.getFinalFitness();
 
             if(testShot.getDidGoThroughWater()){
-               // System.out.println("TUTAK");
-                currentShot += 500;
+                currentShot +=100;
+                amount += 1;
             }
 
             if (currentShot < tempFit) {
                 tempFit = currentShot;
-                bestVel = new double[]{velocities[i][0], velocities[i][1]};
+                bestVel = nextVel;
             }
         }
-        System.out.println(Arrays.toString(bestVel));
+        //System.out.println(Arrays.toString(bestVel));
         return bestVel;
     }
 
-    double stepSize = 0.1;
+    public double[] rotateVector(double angle, double[] array){
+        double cos = Math.cos(Math.toRadians(angle));
+        double sin = Math.sin(Math.toRadians(angle));
+        double[] result = new double [2];
+        result[0] = array[0] * cos - array[1] * sin;
+        result[1] = array[0] * sin + array[1] * cos;
+        return result;
+    }
 
-    public double[] hillClimbing(double [] bestVel ,BiFunction<Double,Double,Double> terrain, double [] coords, double kFriction, double sFriction) {
+        public double magnitude(double[] array){
+        return Math.sqrt(Math.pow(array[0], 2) + Math.pow(array[1], 2));
+    }
+    public double[] convertUnit(double[] array){
+        double magnitude = magnitude(array);
+        if (magnitude == 0 ){
+            return bestVelocity;
+        }
+        return new double[]{ Math.random()*5.0 * array[0] / magnitude , Math.random()*5.0 * array[1] / magnitude};
+    }
+
+
+    public double[] hillClimbing(double [] coordsAndVel, double kFriction, double sFriction) {
         testShot = new TestShot(solver);
 
-        double [] bestDirect = getInitialDirection(terrain, new double[]{coords[0],coords[1],bestVel[0],bestVel[1]}, kFriction, sFriction);
+        double [] bestDirect = getInitialDirection(coordsAndVel);
+        System.out.println("BEST DIRECT: "+Arrays.toString(bestDirect));
         bestVelocity = bestDirect;
-        testShot.testshot(0.001, bestDirect, terrain, coords, kFriction, sFriction);
-
+        testShot.testshot(0.001, bestDirect, DataField.terrain, coordsAndVel, kFriction, sFriction);
         bestFitness = testShot.getFinalFitness();
-        if(testShot.getDidGoThroughWater()){
-            bestFitness += 50;
+        if(bestFitness <= DataField.targetRXY[0]){
+            return bestVelocity;
         }
 
         double bestFinalFitness = testShot.getFinalFitness();
@@ -77,10 +93,8 @@ public class HillClimbing {
         outer:
         while (isRunning) {
             double[] currFitness = new double[4];
-            double[] currFinalFitness = new double[4];
             double[][] currVelocities = new double[4][2];
-            double closestPoint = 9999;
-            double closestFinalPoint = 9999;
+            double closestPoint;
             double [][]step = { {0,stepSize}, {stepSize,0}, {0,-stepSize}, {-stepSize,0}};
 
             for (int i = 0; i < 4; i++) {
@@ -90,44 +104,43 @@ public class HillClimbing {
                 if(fasterThan5(testVelocity)){
                     testVelocity = bestVelocity;
                 }
-                testShot.testshot(0.001, testVelocity, terrain, coords, kFriction, sFriction);
+                testShot.testshot(0.001, testVelocity, DataField.terrain, coordsAndVel, kFriction, sFriction);
                 closestPoint = testShot.getFinalFitness();
-                closestFinalPoint = testShot.getFinalFitness();
                 currVelocities[i] = testVelocity;
                 currFitness[i] = closestPoint;
-                currFinalFitness[i] = closestFinalPoint;
                 if(testShot.getDidGoThroughWater()){
-                   currFinalFitness[i] += 50;
-                   currFitness[i]+=50;
+                    currFitness[i]+=500;
+                    System.out.println("in waterrr");
                 }
 
-                if (testShot.getFinalFitness() < DataField.targetRXY[0] && !testShot.getDidGoThroughWater()) {
+                if (testShot.getFinalFitness() <= DataField.targetRXY[0] && !testShot.getDidGoThroughWater()) {
                     System.out.println("win");
                     bestVelocity = testVelocity;
                     break outer;
                 }
             }
-
             isRunning = false;
-            for (int i = 0; i < currFinalFitness.length ; i++) {
-
+            for (int i = 0; i < currFitness.length ; i++) {
                 if( currFitness[i] < bestFitness ){
-                  //  System.out.println("hehehehe");
                     bestVelocity = currVelocities[i];
-                    bestFitness = currFinalFitness[i];
+                    bestFitness = currFitness[i];
                     isRunning = true ;
+                }
+                if(testShot.getDidGoThroughWater()){
+                    isRunning = true;
                 }
             }
         }
-      return bestVelocity;
+        return bestVelocity;
     }
+
 
     public boolean fasterThan5(double[] velocity){
         return Math.sqrt(Math.pow(velocity[0], 2) + Math.pow(velocity[1], 2)) > 5;
     }
 
     public double[] performShot(double step,double[] vel , BiFunction<Double,Double,Double> terrain, double []coordinates, double kFriction, double sFriction){
-       return testShot.performShot(step,vel,terrain,coordinates,kFriction,sFriction);
+        return testShot.performShot(step,vel,terrain,coordinates,kFriction,sFriction);
     }
 
 
@@ -141,13 +154,15 @@ public class HillClimbing {
         solver1.coordinatesAndVelocityUntilStop(0.001,false);
         //double[] coor= {0.50165 , 0.47448};
         HillClimbing h = new HillClimbing(solver1);
-        double [] vel = {3.3,1.5};//h.getInitialDirection(terrain, coordsAndVel, 0.1,0.2);
-        //System.out.println("Initial Direction: " + Arrays.toString(vel));
-        double[] best_velocity = h.hillClimbing(vel,terrain, new double[]{coordsAndVel[0],coordsAndVel[1]}, 0.1,0.2);
-        System.out.println("Hill Climbing: " + Arrays.toString(best_velocity));
+        double [] vel = h.getInitialDirection( coordsAndVel);
+
+        // System.out.println("Initial Direction: " + Arrays.toString(vel));
+        double[] best_velocity = h.hillClimbing(new double[]{coordsAndVel[0],coordsAndVel[1]}, 0.1,0.2);
+        // System.out.println("Hill Climbing: " + Arrays.toString(best_velocity));
         solver1.coordinatesAndVelocityUntilStop(0.1, false);
         long stopTime = System.nanoTime();
         long timeElapsed = stopTime - startTime;
-        System.out.println("Time:  "+ timeElapsed);
+        // System.out.println("Time:  "+ timeElapsed);
     }
+
 }
