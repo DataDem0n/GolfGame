@@ -2,6 +2,8 @@ package HillClimbingAI;
 import com.mygdx.game.main.DataField;
 import solvers.RungeKutta4;
 import solvers.Solver;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
@@ -22,20 +24,24 @@ public class HillClimbing {
 
     public double [] getInitialDirection(double [] coordsAndVel) {
 
-        double[] initVel = {-1.0*DataField.targetRXY[1], -1.0*DataField.targetRXY[2]};
-        double[] oppositeVel = convertUnit(initVel);
+        // czy to nie dziala tylko jak initial position jest 0 0?
+        double[] initVel = {-1.0*Math.abs(DataField.targetRXY[1]-coordsAndVel[0]), -1.0*Math.abs(DataField.targetRXY[2]-coordsAndVel[1])};
+        double[] oppositeVel = convertRandomUnit(initVel);
+        ArrayList<double[]> allVelocities = new ArrayList<>();
 
         testShot.testshot(0.001, oppositeVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
         double tempFit = testShot.getFinalFitness();
-
+        allVelocities.add(new double[]{oppositeVel[0], oppositeVel[1], tempFit});
         double[] bestVel = oppositeVel;
         double amount = 360;
 
-        for (int i = 0; i < amount; i++) {
-            double[] nextVel = convertUnit(rotateVector(1.0,oppositeVel));
+        for (int i = 1; i < amount; i++) {
+
+            double[] nextVel = convertRandomUnit(rotateVector(1.0,oppositeVel));
             oppositeVel = nextVel;
             testShot.testshot(0.001, nextVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
             double currentShot = testShot.getFinalFitness();
+
 
             if(testShot.getDidGoThroughWater()){
                 currentShot +=100;
@@ -48,6 +54,9 @@ public class HillClimbing {
             }
         }
         //System.out.println(Arrays.toString(bestVel));
+
+        testShot.testshot(0.001, bestVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
+        wentThroughWater=testShot.getDidGoThroughWater();
         return bestVel;
     }
 
@@ -60,10 +69,11 @@ public class HillClimbing {
         return result;
     }
 
-        public double magnitude(double[] array){
+    public double magnitude(double[] array){
         return Math.sqrt(Math.pow(array[0], 2) + Math.pow(array[1], 2));
     }
-    public double[] convertUnit(double[] array){
+
+    public double[] convertRandomUnit(double[] array){
         double magnitude = magnitude(array);
         if (magnitude == 0 ){
             return bestVelocity;
@@ -71,8 +81,8 @@ public class HillClimbing {
         return new double[]{ Math.random()*5.0 * array[0] / magnitude , Math.random()*5.0 * array[1] / magnitude};
     }
 
-
     public double[] hillClimbing(double [] coordsAndVel, double kFriction, double sFriction) {
+        int counter = 0;
         testShot = new TestShot(solver);
 
         double [] bestDirect = getInitialDirection(coordsAndVel);
@@ -92,6 +102,7 @@ public class HillClimbing {
         }
         outer:
         while (isRunning) {
+            counter++;
             double[] currFitness = new double[4];
             double[][] currVelocities = new double[4][2];
             double closestPoint;
@@ -130,7 +141,11 @@ public class HillClimbing {
                     isRunning = true;
                 }
             }
+            if(counter > 1000){
+               bestVelocity = getInitialDirection(coordsAndVel);
+            }
         }
+        System.out.println(counter);
         return bestVelocity;
     }
 
@@ -148,7 +163,7 @@ public class HillClimbing {
         long startTime = System.nanoTime();
         double [] coordsAndVel = {-3.0,0.0,0.1,0.1};
         //double[] coords = {0.50165 , 0.47448 , 0.1, 0.1};
-        BiFunction<Double, Double, Double> terrain = (x,y) -> 0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+        BiFunction<Double, Double, Double> terrain = (x,y) -> y*y-x*x;
         Solver solver1 = new RungeKutta4(terrain, coordsAndVel, 0.8,0.2,  DataField.targetRXY);
         //TestShot test = new TestShot(solver1, 5.0,5.0);
         solver1.coordinatesAndVelocityUntilStop(0.001,false);

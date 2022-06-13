@@ -3,7 +3,11 @@ package com.mygdx.game.main;
 import Bots.AI;
 import Bots.AdjacencyField;
 import Bots.SlopeField;
+import HillClimbingAI.HillClimbing;
+import HillClimbingAI.HillClimbingBot;
 import Music.MusicControls;
+import solvers.RungeKutta4;
+import solvers.Solver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +36,7 @@ public class WindowMain{
     //Bot buttons
     JButton ruleBotButton;
     JButton pathBot;
+    JButton hillClimbing;
 
     //Push Button
     JButton pushButton = new JButton("PUTT!");
@@ -49,9 +54,29 @@ public class WindowMain{
     WindowMain(){
         pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
+        hillClimbing = new JButton("Start Hill climbing bot");
 
         ruleBotButton.addActionListener(e -> {
             Charley.start();
+        });
+
+        hillClimbing.addActionListener(e -> {
+            double [] coordsAndVel = {DataField.x, DataField.y,0.1,0.1};
+            Solver solver = new RungeKutta4(DataField.terrain, coordsAndVel, DataField.kFriction,DataField.sFriction,  DataField.targetRXY);
+            HillClimbing h = new HillClimbing(solver);
+            HillClimbingBot hcb = new HillClimbingBot(h,new double []{coordsAndVel[0],coordsAndVel[1]}, solver);
+            ArrayList<ArrayList<Double>> temp = hcb.hillClimbingBot();
+            ArrayList<Double> xVelocities = temp.get(0);
+            ArrayList<Double> yVelocities = temp.get(1);
+
+            DataField.velocityX = xVelocities;
+            DataField.velocityY = yVelocities;
+            DataField.GUI = false;
+
+            Timer t = new Timer(100, e1 -> {
+                DataField.GUI = true;
+            });
+
         });
 
         pathBot.addActionListener(e -> {
@@ -258,7 +283,7 @@ public class WindowMain{
         gc.gridx = 1;
         gc.gridy = 4;
         gc.gridwidth = 1;
-        panel.add(ruleBotButton, gc);
+        panel.add(hillClimbing, gc);
 
         //Swing frame settings
         frame.add(sideMenu);

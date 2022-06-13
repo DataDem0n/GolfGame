@@ -28,6 +28,7 @@ public class RungeKutta4 implements Solver {
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
+    private Tree tree = DataField.gameForest.getForest().get(0);
    private double bestDistance =100;
    private double bestFinalDistance = 100;
    private boolean didGoThroughWater;
@@ -142,7 +143,7 @@ public class RungeKutta4 implements Solver {
             if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-//            tree.collide(coordinatesAndVelocity, tempCoordinates);
+            tree.collide(coordinatesAndVelocity, tempCoordinates);
 //            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         //System.out.println("RK$ Best distance:  " + bestDistance);

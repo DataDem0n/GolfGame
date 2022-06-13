@@ -27,7 +27,9 @@ public class GameEngine extends Thread {
         }
 
         solver.setCoordinates(DataField.x, DataField.y);
+
         solver.setVelocity(DataField.velocityX.get(0), DataField.velocityY.get(0));
+
         solver.setkFriction(DataField.kFriction);
         solver.setsFriction(DataField.sFriction);
         solver.setTargetRXY(DataField.targetRXY);

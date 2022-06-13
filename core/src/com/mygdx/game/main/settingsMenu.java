@@ -114,9 +114,9 @@ public class settingsMenu{
         test1.addActionListener(e ->{
             DataField.x = 0;
             DataField.y = 0;
-            DataField.targetRXY = new double[]{0.15,20,20};
+            DataField.targetRXY = new double[]{0.15,6,6};
             DataField.gameForest = new Forest(0);
-            DataField.gameForest.getForest().add(new Tree(15,15));
+            DataField.gameForest.getForest().add(new Tree(2,2));
             DataField.kFriction = 0.2;
             DataField.sFriction = 0.3;
             DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
@@ -131,11 +131,11 @@ public class settingsMenu{
         test2.addActionListener(e ->{
             DataField.x = -3;
             DataField.y = 0;
-            DataField.targetRXY = new double[]{0.5,4,1};
+            DataField.targetRXY = new double[]{0.15,4,1};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(100,100));
-            DataField.kFriction = 0.2;
-            DataField.sFriction = 0.3;//TODO: fix this with saman
+            DataField.kFriction = 0.08;
+            DataField.sFriction = 0.2;//TODO: fix this with saman
             DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
             chooseSolvers.setSelectedIndex(2);
             DataField.sandPit = new double[]{40,40,40,40};

@@ -2,6 +2,7 @@ package HillClimbingAI;
 
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.main.DataField;
+
 import solvers.RungeKutta4;
 import solvers.Solver;
 import java.util.ArrayList;
@@ -27,10 +28,12 @@ public class HillClimbingBot {
         this.hc = new HillClimbing(solver);
     }
 
-    public void hillClimbingBot(){
+    public ArrayList<ArrayList<Double>> hillClimbingBot(){
 
         ArrayList<Double> xVelocities = new ArrayList<>();
         ArrayList<Double> yVelocities = new ArrayList<>();
+
+        int counter = 0;
 
         while (!(Math.pow(targetRXY[0],2)>(Math.pow((coordsAndVel[0]-targetRXY[1]), 2 )+Math.pow((coordsAndVel[1]-targetRXY[2]), 2 )))){
 
@@ -40,6 +43,10 @@ public class HillClimbingBot {
             double[]  coords = {coordsAndVel[0],coordsAndVel[1]};
             double [] newCoor = hc.performShot(0.0001, best_velocity,terrain,coords,kFriction,sFriction);
 
+            if(hc.getWentThroguhWater()){
+                hillClimbingBot();
+            }
+
             xVelocities.add(best_velocity[0]);
             yVelocities.add(best_velocity[1]);
 
@@ -48,18 +55,22 @@ public class HillClimbingBot {
 
             coordsAndVel[2]=0.001;
             coordsAndVel[3]=0.001;
-
+            counter++;
         }
+        System.out.println("counter of bot    "+counter);
         System.out.println("Hill Climbing xVel: " + xVelocities);
         System.out.println("Hill Climbing yVel: " + yVelocities);
+        ArrayList<ArrayList<Double>> velocitiesOutput = new ArrayList<>();
+        velocitiesOutput.add(xVelocities);
+        velocitiesOutput.add(yVelocities);
+        return velocitiesOutput;
     }
 
     public static void main(String[] args) {
-        double [] coordsAndVel = {-1.0,-1.0,0.1,0.1};
+        double [] coordsAndVel = {0.0, 0.0,0.1,0.1};
         Solver solver = new RungeKutta4(DataField.terrain, coordsAndVel, DataField.kFriction,DataField.sFriction,  DataField.targetRXY);
         HillClimbing h = new HillClimbing(solver);
         HillClimbingBot hcb = new HillClimbingBot(h,new double []{coordsAndVel[0],coordsAndVel[1]}, solver);
         hcb.hillClimbingBot();
     }
-
 }
