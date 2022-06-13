@@ -6,6 +6,7 @@ import solvers.RungeKutta4;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.time.*;
 
 public class BruteStart {
 
@@ -18,11 +19,11 @@ public class BruteStart {
     double initY;
 
         public BruteStart(double x, double y){
+
             initX = x;
             initY = y;
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
-            v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
             xVel = new ArrayList<>();
             yVel = new ArrayList<>();
         }
@@ -32,28 +33,48 @@ public class BruteStart {
 //        b.simulate(0,0);
 //    }
 
+        public ArrayList<WeightedVector> variance(WeightedVector mainshot, double step, double bound){
+
+            double x = mainshot.getX();
+            double y = mainshot.getY();
+
+            ArrayList<WeightedVector> output = new ArrayList<>();
+
+            for (double i = -bound; i <= bound; i+=step) {
+                output.add(new WeightedVector(x+i,y+i));
+                output.add(new WeightedVector(x+i,y-i));
+                output.add(new WeightedVector(x-i,y+i));
+            }
+
+            return output;
+        }
+
         public void start(){
-            ArrayList<WeightedVector> allshots = simulate(DataField.x,DataField.y);
-            System.out.println(allshots);
-            ArrayList<WeightedVector> best10 = sort(allshots);
-            System.out.println(best10);
-            System.out.println("XY:"+DataField.x+" "+DataField.y);
-            TakeShot(best10);
+            //add java timer
 
             v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
+            ArrayList<WeightedVector> allshots = simulate(DataField.x,DataField.y, v);
 
+            ArrayList<WeightedVector> best10 = sort(allshots);
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            ArrayList<WeightedVector> t1 = sort(simulate(DataField.x,DataField.y,variance(best10.get(0),0.1,2)));
+            ArrayList<WeightedVector> t2 = sort(simulate(DataField.x,DataField.y,variance(t1.get(0),0.01,1)));
+            ArrayList<WeightedVector> t3 = sort(simulate(DataField.x,DataField.y,variance(t2.get(0),0.001,.1)));
+            ArrayList<WeightedVector> t4 = sort(simulate(DataField.x,DataField.y,variance(t3.get(0),0.0001,.25)));
+            ArrayList<WeightedVector> t5 = sort(simulate(DataField.x,DataField.y,variance(best10.get(1),0.1,2)));
+            ArrayList<WeightedVector> t6 = sort(simulate(DataField.x,DataField.y,variance(t5.get(0),0.01,1)));
+            ArrayList<WeightedVector> t7 = sort(simulate(DataField.x,DataField.y,variance(t6.get(0),0.001,.1)));
+            ArrayList<WeightedVector> t8 = sort(simulate(DataField.x,DataField.y,variance(t7.get(0),0.0001,.01)));
+            System.out.println(t4);
+
+            if (t8.get(0).getWeight()>t4.get(0).getWeight()) {
+                System.out.println("ya dis tru man");
+                TakeShot(t8);
+            }else{
+                TakeShot(t4);
             }
-            System.out.println("XY:"+DataField.x+" "+DataField.y);
-            allshots = simulate(DataField.x,DataField.y);
-            System.out.println(allshots);
-            best10 = sort(allshots);
-            System.out.println(best10);
-            TakeShot(best10);
+            //https://www.youtube.com/watch?v=NO56_sZrCpM
+
         }
 
         public ArrayList<WeightedVector> sort(ArrayList<WeightedVector> allshots){
@@ -71,15 +92,14 @@ public class BruteStart {
 
             ArrayList<WeightedVector> best10 = new ArrayList<>();
 
-//            for (int k = 0; k <= 10; k++) {
-//                best10.add(allshots.get(k));
-//            }
-            best10.add(allshots.get(0));
+            for (int k = 0; k <= 10; k++) {
+                best10.add(allshots.get(k));
+            }
 
             return best10;
         }
 
-        public ArrayList<WeightedVector> simulate(double ballInitX,double ballInitY) {
+        public ArrayList<WeightedVector> simulate(double ballInitX,double ballInitY, ArrayList<WeightedVector> v) {
 
             for (WeightedVector wv:v) {
                 RungeKutta4 rk4 = new RungeKutta4(DataField.terrain,new double[]{ballInitX,ballInitY,wv.getX(),wv.getY()},DataField.sFriction,DataField.kFriction,DataField.targetRXY);
