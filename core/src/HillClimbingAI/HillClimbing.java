@@ -13,6 +13,7 @@ public class HillClimbing {
     private double bestFitness;
     private double[] bestVelocity;
     private Solver solver;
+    private boolean wentThroughWater;
 
     private final double stepSize = 0.01;
 
@@ -22,7 +23,9 @@ public class HillClimbing {
         testShot = new TestShot(solver);
     }
 
-    public double [] getInitialDirection(double [] coordsAndVel) {
+    public double[] getInitialDirection(double [] coordsAndVel) {
+
+
 
         // czy to nie dziala tylko jak initial position jest 0 0?
         double[] initVel = {-1.0*Math.abs(DataField.targetRXY[1]-coordsAndVel[0]), -1.0*Math.abs(DataField.targetRXY[2]-coordsAndVel[1])};
@@ -48,6 +51,9 @@ public class HillClimbing {
                 amount += 1;
             }
 
+
+            allVelocities.add(new double[]{nextVel[0], nextVel[1], currentShot});
+            //tutaj wykomentowane bo zwracamy liste i tak
             if (currentShot < tempFit) {
                 tempFit = currentShot;
                 bestVel = nextVel;
@@ -58,7 +64,11 @@ public class HillClimbing {
         testShot.testshot(0.001, bestVel, DataField.terrain, new double[]{coordsAndVel[0], coordsAndVel[1]}, DataField.kFriction, DataField.sFriction);
         wentThroughWater=testShot.getDidGoThroughWater();
         return bestVel;
+
+       // return allVelocities;
     }
+
+
 
     public double[] rotateVector(double angle, double[] array){
         double cos = Math.cos(Math.toRadians(angle));
@@ -178,6 +188,10 @@ public class HillClimbing {
         long stopTime = System.nanoTime();
         long timeElapsed = stopTime - startTime;
         // System.out.println("Time:  "+ timeElapsed);
+    }
+
+    public  boolean getWentThroguhWater(){
+        return wentThroughWater;
     }
 
 }
