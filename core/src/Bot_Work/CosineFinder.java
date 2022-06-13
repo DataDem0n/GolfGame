@@ -3,9 +3,8 @@ package Bot_Work;
 import com.mygdx.game.main.DataField;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class CosineFinder implements VectorFinder{
+public class CosineFinder implements VectorFinder {
 
     double step;
 
@@ -36,7 +35,7 @@ public class CosineFinder implements VectorFinder{
     }
 
     //for trying shorter shots
-    public ArrayList<WeightedVector> reduceVectors(ArrayList<WeightedVector> out, double step){
+    public ArrayList<WeightedVector> reduceVectors(ArrayList<WeightedVector> out, double step) {
         ArrayList<WeightedVector> addition = new ArrayList<>();
 
         for (WeightedVector wv:out) {
@@ -96,7 +95,7 @@ public class CosineFinder implements VectorFinder{
     }
 
     //Distance between two points method (can use the return as a weight value if needed)
-    private double Euclidistance(double x1, double x2, double y1, double y2){
+    private double Euclidistance(double x1, double x2, double y1, double y2) {
         return Math.sqrt(Math.pow((x2-x1) ,2) + Math.pow((y2-y1), 2));
     }
 
@@ -106,15 +105,15 @@ public class CosineFinder implements VectorFinder{
         double xt = Distance(ballX, holeX);
         double yt = Distance(holeY, ballY);
 
-        if (xt>5.0)
-            xt =5.0;
+        if (xt > 5.0)
+            xt = 5.0;
 
         if(yt>5.0)
-            yt=5.0;
+            yt = 5.0;
 
-        if(ballX>holeX)
+        if(ballX > holeX)
             xt = -xt;
-        if(ballY>holeY)
+        if(ballY > holeY)
             yt = -yt;
 
         return new WeightedVector(xt,yt);
@@ -128,7 +127,6 @@ public class CosineFinder implements VectorFinder{
 //            return new double[]{5*basisRatio, 5};
 //
 //    }
-
 
     //testing method
     public static void main(String[] args) {

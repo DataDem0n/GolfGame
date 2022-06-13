@@ -110,8 +110,6 @@ public class BruteStart {
                 if(rk4.getDidGoThroughWater()){
                     wv.setWeight(100);
                 }
-
-                //System.out.println("------------ wee woo wee woo weight incoming ------------" + wv.getWeight());
             }
             return v;
         }
