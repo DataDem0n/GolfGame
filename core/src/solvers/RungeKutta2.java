@@ -27,8 +27,10 @@ public class RungeKutta2 implements Solver{
     private SandPits sandPits = new SandPits(DataField.sandPit, DataField.kFriction+0.2, DataField.sFriction+0.2);
     private Forest f = DataField.gameForest;
     private Water water = new Water();
+    private double bestDistance =100;
     private double bestFinalDistance = 100;
-    private boolean didGoThroughWater = false;
+    private boolean didGoThroughWater;
+    private Tree tree = DataField.gameForest.getForest().get(0);
 
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -52,11 +54,12 @@ public class RungeKutta2 implements Solver{
         DataField.kFriction = kFriction;
         DataField.sFriction = sFriction;
         this.targetRXY = targetRXY;
+        this.didGoThroughWater =false;
     }
 
     @Override
     public double getBestDistance() {
-        return 0;
+        return bestDistance;
     }
 
     @Override
@@ -73,12 +76,6 @@ public class RungeKutta2 implements Solver{
 
     @Override
     public double[] coordinatesAndVelocityUntilStop(double step, boolean update) {
-        double tempvelx1, tempvely1, tempvelx2, tempvely2, tempvelx3, tempvely3;
-
-        double tempcoorx1;
-        double tempcoory1;
-        pathX=null;
-        pathY=null;
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
@@ -92,45 +89,51 @@ public class RungeKutta2 implements Solver{
                 coordinatesAndVelocity[2] = coordinatesAndVelocity[2] + (step * acceleration.accelerationX2(coordinatesAndVelocity, terrain, DataField.kFriction)); //X-Velocity = xVelocity + step*acc
                 coordinatesAndVelocity[3] = coordinatesAndVelocity[3] + (step * acceleration.accelerationY2(coordinatesAndVelocity, terrain, DataField.kFriction)); //Y-Velocity = YVelocity + step*acc
             } else {
-                tempvelx1 = acceleration.accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting x-velocity using midpoint
-                tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
-                tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
-                tempvelx3 = acceleration.accelerationrungeX(tempcoorx1,coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
+                double [] k1_coords = {coordinatesAndVelocity[0], coordinatesAndVelocity[1]};
+                double [] k1_velocities = {coordinatesAndVelocity[2], coordinatesAndVelocity[3]};
+                double[] k1_acceleration = {acceleration.accelerationrungeX(k1_coords[0],k1_coords[1],k1_velocities[0],k1_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k1_coords[0],k1_coords[1],k1_velocities[0],k1_velocities[1] , terrain, DataField.kFriction)};     //getting x-velocity using midpoint
 
-                tempvely1 = acceleration.accelerationrungeY(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, DataField.kFriction)*step;        //getting y-velocity using midpoint
-                tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
-                tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
-                tempvely3 = acceleration.accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,DataField.kFriction)*step;
-                
-                coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
+                double[] k2_positions ={(k1_coords[0] + (2.0/3.0) * step * k1_velocities[0]), (k1_coords[1] + (2.0/3.0) * step * k1_velocities[1]) } ;
+                double[] k2_velocities = {(k1_velocities[0] + (2.0/3.0) * step * k1_acceleration[0]),k1_velocities[1] + (2.0/3.0) * step * k1_acceleration[1]};
+                double[] k2_acceleration = {acceleration.accelerationrungeX(k2_positions[0],k2_positions[1],k2_velocities[0],k2_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k2_positions[0],k2_positions[1],k2_velocities[0],k2_velocities[1] , terrain, DataField.kFriction)};
 
-                coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
+                double x_coor = coordinatesAndVelocity[0] + step*(1.0/4.0)*(k1_velocities[0] + 3*k2_velocities[0]);
+                double y_coor = coordinatesAndVelocity[1] + step*(1.0/4.0)*(k1_velocities[1] + 3*k2_velocities[1]);
+                double x_vel = coordinatesAndVelocity[2] + step*(1.0/4.0)*(k1_acceleration[0] + 3*k2_acceleration[0]);
+                double y_vel = coordinatesAndVelocity[3] + step*(1.0/4.0)*(k1_acceleration[1] + 3*k2_acceleration[1]);
+
+                coordinatesAndVelocity = new double[]{x_coor,y_coor,x_vel,y_vel};
             }
 
-            //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
-            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
-            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
+            if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
+                //System.out.println("did go trhough water");
+                didGoThroughWater = true;
+            }
 
             if(update) {
                 DataField.x = coordinatesAndVelocity[0];
                 DataField.y = coordinatesAndVelocity[1];
             }
-            pathX.add(coordinatesAndVelocity[0]);
-            pathY.add(coordinatesAndVelocity[1]);
 
-            water.collide(coordinatesAndVelocity, tempCoordinates);
+            double tempDist = Math.sqrt((Math.pow( (DataField.targetRXY[1]-coordinatesAndVelocity[0]) , 2) + ( Math.pow( (DataField.targetRXY[2]- coordinatesAndVelocity[1]), 2))));
+            if (tempDist < bestDistance){
+                bestDistance=tempDist;
+            }
+
+
+            if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+            tree.collide(coordinatesAndVelocity, tempCoordinates);
+//            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
         double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
         bestFinalDistance = FINALDist;
-//        System.out.println("accx: " + coordinatesAndVelocity[2]);
-//        System.out.println("accy: " + coordinatesAndVelocity[3]);
         return coordinatesAndVelocity;
     }
-
 
 
     //SETTERS

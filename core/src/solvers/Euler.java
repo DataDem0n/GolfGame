@@ -29,8 +29,10 @@ public class Euler implements Solver {
     private Water water = new Water();
     private ArrayList<Double> pathX = new ArrayList<Double>();
     private ArrayList<Double> pathY = new ArrayList<Double>();
+    private Tree tree = DataField.gameForest.getForest().get(0);
+    private double bestDistance =100;
     private double bestFinalDistance = 100;
-    private boolean didGoThroughWater = false;
+    private boolean didGoThroughWater;
 
 
     // Overview of what is stored in the coordinatedAndVelocity array:
@@ -66,8 +68,6 @@ public class Euler implements Solver {
 
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
-        pathX=null;
-        pathY=null;
 
         if(!DataField.aiRunning)
             coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
@@ -87,20 +87,26 @@ public class Euler implements Solver {
             coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2]*step;
             coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3]*step;
 
+            if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
+                //System.out.println("did go trhough water");
+                didGoThroughWater = true;
+            }
+
             if(update) {
                 DataField.x = coordinatesAndVelocity[0];
                 DataField.y = coordinatesAndVelocity[1];
             }
-            double x = coordinatesAndVelocity[0];
-            double y = coordinatesAndVelocity[1];
 
-            pathX.add(coordinatesAndVelocity[0]);
-            pathY.add(coordinatesAndVelocity[1]);
+            double tempDist = Math.sqrt((Math.pow( (DataField.targetRXY[1]-coordinatesAndVelocity[0]) , 2) + ( Math.pow( (DataField.targetRXY[2]- coordinatesAndVelocity[1]), 2))));
+            if (tempDist < bestDistance){
+                bestDistance=tempDist;
+            }
 
-            water.collide(coordinatesAndVelocity, tempCoordinates);
+
+            if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+            tree.collide(coordinatesAndVelocity, tempCoordinates);
 
        }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);

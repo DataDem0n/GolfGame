@@ -66,11 +66,6 @@ public class RungeKutta4 implements Solver {
     public double[] coordinatesAndVelocityUntilStop(double step, boolean update)  {
         tempCoordinates[0] = coordinatesAndVelocity[0];
         tempCoordinates[1] = coordinatesAndVelocity[1];
-        ArrayList<Double> pathXt = new ArrayList<Double>();
-        ArrayList<Double> pathYt = new ArrayList<Double>();
-
-        double tempvelx1,tempvely1,tempvelx2, tempvely2, tempvelx3, tempvely3, tempvelx4, tempvely4, tempvelx5, tempvely5, tempvely6, tempvelx6, tempvelx7, tempvely7;
-        double tempcoorx1, tempcoory1, tempcoorx2, tempcoory2, tempcoorx3, tempcoory3;
 
         if(!DataField.aiRunning)
             coordinatesAndVelocity = maxSpeed.maxSpeedReached(coordinatesAndVelocity);
@@ -84,46 +79,34 @@ public class RungeKutta4 implements Solver {
             }
             else
             {
-                tempvelx1 = acceleration.accelerationrungeX(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;     //k1
+                double [] k1_coords = {coordinatesAndVelocity[0], coordinatesAndVelocity[1]};
+                double [] k1_velocities = {coordinatesAndVelocity[2], coordinatesAndVelocity[3]};
+                double[] k1_acceleration = {acceleration.accelerationrungeX(k1_coords[0],k1_coords[1],k1_velocities[0],k1_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k1_coords[0],k1_coords[1],k1_velocities[0],k1_velocities[1] , terrain, DataField.kFriction)};
 
-                tempvelx2 = coordinatesAndVelocity[2] + 0.5 * tempvelx1;
-                tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2 * step * 0.5;
-                tempvelx3 = acceleration.accelerationrungeX(tempcoorx1, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;    //k2
+                double[] k2_coords ={(k1_coords[0] + (1.0/2.0) * step * k1_velocities[0]), (k1_coords[1] + (1.0/2.0) * step * k1_velocities[1]) };
+                double[] k2_velocities = {(k1_velocities[0] + (1.0/2.0) * step * k1_acceleration[0]),k1_velocities[1] + (1.0/2.0) * step * k1_acceleration[1]};
+                double[] k2_acceleration = {acceleration.accelerationrungeX(k2_coords[0],k2_coords[1],k2_velocities[0],k2_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k2_coords[0],k2_coords[1],k2_velocities[0],k2_velocities[1] , terrain, DataField.kFriction)};
 
-                tempvelx4 = coordinatesAndVelocity[2] + 0.5 * tempvelx3;
-                tempcoorx2 = coordinatesAndVelocity[0] + tempvelx4 * step * 0.5;
-                tempvelx5 = acceleration.accelerationrungeX(tempcoorx2, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;      //k3
+                double[] k3_coords = new double[]{(k1_coords[0] +(1.0/2.0) * step * k2_velocities[0]) ,k1_coords[1] + (1.0/2.0) * step * k2_velocities[1] } ;
+                double[] k3_velocities= {k1_velocities[0] + (1.0/2.0) * step * k2_acceleration[0] ,k1_velocities[1] + (1.0/2.0) * step * k2_acceleration[1]};
+                double[] k3_acceleration = {acceleration.accelerationrungeX(k3_coords[0],k3_coords[1],k3_velocities[0],k3_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k3_coords[0],k3_coords[1],k3_velocities[0],k3_velocities[1] , terrain, DataField.kFriction)};
 
-                tempvelx6 = coordinatesAndVelocity[2] + tempvelx5;
-                tempcoorx3 = coordinatesAndVelocity[0] + tempvelx6 * step;
-                tempvelx7 = acceleration.accelerationrungeX(tempcoorx3, coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;         //k4
-
-                //IMPLEMENT 1,3,5,7
-                tempvely1 = acceleration.accelerationrungeY(coordinatesAndVelocity[0], coordinatesAndVelocity[1], coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;      //k1
-
-                tempvely2 = coordinatesAndVelocity[3] + 0.5 * tempvely1;
-                tempcoory1 = coordinatesAndVelocity[1] + tempvely2 * step * 0.5;
-                tempvely3 = acceleration.accelerationrungeY(coordinatesAndVelocity[0], tempcoory1, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;            //k2
+                double[] k4_coords = new double[]{k1_coords[0] + (1.0/2.0) * step * k3_coords[0],k1_coords[1] + (1.0/2.0) * step* k3_coords[1] };
+                double[] k4_velocities = new double[]{k1_velocities[0] +(1.0/2.0) * step * k3_acceleration[0] ,k1_velocities[1] + (1.0/2.0) * step * k3_acceleration[1]};
+                double[] k4_acceleration = {acceleration.accelerationrungeX(k4_coords[0],k4_coords[1],k4_velocities[0],k4_velocities[1] , terrain, DataField.kFriction),
+                        acceleration.accelerationrungeY(k4_coords[0],k4_coords[1],k4_velocities[0],k4_velocities[1] , terrain, DataField.kFriction)};;
 
 
-                tempvely4 = coordinatesAndVelocity[3] + 0.5 * tempvely3;
-                tempcoory2 = coordinatesAndVelocity[1] + tempvely4 * step * 0.5;
-                tempvely5 = acceleration.accelerationrungeY(coordinatesAndVelocity[0], tempcoory2, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;           //k3
+                double x_coor = coordinatesAndVelocity[0] + step*(1.0/6.0)*(k1_velocities[0] + 2.0*k2_velocities[0] + 2.0*k3_velocities[0] + k4_velocities[0]);
+                double y_coor = coordinatesAndVelocity[1] + step*(1.0/6.0)*(k1_velocities[1] + 2.0*k2_velocities[1] + 2.0*k3_velocities[1] + k4_velocities[1]);
+                double x_vel = coordinatesAndVelocity[2] + step*(1.0/6.0)*(k1_acceleration[0] + 2.0*k2_acceleration[0] + 2.0*k3_acceleration[0] + k4_acceleration[0]);
+                double y_vel = coordinatesAndVelocity[3] + step*(1.0/6.0)*(k1_acceleration[1] + 2.0*k2_acceleration[1] + 2.0*k3_acceleration[1] +k4_acceleration[1]);
 
-                tempvely6 = coordinatesAndVelocity[3] + tempvely5;
-                tempcoory3 = coordinatesAndVelocity[1] + tempvely6 * step;
-                tempvely7 = acceleration.accelerationrungeY(coordinatesAndVelocity[0], tempcoory3, coordinatesAndVelocity[2], coordinatesAndVelocity[3], terrain, DataField.kFriction) * step;            //k4
-
-                //IMPLEMENT 1,3,5,7
-
-                coordinatesAndVelocity[2] += (tempvelx1 + 2 * tempvelx3 + 2 * tempvelx5 + tempvelx7) / 6;
-                coordinatesAndVelocity[3] += (tempvely1 + 2 * tempvely3 + 2 * tempvely5 + tempvely7) / 6;
+                coordinatesAndVelocity = new double[]{x_coor, y_coor,x_vel,y_vel};
             }
-
-            //here updating the coordinates based on calculated velocities (step = timeInterval ALWAYS)
-            coordinatesAndVelocity[0] = coordinatesAndVelocity[0] + coordinatesAndVelocity[2] * step;
-            coordinatesAndVelocity[1] = coordinatesAndVelocity[1] + coordinatesAndVelocity[3] * step;
-
             if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
                 //System.out.println("did go trhough water");
                 didGoThroughWater = true;
