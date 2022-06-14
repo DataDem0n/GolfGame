@@ -108,7 +108,6 @@ public class RungeKutta4 implements Solver {
                 coordinatesAndVelocity = new double[]{x_coor, y_coor,x_vel,y_vel};
             }
             if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
-                //System.out.println("did go trhough water");
                 didGoThroughWater = true;
             }
 
@@ -127,16 +126,15 @@ public class RungeKutta4 implements Solver {
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
             tree.collide(coordinatesAndVelocity, tempCoordinates);
-//            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
+
         }
-        //System.out.println("RK$ Best distance:  " + bestDistance);
 
         double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
         bestFinalDistance = FINALDist;
 
 //        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//        System.out.println("accx: " + coordinatesAndVelocity[2]);
-//        System.out.println("accy: " + coordinatesAndVelocity[3]);
+//        System.out.println("velx: " + coordinatesAndVelocity[2]);
+//        System.out.println("vely: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }

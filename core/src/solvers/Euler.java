@@ -110,8 +110,8 @@ public class Euler implements Solver {
 
        }
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-        System.out.println("accx: " + coordinatesAndVelocity[2]);
-        System.out.println("accy: " + coordinatesAndVelocity[3]);
+        System.out.println("velx: " + coordinatesAndVelocity[2]);
+        System.out.println("vely: " + coordinatesAndVelocity[3]);
 
         double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
         bestFinalDistance = FINALDist;
@@ -207,11 +207,11 @@ public class Euler implements Solver {
 
     @Override
     public boolean getDidGoThroughWater() {
-        return false;
+        return didGoThroughWater;
     }
 
     @Override
-    public double getBestDistance(){return 0;}
+    public double getBestDistance(){return bestDistance;}
 
     @Override
     public double getBestFinalDistance() {

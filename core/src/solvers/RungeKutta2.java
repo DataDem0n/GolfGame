@@ -129,7 +129,11 @@ public class RungeKutta2 implements Solver{
             tree.collide(coordinatesAndVelocity, tempCoordinates);
 //            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
+
+
         System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
+
+
         double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
         bestFinalDistance = FINALDist;
         return coordinatesAndVelocity;
