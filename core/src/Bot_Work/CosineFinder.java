@@ -65,7 +65,7 @@ public class CosineFinder implements VectorFinder {
 
     private ArrayList<WeightedVector> lineFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector, double step, double bound) {
         ArrayList<WeightedVector> wv = new ArrayList<>();
-        for (double i = step; i < 5.0; i=i+step) {
+        for (double i = step; i < 2.5; i=i+step) {
             double xAddition = -i;
             double yAddition = -i;
 
