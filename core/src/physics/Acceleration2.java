@@ -56,9 +56,9 @@ public class Acceleration2 {
     public double accelerationrungeY(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
     {
         double acc;
-        acc =  -((GRAVITY*derivative.derivativeXValue(terrain, coorx, coory))/(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2))) -
+        acc =  -((GRAVITY*derivative.derivativeYValue(terrain, coorx, coory))/(1+Math.pow(derivative.derivativeXValue(terrain,coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2))) -
                 ((friction*GRAVITY)/(Math.sqrt(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2)))) *
-                        (velx/(Math.sqrt(Math.pow(velx,2)+Math.pow(vely,2)+(Math.pow(derivative.derivativeXValue(terrain, coorx, coory)*velx+derivative.derivativeYValue(terrain, coorx, coory)*vely,2)))));
+                        (vely/(Math.sqrt(Math.pow(velx,2)+Math.pow(vely,2)+(Math.pow(derivative.derivativeXValue(terrain, coorx, coory)*velx+derivative.derivativeYValue(terrain, coorx, coory)*vely,2)))));
         return acc;
     }
 
@@ -74,11 +74,19 @@ public class Acceleration2 {
      */
     public double accelerationrungeX(double coorx, double coory, double velx, double vely, BiFunction <Double, Double, Double> terrain, double friction)
     {
+
         double acc;
-        acc = -((GRAVITY*derivative.derivativeYValue(terrain, coorx, coory))/(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2))) -
+        acc =  -((GRAVITY*derivative.derivativeYValue(terrain, coorx, coory))/(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain,coorx, coory),2))) -
                 ((friction*GRAVITY)/(Math.sqrt(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2)))) *
-                        (vely/(Math.sqrt(Math.pow(velx,2)+Math.pow(vely,2)+(Math.pow(derivative.derivativeXValue(terrain, coorx, coory)*vely+derivative.derivativeYValue(terrain, coorx, coory)*vely,2)))));
+                        (vely/(Math.sqrt(Math.pow(velx,2)+Math.pow(vely,2)+(Math.pow(derivative.derivativeXValue(terrain, coorx, coory)*velx+derivative.derivativeYValue(terrain, coorx, coory)*vely,2)))));
         return acc;
+
+
+//        double acc;
+//        acc = -((GRAVITY*derivative.derivativeYValue(terrain, coorx, coory))/(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2))) -
+//                ((friction*GRAVITY)/(Math.sqrt(1+Math.pow(derivative.derivativeXValue(terrain, coorx, coory),2)+Math.pow(derivative.derivativeYValue(terrain, coorx, coory),2)))) *
+//                        (vely/(Math.sqrt(Math.pow(velx,2)+Math.pow(vely,2)+(Math.pow(derivative.derivativeXValue(terrain, coorx, coory)*vely+derivative.derivativeYValue(terrain, coorx, coory)*vely,2)))));
+//        return acc;
     }
 
     public double accelerationX2(double [] coordinatesAndVelocity, BiFunction <Double, Double, Double> terrain, double friction)
