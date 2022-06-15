@@ -51,29 +51,32 @@ public class BruteStart {
 
         public void start(){
 
-            v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
+            v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2],FranklinTheSecond.vectorToPoint(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]),1,true,5);
 
-            for(WeightedVector v: i forgor 💀) {
                 ArrayList<WeightedVector> allshots = simulate(DataField.x, DataField.y, v);
                 ArrayList<WeightedVector> best10 = sort(allshots);
                 System.out.println("XY:" + DataField.x + " " + DataField.y);
+                TakeShot(best10);
 
-                ArrayList<WeightedVector> t1 = sort(simulate(DataField.x, DataField.y, variance(best10.get(0), 0.1, 2)));
-                ArrayList<WeightedVector> t2 = sort(simulate(DataField.x, DataField.y, variance(t1.get(0), 0.01, 1)));
-                ArrayList<WeightedVector> t3 = sort(simulate(DataField.x, DataField.y, variance(t2.get(0), 0.001, .1)));
-                ArrayList<WeightedVector> t4 = sort(simulate(DataField.x, DataField.y, variance(t3.get(0), 0.0001, .25)));
-                ArrayList<WeightedVector> t5 = sort(simulate(DataField.x, DataField.y, variance(best10.get(1), 0.1, 2)));
-                ArrayList<WeightedVector> t6 = sort(simulate(DataField.x, DataField.y, variance(t5.get(0), 0.01, 1)));
-                ArrayList<WeightedVector> t7 = sort(simulate(DataField.x, DataField.y, variance(t6.get(0), 0.001, .1)));
-                ArrayList<WeightedVector> t8 = sort(simulate(DataField.x, DataField.y, variance(t7.get(0), 0.0001, .01)));
-                System.out.println(t4);
 
-                if (t8.get(0).getWeight() > t4.get(0).getWeight()) {
-                    System.out.println("ya dis tru man");
-                    TakeShot(t8);
-                } else {
-                    TakeShot(t4);
-                }
+//                ArrayList<WeightedVector> t1 = sort(simulate(DataField.x, DataField.y, variance(best10.get(0), 0.1, 2)));
+//                ArrayList<WeightedVector> t2 = sort(simulate(DataField.x, DataField.y, variance(t1.get(0), 0.01, 1)));
+//                ArrayList<WeightedVector> t3 = sort(simulate(DataField.x, DataField.y, variance(t2.get(0), 0.001, .1)));
+//                ArrayList<WeightedVector> t4 = sort(simulate(DataField.x, DataField.y, variance(t3.get(0), 0.0001, .25)));
+//                ArrayList<WeightedVector> t5 = sort(simulate(DataField.x, DataField.y, variance(best10.get(1), 0.1, 2)));
+//                ArrayList<WeightedVector> t6 = sort(simulate(DataField.x, DataField.y, variance(t5.get(0), 0.01, 1)));
+//                ArrayList<WeightedVector> t7 = sort(simulate(DataField.x, DataField.y, variance(t6.get(0), 0.001, .1)));
+//                ArrayList<WeightedVector> t8 = sort(simulate(DataField.x, DataField.y, variance(t7.get(0), 0.0001, .01)));
+//                System.out.println(t4);
+//
+//                if (t8.get(0).getWeight() > t4.get(0).getWeight()) {
+//                    System.out.println("ya dis tru man");
+//                    TakeShot(t8);
+//                } else {
+//                    TakeShot(t4);
+//                }
+
+
 
                 try {
                     Thread.sleep(1000);
@@ -82,19 +85,16 @@ public class BruteStart {
                 }
 
                 //shot 2 (i don't think it works)
-                System.out.println("XY:" + DataField.x + " " + DataField.y);
-                allshots = simulate(DataField.x, DataField.y, v);
-                best10 = sort(allshots);
+//                System.out.println("XY:" + DataField.x + " " + DataField.y);
+//                allshots = simulate(DataField.x, DataField.y, v);
+//                best10 = sort(allshots);
 
-                TakeShot(best10);
-            }
 
         }
 
         public ArrayList<WeightedVector> sort(ArrayList<WeightedVector> allshots){
 
             for (int j = 0;j < allshots.size(); j++) {
-
                 for (int i = 0; i < allshots.size(); i++) {
                   if(i+1<allshots.size()&&allshots.get(i).getWeight()>allshots.get(i+1).getWeight()){ //godlike sorting almost O(1) ;)
                       WeightedVector temp = allshots.get(i);
@@ -117,7 +117,7 @@ public class BruteStart {
 
             for (WeightedVector wv:v) {
                 RungeKutta4 rk4 = new RungeKutta4(DataField.terrain,new double[]{ballInitX,ballInitY,wv.getX(),wv.getY()},DataField.sFriction,DataField.kFriction,DataField.targetRXY);
-//                GameEngine gm = new GameEngine(rk4);
+//
                 double[] out = rk4.coordinatesAndVelocityUntilStop(0.0001,false);
                 wv.setWeight(rk4.getBestFinalDistance());
 
@@ -130,6 +130,10 @@ public class BruteStart {
 
         private void TakeShot(ArrayList<WeightedVector> v1){
 
+            xVel.clear();
+            yVel.clear();
+            DataField.velocityX.clear();
+            DataField.velocityY.clear();
             for (WeightedVector wv:v1) {
                 xVel.add(wv.getX());
                 yVel.add(wv.getY());

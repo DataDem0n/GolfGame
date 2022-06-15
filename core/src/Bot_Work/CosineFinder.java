@@ -1,5 +1,5 @@
 package Bot_Work;
-
+import java.time.Duration;
 import com.mygdx.game.main.DataField;
 
 import java.util.ArrayList;
@@ -14,23 +14,26 @@ public class CosineFinder implements VectorFinder {
     }
 
     @Override
-    public ArrayList<WeightedVector> vectorFind(double ballX, double ballY, double holeX, double holeY) {
-        WeightedVector basisVector;
+    public ArrayList<WeightedVector> vectorFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector, double step, boolean reduce, double bound) {
 
         ArrayList<WeightedVector> out = new ArrayList<>();
-        basisVector = vectorToPoint(ballX,ballY,holeX,holeY);
         out.add(basisVector);
-        out.addAll(lineFind(ballX,ballY,holeX,holeY,basisVector));
 
-        ArrayList<WeightedVector> temp = reduceVectors(out, 1);
-        out.addAll(temp);
+        out.addAll(lineFind(ballX,ballY,holeX,holeY,basisVector, step, bound ));
 
-        for (int i = 0; i < 5 ; i++) {
-            ArrayList<WeightedVector> y = reduceVectors(temp, 1);
-            out.addAll(y);
-            temp=y;
+        if(reduce) {
+            ArrayList<WeightedVector> temp = reduceVectors(out, 1);
+
+            out.addAll(temp);
+
+            for (int i = 0; i < 5; i++) {
+                ArrayList<WeightedVector> y = reduceVectors(temp, 1);
+                out.addAll(y);
+                temp = y;
+            }
         }
 
+        System.out.println("reduce vector time loop.  " +System.nanoTime());
         return out;
     }
 
@@ -60,7 +63,7 @@ public class CosineFinder implements VectorFinder {
         return addition;
     }
 
-    private ArrayList<WeightedVector> lineFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector) {
+    private ArrayList<WeightedVector> lineFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector, double step, double bound) {
         ArrayList<WeightedVector> wv = new ArrayList<>();
         for (double i = step; i < 5.0; i=i+step) {
             double xAddition = -i;
@@ -76,10 +79,14 @@ public class CosineFinder implements VectorFinder {
             if((holeX<ballX+1.0||holeX>ballX-1.0)){
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()+xAddition));
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()-xAddition));
+//                wv.add(new WeightedVector(basisVector.getX()+yAddition,basisVector.getY()));
+//                wv.add(new WeightedVector(basisVector.getX()-yAddition,basisVector.getY()));
             }
             else if((holeY<ballY+1.0 || holeY>ballY-1.0)){
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()+yAddition));
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()-yAddition));
+//                wv.add(new WeightedVector(basisVector.getX()+xAddition,basisVector.getY()));
+//                wv.add(new WeightedVector(basisVector.getX()-xAddition,basisVector.getY()));
             }
 
             else {
