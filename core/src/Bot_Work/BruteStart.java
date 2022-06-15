@@ -50,30 +50,44 @@ public class BruteStart {
         }
 
         public void start(){
-            //add java timer
 
             v = FranklinTheSecond.vectorFind(DataField.x,DataField.y,DataField.targetRXY[1],DataField.targetRXY[2]);
-            ArrayList<WeightedVector> allshots = simulate(DataField.x,DataField.y, v);
 
-            ArrayList<WeightedVector> best10 = sort(allshots);
+            for(WeightedVector v: i forgor 💀) {
+                ArrayList<WeightedVector> allshots = simulate(DataField.x, DataField.y, v);
+                ArrayList<WeightedVector> best10 = sort(allshots);
+                System.out.println("XY:" + DataField.x + " " + DataField.y);
 
-            ArrayList<WeightedVector> t1 = sort(simulate(DataField.x,DataField.y,variance(best10.get(0),0.1,2)));
-            ArrayList<WeightedVector> t2 = sort(simulate(DataField.x,DataField.y,variance(t1.get(0),0.01,1)));
-            ArrayList<WeightedVector> t3 = sort(simulate(DataField.x,DataField.y,variance(t2.get(0),0.001,.1)));
-            ArrayList<WeightedVector> t4 = sort(simulate(DataField.x,DataField.y,variance(t3.get(0),0.0001,.25)));
-            ArrayList<WeightedVector> t5 = sort(simulate(DataField.x,DataField.y,variance(best10.get(1),0.1,2)));
-            ArrayList<WeightedVector> t6 = sort(simulate(DataField.x,DataField.y,variance(t5.get(0),0.01,1)));
-            ArrayList<WeightedVector> t7 = sort(simulate(DataField.x,DataField.y,variance(t6.get(0),0.001,.1)));
-            ArrayList<WeightedVector> t8 = sort(simulate(DataField.x,DataField.y,variance(t7.get(0),0.0001,.01)));
-            System.out.println(t4);
+                ArrayList<WeightedVector> t1 = sort(simulate(DataField.x, DataField.y, variance(best10.get(0), 0.1, 2)));
+                ArrayList<WeightedVector> t2 = sort(simulate(DataField.x, DataField.y, variance(t1.get(0), 0.01, 1)));
+                ArrayList<WeightedVector> t3 = sort(simulate(DataField.x, DataField.y, variance(t2.get(0), 0.001, .1)));
+                ArrayList<WeightedVector> t4 = sort(simulate(DataField.x, DataField.y, variance(t3.get(0), 0.0001, .25)));
+                ArrayList<WeightedVector> t5 = sort(simulate(DataField.x, DataField.y, variance(best10.get(1), 0.1, 2)));
+                ArrayList<WeightedVector> t6 = sort(simulate(DataField.x, DataField.y, variance(t5.get(0), 0.01, 1)));
+                ArrayList<WeightedVector> t7 = sort(simulate(DataField.x, DataField.y, variance(t6.get(0), 0.001, .1)));
+                ArrayList<WeightedVector> t8 = sort(simulate(DataField.x, DataField.y, variance(t7.get(0), 0.0001, .01)));
+                System.out.println(t4);
 
-            if (t8.get(0).getWeight()>t4.get(0).getWeight()) {
-                System.out.println("ya dis tru man");
-                TakeShot(t8);
-            }else{
-                TakeShot(t4);
+                if (t8.get(0).getWeight() > t4.get(0).getWeight()) {
+                    System.out.println("ya dis tru man");
+                    TakeShot(t8);
+                } else {
+                    TakeShot(t4);
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //shot 2 (i don't think it works)
+                System.out.println("XY:" + DataField.x + " " + DataField.y);
+                allshots = simulate(DataField.x, DataField.y, v);
+                best10 = sort(allshots);
+
+                TakeShot(best10);
             }
-            //https://www.youtube.com/watch?v=NO56_sZrCpM
 
         }
 
