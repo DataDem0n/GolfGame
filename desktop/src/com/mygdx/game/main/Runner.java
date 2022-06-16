@@ -214,7 +214,7 @@ public class Runner extends Thread
         DataField.kFriction = kineticFriction;
         DataField.GUI = true;
         DataField.usingGui = true;
-        DataField.terrain = (x,y)->(double)(Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2)));;//-0.1+(x*x+y*y)/1000.0 );//(1.0/10.0)*Math.cos(0.2*x));//(0.4*(0.9-Math.exp(-((x*x+y*y)/8.0))));
+        DataField.terrain = (x,y)->(double)(Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2)));
 
         if(!choice.equals("y")){
             DataField.x = coordinatesAndVelocity[0];

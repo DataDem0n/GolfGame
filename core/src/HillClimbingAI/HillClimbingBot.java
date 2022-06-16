@@ -30,7 +30,7 @@ public class HillClimbingBot {
         this.sFriction=DataField.sFriction;
         this.targetRXY=DataField.targetRXY;
         this.hc = new HillClimbing(solver);
-        this.random = new RandomNoise(1.0,1.1);
+        this.random = new RandomNoise(0.60,1.4);
         this.seed = random.generateSeed();
     }
 
