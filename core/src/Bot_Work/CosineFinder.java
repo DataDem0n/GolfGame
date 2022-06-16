@@ -22,12 +22,12 @@ public class CosineFinder implements VectorFinder {
         out.addAll(lineFind(ballX,ballY,holeX,holeY,basisVector, step, bound ));
 
         if(reduce) {
-            ArrayList<WeightedVector> temp = reduceVectors(out, 1);
+            ArrayList<WeightedVector> temp = reduceVectors(out, 0.80);
 
             out.addAll(temp);
 
             for (int i = 0; i < 5; i++) {
-                ArrayList<WeightedVector> y = reduceVectors(temp, 1);
+                ArrayList<WeightedVector> y = reduceVectors(temp, 0.80);
                 out.addAll(y);
                 temp = y;
             }
@@ -37,7 +37,6 @@ public class CosineFinder implements VectorFinder {
         return out;
     }
 
-    //for trying shorter shots
     public ArrayList<WeightedVector> reduceVectors(ArrayList<WeightedVector> out, double step) {
         ArrayList<WeightedVector> addition = new ArrayList<>();
 
@@ -65,7 +64,8 @@ public class CosineFinder implements VectorFinder {
 
     private ArrayList<WeightedVector> lineFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector, double step, double bound) {
         ArrayList<WeightedVector> wv = new ArrayList<>();
-        for (double i = step; i < 2.5; i=i+step) {
+
+        for (double i = step; i < 4.0; i=i+step) {
             double xAddition = -i;
             double yAddition = -i;
 
@@ -73,22 +73,14 @@ public class CosineFinder implements VectorFinder {
                 xAddition = xAddition*-1;
             if(ballY>holeY)
                 yAddition = yAddition*-1;
-
-            //if the y vectors/ x vectors are less than 5 then fix it.
-
             if((holeX<ballX+1.0||holeX>ballX-1.0)){
                 wv.add(new WeightedVector(basisVector.getX()+xAddition, basisVector.getY()));
                 wv.add(new WeightedVector(basisVector.getX()-xAddition, basisVector.getY()));
-//                wv.add(new WeightedVector(basisVector.getX()+yAddition,basisVector.getY()));
-//                wv.add(new WeightedVector(basisVector.getX()-yAddition,basisVector.getY()));
             }
             else if((holeY<ballY+1.0 || holeY>ballY-1.0)){
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()+yAddition));
                 wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()-yAddition));
-//                wv.add(new WeightedVector(basisVector.getX()+xAddition,basisVector.getY()));
-//                wv.add(new WeightedVector(basisVector.getX()-xAddition,basisVector.getY()));
             }
-
             else {
                 wv.add(new WeightedVector(basisVector.getX() + xAddition, basisVector.getY()));
                 wv.add(new WeightedVector(basisVector.getX(), basisVector.getY()+ yAddition));
@@ -105,11 +97,12 @@ public class CosineFinder implements VectorFinder {
         double xt = Distance(ballX, holeX);
         double yt = Distance(holeY, ballY);
 
-        if (xt > 5.0)
-            xt = 5.0;
+        if (xt > 5.0){
+            xt = 5.0;}
 
-        if(yt>5.0)
+        if(yt>5.0) {
             yt = 5.0;
+        }
 
         if(ballX > holeX)
             xt = -xt;
@@ -118,14 +111,6 @@ public class CosineFinder implements VectorFinder {
 
         return new WeightedVector(xt,yt);
     }
-
-//    public double[] findMax(double x,double y){
-//        double basisRatio = Math.min(x,y)/Math.max(x,y);
-//        if(x>y)
-//            return new double[]{5,5*basisRatio};
-//        else
-//            return new double[]{5*basisRatio, 5};
-//    }
 
     //testing method
     public static void main(String[] args) {

@@ -55,7 +55,13 @@ public class BruteStart {
 
                 ArrayList<WeightedVector> allshots = simulate(DataField.x, DataField.y, v);
                 ArrayList<WeightedVector> best10 = sort(allshots);
-                System.out.println("XY:" + DataField.x + " " + DataField.y);
+
+                if (best10.get(0).getWeight()<1.0) {
+                    best10.get(0).setX(best10.get(0).getX()*1.1);
+                    best10.get(0).setY(best10.get(0).getY()*1.1);
+                }
+
+            System.out.println("XY:" + best10.get(0).getX() + " " + best10.get(0).getY());
                 TakeShot(best10);
 
 
@@ -131,6 +137,7 @@ public class BruteStart {
 
             xVel.clear();
             yVel.clear();
+
             DataField.velocityX.clear();
             DataField.velocityY.clear();
 
@@ -152,4 +159,25 @@ public class BruteStart {
                 DataField.GUI = true;
             });
         }
+
+    public double increaseBasis(double t){
+        double multiplier = 1.0;
+        if(t<5&&t>=4){
+            t = t*1.1;
+        }
+        else if(t<4&&t>=3){
+            t = t*1.1;
+        }
+        else if(t<3&&t>=2){
+            t = t*1.3;
+        }
+        else if(t<2&&t>=1){
+            t = t*1.4;
+        }
+        else if(t<1&&t>=0){
+            t = t*1.1;
+        }
+
+        return t;
+    }
 }
