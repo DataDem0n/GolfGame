@@ -1,8 +1,6 @@
 package com.mygdx.game.main;
 
-import Bots.AI;
-import Bots.AdjacencyField;
-import Bots.SlopeField;
+import BruteForce.BruteStart;
 import HillClimbingAI.HillClimbing;
 import HillClimbingAI.HillClimbingBot;
 import Music.MusicControls;
@@ -34,7 +32,7 @@ public class WindowMain{
     JLabel ballYCoord;
 
     //Bot buttons
-    JButton ruleBotButton;
+    JButton bruteBotButton;
     JButton pathBot;
     JButton hillClimbing;
 
@@ -52,7 +50,7 @@ public class WindowMain{
     //JLabel selectedSolver = new JLabel("Solver: ");   will be used in phase 3
     WindowMain(){
         pathBot = new JButton("Start Path Finding Bot");
-        ruleBotButton = new JButton("Start rule Bot");
+        bruteBotButton = new JButton("Start Brute Force Bot");
         hillClimbing = new JButton("Start Hill climbing bot");
         BruteStart Franklin = new BruteStart();
 
@@ -68,7 +66,6 @@ public class WindowMain{
             ArrayList<ArrayList<Double>> temp = hcb.hillClimbingBot();
             ArrayList<Double> xVelocities = temp.get(0);
             ArrayList<Double> yVelocities = temp.get(1);
-
 
             DataField.velocityX = xVelocities;
             DataField.velocityY = yVelocities;
@@ -285,6 +282,11 @@ public class WindowMain{
         gc.gridy = 4;
         gc.gridwidth = 1;
         panel.add(hillClimbing, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 5;
+        gc.gridwidth = 1;
+        panel.add(bruteBotButton, gc);
 
         //Swing frame settings
         frame.add(sideMenu);
