@@ -42,7 +42,6 @@ public class WindowMain{
     JButton pushButton = new JButton("PUTT!");
 
     //initialising bot elements
-    BotBasic Charley = new BotBasic();
 //    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]});
 //    SlopeField b = new SlopeField(1,DataField.terrain);
 
@@ -55,9 +54,10 @@ public class WindowMain{
         pathBot = new JButton("Start Path Finding Bot");
         ruleBotButton = new JButton("Start rule Bot");
         hillClimbing = new JButton("Start Hill climbing bot");
+        BruteStart Franklin = new BruteStart();
 
-        ruleBotButton.addActionListener(e -> {
-            Charley.start();
+        bruteBotButton.addActionListener(e -> {
+            Franklin.start();
         });
 
         hillClimbing.addActionListener(e -> {
