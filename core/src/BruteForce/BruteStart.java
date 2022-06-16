@@ -1,12 +1,10 @@
 package BruteForce;
 
 import com.mygdx.game.main.DataField;
-import engine.GameEngine;
 import solvers.RungeKutta4;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.time.*;
 
 public class BruteStart {
 
@@ -15,37 +13,14 @@ public class BruteStart {
     CosineFinder FranklinTheSecond = new CosineFinder();
     ArrayList<WeightedVector> v;
 
-    double initX;
-    double initY;
-
-
     private ArrayList<Double> seed;
     private static int counter =0;
 
         public BruteStart(){
-
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
             xVel = new ArrayList<>();
             yVel = new ArrayList<>();
-        }
-
-
-
-        public ArrayList<WeightedVector> variance(WeightedVector mainshot, double step, double bound){
-
-            double x = mainshot.getX();
-            double y = mainshot.getY();
-
-            ArrayList<WeightedVector> output = new ArrayList<>();
-
-            for (double i = -bound; i <= bound; i+=step) {
-                output.add(new WeightedVector(x+i,y+i));
-                output.add(new WeightedVector(x+i,y-i));
-                output.add(new WeightedVector(x-i,y+i));
-            }
-
-            return output;
         }
 
         public void start(){
@@ -96,6 +71,7 @@ public class BruteStart {
 
         public ArrayList<WeightedVector> simulate(double ballInitX,double ballInitY, ArrayList<WeightedVector> v) {
             for (WeightedVector wv:v) {
+                counter++;
                 RungeKutta4 rk4 = new RungeKutta4(DataField.terrain,new double[]{ballInitX,ballInitY,wv.getX(),wv.getY()},DataField.sFriction,DataField.kFriction,DataField.targetRXY);
                 double[] out = rk4.coordinatesAndVelocityUntilStop(0.001,false);
                 wv.setWeight(rk4.getBestFinalDistance());
@@ -106,7 +82,7 @@ public class BruteStart {
             }
             return v;
         }
-
+        public int counter2electricboogaloo = 0;
         private void TakeShot(ArrayList<WeightedVector> v1){
             xVel.clear();
             yVel.clear();
@@ -122,8 +98,8 @@ public class BruteStart {
             DataField.velocityX.add(xVel.get(0));
             DataField.velocityY.add(yVel.get(0));
 
-            System.out.println("wagwan dis da velocity X " + DataField.velocityX.get(0));
-            System.out.println("wagwan dis da velocity Y " + DataField.velocityY.get(0));
+            System.out.println("X velocity: " + DataField.velocityX.get(0));
+            System.out.println("Y velocity: " + DataField.velocityY.get(0));
 
             counter++;
 

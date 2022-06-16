@@ -1,14 +1,8 @@
 package BruteForce;
-import java.time.Duration;
-import com.mygdx.game.main.DataField;
 
 import java.util.ArrayList;
 
 public class CosineFinder {
-
-    final static double step = 0.2;
-
-    ArrayList<Double> v;
 
     public ArrayList<WeightedVector> vectorFind(double ballX, double ballY, double holeX, double holeY, WeightedVector basisVector, double step, boolean reduce, double bound) {
 
@@ -110,11 +104,6 @@ public class CosineFinder {
             yt = -yt;
 
         return new WeightedVector(xt,yt);
-    }
-
-    //testing method
-    public static void main(String[] args) {
-        CosineFinder cf = new CosineFinder();
     }
 
 }
