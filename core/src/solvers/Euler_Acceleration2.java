@@ -197,15 +197,6 @@ import java.util.function.BiFunction;
             return false;
         }
 
-        public static void main(String[] args) {
-            BiFunction<Double,Double,Double> terrain = (x,y) -> x/2.0+100;
-            double [] coordinatesAndVel = {0,0,5,0};
-            double kFriction = 0.1;
-            double sFriction = 0.5;
-            double [] targetRXY = {0.1,10,10};
-            Euler_Acceleration2 rungeKutta4 = new Euler_Acceleration2(terrain,coordinatesAndVel,kFriction,sFriction,targetRXY);
-            // System.out.println("hello");
-            System.out.println(Arrays.toString(rungeKutta4.coordinatesAndVelocityUntilStop(0.001, false)));
-        }
+
     }
 
