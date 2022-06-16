@@ -84,7 +84,7 @@ public class BruteStart {
                     e.printStackTrace();
                 }
 
-                //shot 2 (i don't think it works)
+                //shot 2
 //                System.out.println("XY:" + DataField.x + " " + DataField.y);
 //                allshots = simulate(DataField.x, DataField.y, v);
 //                best10 = sort(allshots);
@@ -106,7 +106,7 @@ public class BruteStart {
 
             ArrayList<WeightedVector> best10 = new ArrayList<>();
 
-            for (int k = 0; k <= 10; k++) {
+            for (int k = 0; k < 10; k++) {
                 best10.add(allshots.get(k));
             }
 
@@ -133,10 +133,12 @@ public class BruteStart {
             yVel.clear();
             DataField.velocityX.clear();
             DataField.velocityY.clear();
+
             for (WeightedVector wv:v1) {
                 xVel.add(wv.getX());
                 yVel.add(wv.getY());
             }
+
 
             DataField.velocityX.add(xVel.get(0));
             DataField.velocityY.add(yVel.get(0));

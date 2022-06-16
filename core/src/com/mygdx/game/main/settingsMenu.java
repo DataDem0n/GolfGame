@@ -112,14 +112,14 @@ public class settingsMenu{
         //initialising preset 1
         test1.addActionListener(e ->{
             DataField.x = 0;
-            DataField.y = 0;
-            DataField.targetRXY = new double[]{0.15,20,20};
+            DataField.y = 6;
+            DataField.targetRXY = new double[]{0.15,0,-6};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(15,15));
             DataField.kFriction = 0.2;
             DataField.sFriction = 0.3;
             DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
-            chooseSolvers.setSelectedIndex(2);
+            chooseSolvers.setSelectedIndex(3);
             settingsMenu.finished = false;
             DataField.sandPit = new double[]{40,40,40,40};
 
@@ -135,7 +135,8 @@ public class settingsMenu{
             DataField.gameForest.getForest().add(new Tree(100,100));
             DataField.kFriction = 0.2;
             DataField.sFriction = 0.3;//TODO: fix this with saman
-            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
+//            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
+            DataField.terrain = (x,y)->1.0;
             chooseSolvers.setSelectedIndex(3);
             DataField.sandPit = new double[]{40,40,40,40};
             settingsMenu.finished = false;

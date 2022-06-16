@@ -77,8 +77,8 @@ public class CosineFinder implements VectorFinder {
             //if the y vectors/ x vectors are less than 5 then fix it.
 
             if((holeX<ballX+1.0||holeX>ballX-1.0)){
-                wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()+xAddition));
-                wv.add(new WeightedVector(basisVector.getX(),basisVector.getY()-xAddition));
+                wv.add(new WeightedVector(basisVector.getX()+xAddition, basisVector.getY()));
+                wv.add(new WeightedVector(basisVector.getX()-xAddition, basisVector.getY()));
 //                wv.add(new WeightedVector(basisVector.getX()+yAddition,basisVector.getY()));
 //                wv.add(new WeightedVector(basisVector.getX()-yAddition,basisVector.getY()));
             }
@@ -100,13 +100,6 @@ public class CosineFinder implements VectorFinder {
     private double Distance(double x1, double x2){
         return Math.sqrt(Math.pow((x2-x1) ,2));
     }
-
-    //Distance between two points method (can use the return as a weight value if needed)
-    private double Euclidistance(double x1, double x2, double y1, double y2) {
-        return Math.sqrt(Math.pow((x2-x1) ,2) + Math.pow((y2-y1), 2));
-    }
-
-
 
     public WeightedVector vectorToPoint(double ballX, double ballY, double holeX, double holeY) {
         double xt = Distance(ballX, holeX);
@@ -132,7 +125,6 @@ public class CosineFinder implements VectorFinder {
 //            return new double[]{5,5*basisRatio};
 //        else
 //            return new double[]{5*basisRatio, 5};
-//
 //    }
 
     //testing method
