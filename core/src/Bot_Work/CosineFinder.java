@@ -10,7 +10,7 @@ public class CosineFinder implements VectorFinder {
 
     ArrayList<Double> v;
     public CosineFinder() {
-        step = 0.2;
+        step = 0.05;
     }
 
     @Override

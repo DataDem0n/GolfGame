@@ -3,6 +3,7 @@ package Bot_Work;
 import com.mygdx.game.main.DataField;
 import engine.GameEngine;
 import solvers.RungeKutta4;
+import Noise.RandomNoise;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class BruteStart {
 
     double initX;
     double initY;
+
+    private RandomNoise random;
+    private ArrayList<Double> seed;
+    private static int counter =0;
 
         public BruteStart(double x, double y){
 
@@ -63,7 +68,6 @@ public class BruteStart {
 
             System.out.println("XY:" + best10.get(0).getX() + " " + best10.get(0).getY());
                 TakeShot(best10);
-
 
 //                ArrayList<WeightedVector> t1 = sort(simulate(DataField.x, DataField.y, variance(best10.get(0), 0.1, 2)));
 //                ArrayList<WeightedVector> t2 = sort(simulate(DataField.x, DataField.y, variance(t1.get(0), 0.01, 1)));
@@ -135,6 +139,9 @@ public class BruteStart {
 
         private void TakeShot(ArrayList<WeightedVector> v1){
 
+            this.random = new RandomNoise(1.0,1.1);
+            this.seed = random.generateSeed();
+
             xVel.clear();
             yVel.clear();
 
@@ -146,9 +153,13 @@ public class BruteStart {
                 yVel.add(wv.getY());
             }
 
+            DataField.velocityX.add(xVel.get(0)*seed.get(counter));
+            DataField.velocityY.add(yVel.get(0)*seed.get(counter));
 
-            DataField.velocityX.add(xVel.get(0));
-            DataField.velocityY.add(yVel.get(0));
+            System.out.println("wagwan dis da velocity X " + DataField.velocityX.get(0));
+            System.out.println("wagwan dis da velocity Y " + DataField.velocityY.get(0));
+
+            counter++;
 
             xVel.remove(0);
             yVel.remove(0);
@@ -158,6 +169,7 @@ public class BruteStart {
             Timer t = new Timer(100, e1 -> {
                 DataField.GUI = true;
             });
+
         }
 
     public double increaseBasis(double t){
