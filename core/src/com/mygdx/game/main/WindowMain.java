@@ -69,6 +69,7 @@ public class WindowMain{
             ArrayList<Double> xVelocities = temp.get(0);
             ArrayList<Double> yVelocities = temp.get(1);
 
+
             DataField.velocityX = xVelocities;
             DataField.velocityY = yVelocities;
             DataField.GUI = false;

@@ -1,5 +1,6 @@
 package HillClimbingAI;
 
+import Noise.RandomNoise;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.main.DataField;
 
@@ -18,6 +19,9 @@ public class HillClimbingBot {
     private double kFriction;
     private double [] targetRXY;
 
+    private RandomNoise random;
+    private ArrayList<Double> seed;
+
 
     public HillClimbingBot(HillClimbing hc, double [] coords, Solver solver){
         this.coordsAndVel=new double[]{coords[0],coords[1], 0,0};
@@ -26,10 +30,11 @@ public class HillClimbingBot {
         this.sFriction=DataField.sFriction;
         this.targetRXY=DataField.targetRXY;
         this.hc = new HillClimbing(solver);
+        this.random = new RandomNoise(1.0,1.1);
+        this.seed = random.generateSeed();
     }
 
     public ArrayList<ArrayList<Double>> hillClimbingBot(){
-
         ArrayList<Double> xVelocities = new ArrayList<>();
         ArrayList<Double> yVelocities = new ArrayList<>();
 
@@ -37,10 +42,10 @@ public class HillClimbingBot {
 
         while (!(Math.pow(targetRXY[0],2)>(Math.pow((coordsAndVel[0]-targetRXY[1]), 2 )+Math.pow((coordsAndVel[1]-targetRXY[2]), 2 )))){
 
-
             double[] best_velocity = hc.hillClimbing(coordsAndVel, kFriction, sFriction);
             coordsAndVel = new double[] {coordsAndVel[0],coordsAndVel[1], best_velocity[0],best_velocity[1]};
             double[]  coords = {coordsAndVel[0],coordsAndVel[1]};
+            best_velocity = new double[]{best_velocity[0]*seed.get(counter), best_velocity[1]*seed.get(counter)};
             double [] newCoor = hc.performShot(0.0001, best_velocity,terrain,coords,kFriction,sFriction);
 
             if(hc.getWentThroguhWater()){

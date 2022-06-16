@@ -186,8 +186,6 @@ public class Runner extends Thread
         String heightProfile = get_function();
 
         //this sets terrain to the heightprofile given in the read.txt
-
-
         /*
         sets all the static fields from the DataFieldclass,
         so it can be accesed by the GameEngine thread
