@@ -2,7 +2,7 @@ package BruteForce;
 
 import com.mygdx.game.main.DataField;
 import solvers.RungeKutta4;
-
+import Noise.RandomNoise;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -14,6 +14,7 @@ public class BruteStart {
     ArrayList<WeightedVector> v;
 
     private ArrayList<Double> seed;
+    private RandomNoise noise;
     private static int counter =0;
 
         public BruteStart(){
@@ -80,10 +81,15 @@ public class BruteStart {
                     wv.setWeight(100);
                 }
             }
+            System.out.println("iterations: " +counter);
             return v;
         }
         public int counter2electricboogaloo = 0;
         private void TakeShot(ArrayList<WeightedVector> v1){
+
+            this.noise = new RandomNoise(1.0,1.1);
+            this.seed = noise.generateSeed();
+
             xVel.clear();
             yVel.clear();
 
@@ -97,6 +103,10 @@ public class BruteStart {
 
             DataField.velocityX.add(xVel.get(0));
             DataField.velocityY.add(yVel.get(0));
+
+//            DataField.velocityX.add(xVel.get(0)*seed.get(counter));
+//            DataField.velocityY.add(yVel.get(0)*seed.get(counter));
+            //*noise.get(0);
 
             System.out.println("X velocity: " + DataField.velocityX.get(0));
             System.out.println("Y velocity: " + DataField.velocityY.get(0));
