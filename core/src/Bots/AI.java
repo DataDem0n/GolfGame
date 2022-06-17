@@ -1,43 +1,51 @@
 package Bots;
 
+import Noise.RandomNoise;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public class AI extends Simulations
+public class AI
 {
-    double holeCoorX, holeCoorY, holeRadius;
+    double[] targetRXY;
+    boolean finalShot;
+    AdjacencyField adjacency;
+    BiFunction<Double, Double, Double> terrain;
+    double interval;
+    SlopeField slope;
+    double ballCoorX;
+    double ballCoorY;
+    double sFriction;
+    double kFriction;
+
+    RandomNoise noise;
     
-    public AI(BiFunction<Double, Double, Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction,  double holeCoorX, double holeCoorY, double holeRadius) 
+    public AI(BiFunction<Double, Double, Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction, double[] targetRXY)
     {
-        super(terrain, interval, adjacency, slope, ballCoorX, ballCoorY, sFriction, kFriction);
-        this.holeCoorX = holeCoorX;
-        this.holeCoorY = holeCoorY;
-        this.holeRadius = holeRadius;
+        this.targetRXY = targetRXY;
         this.adjacency = adjacency;
+        this.slope = slope;
+        this.terrain = terrain;
+        this.interval = interval;
+        this.ballCoorX = ballCoorX;
+        this.ballCoorY = ballCoorY;
+        this.sFriction = sFriction;
+        this.kFriction = kFriction;
+        noise = new RandomNoise(0.9, 1.1);
+
     }
 
-    /**
-     * A method to check if the ball has reached its target
-     * @param ballCoorX1 the ball's current X position
-     * @param ballcoorY1 the ball's current Y position
-     * @return true if the ball has reached the target
-     */
     public boolean endReached(double ballCoorX1, double ballcoorY1)
     {
-        if((ballCoorX1 < holeCoorX+holeRadius && ballCoorX1 > holeCoorX-holeRadius) && (ballcoorY1 < holeCoorY+holeRadius && ballcoorY1 > holeCoorY-holeRadius))
+        if((ballCoorX1 < targetRXY[1]+targetRXY[0] && ballCoorX1 > targetRXY[1]-targetRXY[0]) && (ballcoorY1 < targetRXY[2]+targetRXY[0] && ballcoorY1 > targetRXY[2]-targetRXY[0]))
         {
             return true;
         }
         return false;
     }
+    
 
-    /**
-     * A getter method that receives all of the ball's velocities
-     * @param ballCoorX1 the ball's current X position
-     * @param ballcoorY1 the ball's current Y position
-     * @return all velocities that the ball has currently
-     */
     public List<List> getAllVelocities(double ballCoorX1, double ballcoorY1)
     {
         ArrayList<List> allVelocities = new ArrayList<List>();
@@ -45,69 +53,145 @@ public class AI extends Simulations
         allVelocities.add(new ArrayList<Double>());
 
 
+
          
         while(!endReached(ballCoorX1,ballcoorY1))
         {            
+            System.out.println("ballcoorX: " + ballCoorX1);
+            System.out.println("ballcoorY: " + ballcoorY1);
+            // try 
+            // {
+            //     Thread.sleep(2000);
+            // } 
+            // catch (InterruptedException e) 
+            // {
 
-            Simulations correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction);              //changed correctpos to bestshot
-            double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 6);                                                          //max velocity used to get initialvel  = simulationsRan
-            double[] usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20);                                     //counter is always 0, scaler = the change in velocity at each recusive call (in percentages)
+            // }
+            
+            
+            Plot check = new Plot(terrain, interval, adjacency, slope, ballCoorX, ballCoorY, sFriction, kFriction, targetRXY);
 
+            double[] save = check.slopeCompensator(ballCoorX1, ballcoorY1);
+
+
+            double[] usedVelocity;
+
+            Simulations correctVel;
+
+
+            if(save[0] > targetRXY[1]-1 && save[0] < targetRXY[1]+1 && save[1] > targetRXY[2]-1 && save[1] < targetRXY[2]+1)
+            {
+
+                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, true);              //changed correctpos to bestshot
+                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
+                usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
+
+            }
+            else
+            {
+
+                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, false);              //changed correctpos to bestshot
+                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
+                usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
+            }
+
+            // System.out.println("x: "+ correctVel.coordinatesAndVelocity[0]);
+            // System.out.println("y: "+ correctVel.coordinatesAndVelocity[1]);
             
             allVelocities.get(0).add(usedVelocity[0]);
             allVelocities.get(1).add(usedVelocity[1]);
             
-            ballCoorX1 = correctVel.coordinatesAndVelocity[0];
-            ballcoorY1 = correctVel.coordinatesAndVelocity[1];
+            
+            
+            ballCoorX1 = usedVelocity[2];
+            ballcoorY1 = usedVelocity[3];
+            System.out.println(ballCoorX1+"clomX");
+            System.out.println(ballcoorY1+"clomY");
+            // try 
+            // {
+            //     Thread.sleep(2000);
+            // } 
+            // catch (InterruptedException e) 
+            // {
+
+            // }
 
         }
 
-        for(int i = 0; i<allVelocities.get(0).size();i++)
+        ArrayList<Double> random = new ArrayList<Double>();
+        random = noise.generateSeed();
+        ArrayList<List> newVelocities = new ArrayList<List>();
+        ArrayList<Double> velX = new ArrayList<Double>();
+        ArrayList<Double> velY = new ArrayList<Double>();
+        newVelocities.add(velX);
+        newVelocities.add(velY);
+
+        for(int i = 0; i < allVelocities.get(0).size(); i++)
         {
-            System.out.println("Shot "+(i+1));
-            System.out.println("X velocity: "+ allVelocities.get(0).get(i));
-            System.out.println("Y velocity: "+ allVelocities.get(1).get(i));
-            System.out.println();
+            newVelocities.get(0).add(new Double(allVelocities.get(0).get(i).toString())*random.get(i));
+            newVelocities.get(1).add(new Double(allVelocities.get(1).get(i).toString())*random.get(i));
         }
-        return allVelocities;
+        return newVelocities;
     }
 
 
-    /**
-     * A testing method with pre-determined values
-     */
 
+
+    
+
+
+    
+    
+    
+    
+    
+    
+    
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(1);
-        double[] coorTX = {7};       //x-coordinates of the trees
-        double[] coorTY = {7};         //y-coordinates of the trees
+        BiFunction<Double,Double,Double> terrain = (x,y)->1.0;//-0.1+(x*x+y*y)/1000.0;             //0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0))                        //(double)0.5*(Math.sin((x+y)/10))+1            0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8))
+        double[] coorTX = {15, 15, 8};       //x-coordinates of the trees    
+        double[] coorTY = {15, 8, 15};         //y-coordinates of the trees
         double interval = 1;
-        double holeCoorx = 10;
-        double holeCoory = 10;
-        double holeRadius = 1;
-        double ballCoorX = 0;
-        double ballCoorY = 0;
+        double[] targetRXY = {0.5,18,18};
+        double holeCoorx = 18;
+        double holeCoory = 18;
+        double ballCoorX = -15;
+        double ballCoorY = 15;
         double sFriction = 0.2;
         double kFriction = 0.1;
-        double radius = 2;                                  //radius of all trees
+        double radius = 2;                                  //radius of all trees      
         double[] beginX = {};                    //begin x-coordinates for the sandpits
         double[] endX = {};                       //end x-coordinates for the sandpits
         double[] beginY = {};                    //begin y-coordinates for the sandpits
         double[] endY = {};                       //end y-coordinates for the sandpits
         int sandpitResentment = 0;
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY);
+        SlopeField slope = new SlopeField(interval, terrain);
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);           
+        SlopeField b = new SlopeField(interval,terrain);  
 
-        SlopeField b = new SlopeField(interval,terrain);
-
-        AI newtonSlave = new AI(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, holeCoorx, holeCoory, holeRadius);
+        
+        AI newtonSlave = new AI(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, targetRXY);
 
         List<List> endtest = newtonSlave.getAllVelocities(ballCoorX,ballCoorY);
 
 
-        System.out.println("velocityX1: "+endtest.get(0).get(0));
-        System.out.println("velocityY1: "+endtest.get(1).get(0));
-        System.out.println("velocityX2: "+endtest.get(0).get(1));
-        System.out.println("velocityY2: "+endtest.get(1).get(1));
+
+        for(int i = 0; i < endtest.get(0).size(); i++)
+        {        
+        System.out.println("velocityX"+i+":   "+endtest.get(0).get(i));
+        System.out.println("velocityY"+i+":   "+endtest.get(1).get(i));
+        }
+
     }
 }
+
+
+
+
+
+
+
+
+
+//if the shot is towards the hole turn the boolean in the simulations true.

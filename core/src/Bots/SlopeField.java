@@ -9,12 +9,7 @@ public class SlopeField
 {
     double interval;
     BiFunction<Double,Double,Double> terrain;
-
-    /**
-     *
-     * @param interval scaler distances
-     * @param terrain   terrain from teh main game.
-     */
+    
     public SlopeField(double interval, BiFunction<Double,Double,Double> terrain)     //interval = trade-off between accuracy and speed.
     {
         this.terrain = terrain;
@@ -22,10 +17,6 @@ public class SlopeField
         
     }
 
-    /**
-     * generates a field 2 array
-     * @return 2d array of double
-     */
     public double[][] Field()
     {
        
@@ -41,10 +32,7 @@ public class SlopeField
         return field;
     }
 
-    /**
-     *calculates slope for x vals
-     * @return
-     */
+
     public double[][] slopeXCalculator()
     {
         double[][] field = Field();
@@ -59,14 +47,14 @@ public class SlopeField
             }
             
         }
+        field[25][27] = 1.9;                                                                                  //________________________________________________________________         used to manipulate slope at 1 point
+        field[24][23] = 1.9;
+        field[25][28] = 1.9;
+        field[23][22] = 1.9;
         return field;
     }
 
-    /**
-     *Calculates
-     * slops for y values
-     * @return
-     */
+    
     public double[][] slopeYCalculator()
     {
         double[][] field = Field();
@@ -81,16 +69,16 @@ public class SlopeField
             }
             
         }
-        return field;
+        field[25][27] = 1.9;                                                                                  //________________________________________________________________        used to manipulate slope at 1 point
+        field[24][23] = 1.9;
+        field[25][28] = 1.9;
+        field[23][22] = 1.9;
+        return field;                                                                       
     }
-
-    /**
-     *
-     * @param args
-     */
+    
     public static void main(String[] args) 
     {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));                             //(double)(0.5*(Math.sin((x-y)/7)+0.9))
         double interval = 1;
         SlopeField slopes = new SlopeField(interval, terrain);
         double[][] slopesX = slopes.slopeXCalculator();
