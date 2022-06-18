@@ -55,6 +55,8 @@ public class settingsMenu{
     //Preset buttons
     JButton test1;
     JButton test2;
+    JButton test3;
+    JButton test4;
 
 
     //Set button
@@ -74,7 +76,7 @@ public class settingsMenu{
         sandpitCoordsX2 = new JTextField("x2");
         sandpitCoordsY2 = new JTextField("y2");
 
-        sandpitCoordText = new JLabel("Enter Coords:");
+        sandpitCoordText = new JLabel("Enter Sandpit Coords:");
 
         originXText = new JLabel("Enter ball's X coordinate origin");
         originX = new JTextField("0");
@@ -107,19 +109,21 @@ public class settingsMenu{
         holeR = new JTextField("Radius");
         holeR.setColumns(5);
 
-        test1 = new JButton("Preset 1 (Tree)");
+        test1 = new JButton("Preset 1 (Sine hills)");
         test2 = new JButton("Preset 2 (Lake)");
+        test3 = new JButton("Preset 3 (Big Lake)");
+        test4 = new JButton("Preset 4 (Two hills)");
 
         //initialising preset 1
         test1.addActionListener(e ->{
             DataField.x = 0;
             DataField.y = 0;
-            DataField.targetRXY = new double[]{0.15,6,6};
+            DataField.targetRXY = new double[]{0.15,-12,-8};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(2,2));
-            DataField.kFriction = 0.2;
-            DataField.sFriction = 0.3;
-            DataField.terrain = (x,y)->(1/10.0)*(Math.sin(x+y)+1);
+            DataField.kFriction = 0.1;
+            DataField.sFriction = 0.2;
+            DataField.terrain = (x,y)->(2.0/3.0)*Math.sin(x/6.0)+0.7;
             chooseSolvers.setSelectedIndex(2);
             settingsMenu.finished = false;
             DataField.sandPit = new double[]{40,40,40,40};
@@ -129,14 +133,48 @@ public class settingsMenu{
 
         //initialising preset 2
         test2.addActionListener(e ->{
-            DataField.x = -3;
+            DataField.x = 0;
             DataField.y = 0;
-            DataField.targetRXY = new double[]{0.15,4,1};
+            DataField.targetRXY = new double[]{0.15,-12,-8};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(100,100));
-            DataField.kFriction = 0.15;
-            DataField.sFriction = 0.3;//TODO: fix this with saman
-            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));
+            DataField.kFriction = 0.1;
+            DataField.sFriction = 0.2;//TODO: fix this with saman
+            DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));
+            chooseSolvers.setSelectedIndex(2);
+            DataField.sandPit = new double[]{40,40,40,40};
+            settingsMenu.finished = false;
+
+            frameMain.setVisible(false);
+        });
+
+        //initialising preset 3
+        test3.addActionListener(e ->{
+            DataField.x = -15;
+            DataField.y = -15;
+            DataField.targetRXY = new double[]{0.1,18,18};
+            DataField.gameForest = new Forest(0);
+            DataField.gameForest.getForest().add(new Tree(100,100));
+            DataField.kFriction = 0.1;
+            DataField.sFriction = 0.2;
+            DataField.terrain = (x,y)->-0.1+(x*x+y*y)/1000.0;
+            chooseSolvers.setSelectedIndex(2);
+            DataField.sandPit = new double[]{40,40,40,40};
+            settingsMenu.finished = false;
+
+            frameMain.setVisible(false);
+        });
+
+        //initialising preset 4
+        test4.addActionListener(e ->{
+            DataField.x = 0;
+            DataField.y = 0;
+            DataField.targetRXY = new double[]{0.15,20,20};
+            DataField.gameForest = new Forest(0);
+            DataField.gameForest.getForest().add(new Tree(100,100));
+            DataField.kFriction = 0.08;
+            DataField.sFriction = 0.2;
+            DataField.terrain = (x,y)->Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2));
             chooseSolvers.setSelectedIndex(2);
             DataField.sandPit = new double[]{40,40,40,40};
             settingsMenu.finished = false;
@@ -145,7 +183,7 @@ public class settingsMenu{
         });
 
         /**
-        implementing "Set" button functionality - This confirms all the user-inserted values and parses them on to DataField.java
+         implementing "Set" button functionality - This confirms all the user-inserted values and parses them on to DataField.java
          */
         setButton.addActionListener(y->{
             //adding error messages for missed elements
@@ -249,6 +287,8 @@ public class settingsMenu{
         //Preset buttons contain predetermined values
         panelMain.add(test1);
         panelMain.add(test2);
+        panelMain.add(test3);
+        panelMain.add(test4);
 
         //Adding the set button. Confirms all the user inputted values
         panelMain.add(setButton);
