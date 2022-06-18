@@ -67,12 +67,15 @@ public class WindowMain{
             Solver solver = new RungeKutta4(DataField.terrain, coordsAndVel, DataField.kFriction,DataField.sFriction,  DataField.targetRXY);
             HillClimbing h = new HillClimbing(solver);
             HillClimbingBot hcb = new HillClimbingBot(h,new double []{coordsAndVel[0],coordsAndVel[1]}, solver);
+
             ArrayList<ArrayList<Double>> temp = hcb.hillClimbingBot();
+
             ArrayList<Double> xVelocities = temp.get(0);
             ArrayList<Double> yVelocities = temp.get(1);
 
             DataField.velocityX = xVelocities;
             DataField.velocityY = yVelocities;
+
             DataField.GUI = false;
 
             Timer t = new Timer(100, e1 -> {
@@ -93,6 +96,10 @@ public class WindowMain{
 
             while(!DataField.velocityX.isEmpty()) {
                 DataField.GUI = false;
+            }
+
+            if (DataField.velocityX.isEmpty()){
+                DataField.GUI = true;
             }
 
             Timer t = new Timer(100, e1 -> {
