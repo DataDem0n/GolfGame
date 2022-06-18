@@ -46,11 +46,8 @@ public class WindowMain{
         SlopeField b = new SlopeField(1,DataField.terrain);
     AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]}, b);
 
-
     AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY);
 
-    //solver label
-    //JLabel selectedSolver = new JLabel("Solver: ");   will be used in phase 3
     WindowMain(){
         pathBot = new JButton("Start Path Finding Bot");
         bruteBotButton = new JButton("Start Brute Force Bot");
@@ -256,7 +253,7 @@ public class WindowMain{
 
         //This adds the label for Elevation Depiction
         gc.gridx = 0;
-        gc.gridy = 5;
+        gc.gridy = 6;
         gc.fill=GridBagConstraints.CENTER;
         gc.anchor = GridBagConstraints.CENTER;
         gc.gridwidth = 2;
