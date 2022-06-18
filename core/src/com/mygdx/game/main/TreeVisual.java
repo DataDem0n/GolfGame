@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-public class TreeVisual {
+public class TreeVisual implements SpriteLibGDX {
     Sprite spriteLog;
     Texture log;
     Sprite spriteLeaves;
@@ -31,7 +31,7 @@ public class TreeVisual {
      * @param y: the center y-coordinate is set to this
      * setHolePos() method sets the position of the whole on the terrain
      */
-    public void setTreePos(float x,float y) {
+    public void setPos(float x,float y) {
         this.x = x;
         this.y = y;
         spriteLog.setPosition(x-.25f,y-.25f);
@@ -51,13 +51,19 @@ public class TreeVisual {
     }
 
     /**
-     * This method draws the hole on the screen.
-     * @return the center y-coordinate of the ball
+     *
+     * This method draws the log on the screen.
+     * @param Bat the sprite Batch to be used
      */
     public void draw(SpriteBatch Bat){
         spriteLog.setSize((log.getWidth()/size)*(2*treeradius),(log.getHeight()/size)*(2*treeradius));
         spriteLog.draw(Bat);
     }
+    /**
+     *
+     * This method draws the leaves on the screen.
+     * @param Bat the sprite Batch to be used
+     */
     public void drawLeaves(SpriteBatch Bat){
         spriteLeaves.setSize((leaves.getWidth()/size)*(2*treeradius),(leaves.getHeight()/size)*(2*treeradius));
         spriteLeaves.draw(Bat);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Hole {
+public class Hole implements SpriteLibGDX{
     Sprite spriteHole;
     Texture tex;
     float x;
@@ -19,12 +19,12 @@ public class Hole {
     }
 
     /**
-     * @param PPM: pixel per meter for the rendering system
      * @param x: the center x-coordinate is set to this
      * @param y: the center y-coordinate is set to this
      * setHolePos() method sets the position of the whole on the terrain
      */
-    public void setHolePos(float x,float y, float PPM) {
+
+    public void setPos(float x,float y) {
         this.x = x;
         this.y = y;
 

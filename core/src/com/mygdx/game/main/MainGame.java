@@ -30,6 +30,9 @@ public class MainGame extends ApplicationAdapter {
 	float holeX= (float) DataField.targetRXY[1];
 	float holeY= (float) DataField.targetRXY[2];
 
+	/** Creates all the needed elements and sprites when the window is first opened.
+	 *
+	 */
 	@Override
 	public void create (){
 		System.out.println(Arrays.toString(DataField.sandPit));
@@ -45,12 +48,13 @@ public class MainGame extends ApplicationAdapter {
 
 		for (int i = 0;i<tree1.length;i++) {
 			tree1[i] = new TreeVisual();
-			tree1[i].setTreePos((float) DataField.gameForest.getForest().get(i).getCoordX()*1.4f,(float) DataField.gameForest.getForest().get(i).getCoordY()*1.7f);
+			tree1[i].setPos((float) DataField.gameForest.getForest().get(i).getCoordX()*1.4f,(float) DataField.gameForest.getForest().get(i).getCoordY()*1.7f);
 		}
 
 		s = new ShapeRenderer();
 		Gdx.gl.glClearColor(.5f,0,.5f,1);
-		myHole.setHolePos(holeX*1.8f,holeY*1.8f,PPM);//1.8f why?
+		myHole.setPos(holeX*1.8f,holeY*1.8f);
+
 	}
 
 	/**
@@ -88,20 +92,22 @@ public class MainGame extends ApplicationAdapter {
 	 * @param y
 	 * @return
 	 */
+
 	public double calcHeight(double x,double y){
 		return DataField.terrain.apply(x,y);
 	}
 
 	/**
-	 * The void method renders the screen in x fps (x: is gotten from the DesktopLauncher file).
+	 * The void method renders the screen in x fps (x: is set from the DesktopLauncher file).
 	 */
+
 	@Override
 	public void render (){
 		WM.update();
 		s.setProjectionMatrix(viewport.getCamera().combined);
 		s.begin(ShapeRenderer.ShapeType.Filled);
 
-		gBall.setPos(((float)DataField.x)*1.8f,((float)DataField.y)*1.8f,PPM);
+		gBall.setPos(((float)DataField.x)*1.8f,((float)DataField.y)*1.8f);
 
 		//draws lines based on the height at the coord that the line is drawn at
 		for (int i = 0; i < coordsX.size(); i++) {

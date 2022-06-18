@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Ball extends Sprite {
+public class Ball implements SpriteLibGDX {
     Sprite sMain;
     Texture tex;
     float x;
@@ -23,9 +23,8 @@ public class Ball extends Sprite {
      * setPos() method sets the position of the ball on the terrain.
      * @param x: the center x-coordinate of the ball
      * @param y: the center y-coordinate of the ball
-     * @param PPM: This method disposes all the elements that were previously on the screen.
      */
-    public void setPos(float x,float y,float PPM) {
+    public void setPos(float x,float y) {
         this.x = x;
         this.y = y;
         sMain.setPosition(x+(0.125f), y+(0.125f));//0.125 comes from having 50 points per axis
