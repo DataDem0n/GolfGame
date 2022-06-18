@@ -290,7 +290,7 @@ public class WindowMain{
 
         //This adds the label for Elevation Depiction
         gc.gridx = 0;
-        gc.gridy = 5;
+        gc.gridy = 6;
         gc.fill=GridBagConstraints.CENTER;
         gc.anchor = GridBagConstraints.CENTER;
         gc.gridwidth = 2;
