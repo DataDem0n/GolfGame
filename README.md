@@ -64,7 +64,7 @@ A package **obstacles** which contains the classes and interfaces
 required to create said obstacles and check if the ball collides with them.<br />
 A package **engine** which contains all the solvers implemented 
 used to calculate and approximate the ball's position while running the game.<br />
-A package **Bots** which contains classes needed to run the AI bot and 
+A package **AStarBot** which contains classes needed to run the AI bot and 
 additional solver classes adapted from the **solvers** package made to work with the AI.<br />
 A package **com.mygdx.game.main** which contains game and menu 
 elements as well as the graphical rendering of all game elements.<br />

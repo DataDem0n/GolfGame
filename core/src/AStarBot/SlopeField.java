@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.function.BiFunction;
 
@@ -9,6 +9,12 @@ public class SlopeField
 {
     double interval;
     BiFunction<Double,Double,Double> terrain;
+
+    /**TODO
+     *
+     * @param interval
+     * @param terrain
+     */
     
     public SlopeField(double interval, BiFunction<Double,Double,Double> terrain)     //interval = trade-off between accuracy and speed.
     {
@@ -16,6 +22,10 @@ public class SlopeField
         this.interval = interval;
         
     }
+    /**TODO
+     *
+     * @return
+     */
 
     public double[][] Field()
     {
@@ -33,6 +43,10 @@ public class SlopeField
     }
 
 
+    /**TODO
+     *
+     * @return
+     */
     public double[][] slopeXCalculator()
     {
         double[][] field = Field();
@@ -54,7 +68,10 @@ public class SlopeField
         return field;
     }
 
-    
+    /**TODO
+     *
+     * @return
+     */
     public double[][] slopeYCalculator()
     {
         double[][] field = Field();

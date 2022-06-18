@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.function.BiFunction;
 
@@ -28,6 +28,22 @@ public class Simulations extends Plot
     boolean endHole;
     double scale;
 
+    int iteration = 0;
+
+
+    /**TODO
+     *
+     * @param terrain
+     * @param interval
+     * @param adjacency
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     * @param sFriction
+     * @param kFriction
+     * @param targetRXY
+     * @param endHole
+     */
     public Simulations(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction, double[] targetRXY, boolean endHole)
     {
         super(terrain, interval, adjacency, slope, ballCoorX, ballCoorY, sFriction, kFriction, targetRXY);
@@ -51,6 +67,14 @@ public class Simulations extends Plot
         endCoorY = correctShot[1];
     }
 
+    /**TODO
+     *
+     * @param x1
+     * @param y1
+     * @param getCorrectShot
+     * @return
+     */
+
 
     
 
@@ -62,6 +86,14 @@ public class Simulations extends Plot
         distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
         return distance;
     }
+
+    /**TODO
+     *
+     * @param ballcoorX1
+     * @param ballcoorY1
+     * @param simulationlength
+     * @return
+     */
 
 
 
@@ -89,10 +121,12 @@ public class Simulations extends Plot
             coordinatesAndVelocity[3] = i;
              System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
-            test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
+            test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);
+
             
             System.out.println("i: "+i);
-            double[] vel = test.coordinatesAndVelocityUntilStop(step); 
+            double[] vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xvel: "+vel[2]+"     yvel: "+vel[3]);
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             double distance = getEuclideanDistance(vel[0], vel[1], correctShot);
@@ -112,7 +146,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -131,7 +166,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole); 
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -150,7 +186,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -169,7 +206,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -188,7 +226,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -207,7 +246,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -226,7 +266,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -245,7 +286,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -264,8 +306,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
-            
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -284,7 +326,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -303,7 +346,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -322,7 +366,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -341,7 +386,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -360,7 +406,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -379,7 +426,8 @@ public class Simulations extends Plot
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
-            vel = test.coordinatesAndVelocityUntilStop(step); 
+            vel = test.coordinatesAndVelocityUntilStop(step);
+            iteration++;
             System.out.println("xcoor: "+vel[0]+"     ycoor: "+vel[1]);
             distance = getEuclideanDistance(vel[0], vel[1], correctShot);
             if(distance < min)
@@ -397,6 +445,18 @@ public class Simulations extends Plot
         System.out.println("initialY: "+ initialVel[1]);
         return initialVel;
     }
+    /**TODO
+     *
+     * @param moddedXVel
+     * @param moddedYVel
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @param counter
+     * @param scaler
+     * @param scale
+     * @param counter2
+     * @return
+     */
 
 
 
@@ -432,9 +492,10 @@ public class Simulations extends Plot
         double[] correctVel = {moddedXVel, moddedYVel, 0, 0};
         coordinatesAndVelocity[2] = correctVel[0];
         coordinatesAndVelocity[3] = correctVel[1];
-        RungeKutta2 test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole); 
+        RungeKutta2 test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);
 
         double[] reached = test.coordinatesAndVelocityUntilStop(step);
+        iteration++;
         double reachedCoordX = reached[0];
         double reachedCoordY = reached[1];
         // System.out.println("endcoorX: "+endCoorX);
@@ -546,10 +607,21 @@ public class Simulations extends Plot
 
         // }
 
-        
-        
+
+        System.out.println("amount of iterations: "+iteration);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return correctVel;
     }
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
 
 
 
@@ -579,7 +651,13 @@ public class Simulations extends Plot
 
         return correctVel;
     }
-    
+
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] decreaseBoth(double[] correctVel, double scaler)
     {
 
@@ -603,7 +681,13 @@ public class Simulations extends Plot
 
         return correctVel;
     }
-    
+
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] increaseX(double[] correctVel, double scaler)
     {
         if(correctVel[0] < 0)
@@ -617,6 +701,13 @@ public class Simulations extends Plot
 
         return correctVel;
     }
+
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     
     
     
@@ -635,6 +726,12 @@ public class Simulations extends Plot
 
         return correctVel;
     }
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     
     
     
@@ -651,6 +748,12 @@ public class Simulations extends Plot
         
         return correctVel;
     }
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
 
 
 
@@ -667,7 +770,13 @@ public class Simulations extends Plot
         
         return correctVel;
     }
-    
+
+    /**TODO
+     *
+     * @param correctVel
+     * @param scaler
+     * @return
+     */
     public double[] increaseXDecreaseY(double[] correctVel, double scaler)
     {
 

@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -25,6 +25,13 @@ public class PathCalculator {
     List<Integer> pathMX;
     List<Integer> pathMY;
 
+    /**TODO
+     *
+     * @param adjacency
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     */
 
     public PathCalculator(AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
     {
@@ -39,6 +46,11 @@ public class PathCalculator {
         pathMX = new LinkedList<Integer>();
         pathMY = new LinkedList<Integer>();
     }
+
+    /**TODO
+     *
+     * @return
+     */
 
     public int[] getBallPosition()
     {
@@ -79,6 +91,13 @@ public class PathCalculator {
     }
 
 
+
+    /**TODO
+     *
+     * @param xPos
+     * @param yPos
+     * @return
+     */
 
     public List<List> pathCalculatorX(int xPos, int yPos)                    //pathcalculator x-path priority
     {

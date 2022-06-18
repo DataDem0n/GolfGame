@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.function.BiFunction;
 import java.util.ArrayDeque;
@@ -24,6 +24,19 @@ public class Plot extends PathCalculator
     double kineticFriction;
     double[] targerRXY;
     double[] parameters;
+
+    /**TODO
+     *
+     * @param terrain
+     * @param interval
+     * @param adjacency
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     * @param staticFriction
+     * @param kineticFriction
+     * @param targerRXY
+     */
 
 
     public Plot(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double staticFriction, double kineticFriction, double[] targerRXY)        //change slopeField back to slope after testing
@@ -66,6 +79,13 @@ public class Plot extends PathCalculator
        
     }
 
+    /**TODO
+     *
+     * @param parameters
+     * @param results
+     * @return
+     */
+
     public double[] checker(double[] parameters, double[] results)                              //valid
     {   
         if(parameters[0] > results[0])
@@ -87,7 +107,10 @@ public class Plot extends PathCalculator
         return parameters;
     }
 
-
+    /**TODO
+     *
+     * @return
+     */
     public double[] parameters()                                                                 //valid
     {
       
@@ -194,6 +217,15 @@ public class Plot extends PathCalculator
         return parameters;
 
     }
+
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @param endPathX
+     * @param endPathY
+     * @return
+     */
     
 
     public double[] differenceCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)                                                        //calculates the dx and dy of the shot        (valid)
@@ -211,6 +243,15 @@ public class Plot extends PathCalculator
 
     }
 
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @param endPathX
+     * @param endPathY
+     * @return
+     */
+
     public double unitCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)                                                          //valid                              
     {
         double[] difference = differenceCalc(ballCoorX1,ballCoorY1,endPathX,endPathY);
@@ -227,6 +268,12 @@ public class Plot extends PathCalculator
         //System.out.println(unit);
         return unit;
     }
+    /**TODO
+     *
+     * @param currentX
+     * @param currentY
+     * @return
+     */
 
     public boolean checkWaterOrTree(double currentX, double currentY)                           //no changes since phase 2
     {
@@ -267,7 +314,14 @@ public class Plot extends PathCalculator
         
         
     }
-
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @param endpathX
+     * @param endpathY
+     * @return
+     */
 
 
     public boolean shotPlottable(double ballCoorX1, double ballCoorY1, double endpathX, double endpathY)                                    //all changes made in phase 3 are valid (doesnt mean it is valid)                                                                              
@@ -455,6 +509,15 @@ public class Plot extends PathCalculator
        return true;
     }
 
+    /**TODO
+     *
+     * @param pathXX
+     * @param pathXY
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
+
     
     public int[] getCorrectShotX(List pathXX, List pathXY, double ballCoorX1, double ballCoorY1)                //the getcorrectshot seems correct (test with a scenario, where they arent similar)
     {
@@ -500,6 +563,15 @@ public class Plot extends PathCalculator
         return correctPos;
         
     }
+
+    /**TODO
+     *
+     * @param pathYX
+     * @param pathYY
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
     
     
     
@@ -533,6 +605,14 @@ public class Plot extends PathCalculator
         return correctPos;
         
     }
+
+    /**TODO
+     *
+     * @param container
+     * @param neighbourX
+     * @param neighbourY
+     * @return
+     */
     public int[] getCorrectShotM(List pathMX, List pathMY, double ballCoorX1, double ballCoorY1)
     {
         int counter = 0;
@@ -576,6 +656,12 @@ public class Plot extends PathCalculator
         }
         return false;
     }
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballCoorY1
+     * @return
+     */
 
 
     public double[] slopeCompensator(double ballCoorX1, double ballCoorY1)
@@ -721,6 +807,11 @@ public class Plot extends PathCalculator
 
 
     }
+    /**TODO
+     *
+     * @param path
+     * @return
+     */
 
 
 

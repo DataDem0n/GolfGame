@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -18,11 +18,25 @@ public class AdjacencyField
     BiFunction<Double,Double,Double> terrain;
     double[] coorTX,coorTY,beginX,endX,beginY,endY;
     double radius;
-    SlopeField slope;
     double[][] slopeFieldX;
     double[][] slopeFieldY;
-    
-    
+
+    /**TODO
+     *
+     * @param interval
+     * @param holeCoorx
+     * @param holeCoory
+     * @param sandpitResentment
+     * @param terrain
+     * @param coorTX
+     * @param coorTY
+     * @param radius
+     * @param beginX
+     * @param endX
+     * @param beginY
+     * @param endY
+     * @param slope
+     */
     public AdjacencyField(double interval, double holeCoorx, double holeCoory, int sandpitResentment, BiFunction<Double,Double,Double> terrain, double[] coorTX, double[] coorTY, double radius, double[] beginX, double[] endX, double[] beginY, double[] endY, SlopeField slope)     //interval = trade-off between accuracy and speed.
     {
         this.slopeFieldX = slope.slopeXCalculator();
@@ -40,6 +54,12 @@ public class AdjacencyField
         this.beginY = beginY;
         this.endY = endY;
     }
+
+    /**TODO
+     *
+     *
+     * @return
+     */
 
     public int[] getHolePosition()
     {
@@ -85,6 +105,13 @@ public class AdjacencyField
         return field;
     }
 
+    /**TODO
+     *
+     * @param neighbor
+     * @param container
+     * @return
+     */
+
     public boolean Contain(int[] neighbor, ArrayList<int[]> container)
     {
         for(int i = 0; i < container.size(); i++)
@@ -98,6 +125,11 @@ public class AdjacencyField
         }
         return false; 
     }
+
+    /**TODO
+     *
+     * @return
+     */
 
 
     // public int[][] floodFillUpdateWater()                                                   //convergence to box fucks up, if there are 2 lakes (2 places with water)
@@ -149,17 +181,14 @@ public class AdjacencyField
                     }
                 }
             }
-    
 
-
-
-        
-        
-        
-        
-        
         return field;
     }
+
+    /**TODO
+     *
+     * @return
+     */
 
    
    
@@ -186,6 +215,12 @@ public class AdjacencyField
         return field;
     }
 
+
+    /**TODO
+     *
+     * @return
+     */
+
     public int[][] floodFillUpdateSlope()
     {
         int[][] field = floodFillUpdateTree();
@@ -195,7 +230,7 @@ public class AdjacencyField
             for(int j = 0; j < field[0].length; j++)
             {
 
-                        if(slopeFieldX[i][j] > 1.5 || slopeFieldY[i][j] > 1.5)                                                  //decide upon a good slope extreme
+                        if(slopeFieldX[i][j] > 1.5 || slopeFieldY[i][j] > 1.5)
                         {
                             field[i][j] = -3;           //20000
                         }
@@ -208,6 +243,10 @@ public class AdjacencyField
 
 
 
+    /**TODO
+     *
+     * @return
+     */
     public int[][] floodFill()
     {
         Queue<int[]> queue = new ArrayDeque<int[]>();
@@ -327,9 +366,12 @@ public class AdjacencyField
     }
 
 
-    
-   
 
+
+    /**TODO
+     *
+     * @return
+     */
     public int[][] floodFillUpdateSandpits()
     {
         int[][] field = floodFill();
@@ -350,6 +392,13 @@ public class AdjacencyField
         return field;
     }
 
+
+    /**TODO
+     *
+     * @param ballCoorX
+     * @param ballCoorY
+     * @return
+     */
     public int[][] floodFillUpdateBall(double ballCoorX, double ballCoorY)
     {
         int[][] field = floodFillUpdateSandpits();

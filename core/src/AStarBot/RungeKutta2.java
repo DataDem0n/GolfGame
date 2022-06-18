@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.function.BiFunction;
 
@@ -18,6 +18,7 @@ public class RungeKutta2 extends Physics{
     double fitnessValue = Integer.MAX_VALUE;
     boolean switcher;
 
+
     /**TODO
      *
      * @param terrain
@@ -28,12 +29,14 @@ public class RungeKutta2 extends Physics{
      * @param targetRXY
      * @param switcher
      */
+ 
+
     public RungeKutta2(BiFunction<Double, Double, Double> terrain, double[] coordinatesAndVelocity, double kFriction, double sFriction, double stepsize, double[] targetRXY, boolean switcher){
         this.terrain = terrain;
         this.kFriction = kFriction;
         this.sFriction = sFriction;
         this.stepsize = stepsize;
-        this.coordinatesAndVelocity = coordinatesAndVelocity;
+        this.coordinatesAndVelocity = coordinatesAndVelocity;               //the coordinatesAndVelocity, should also return the fitnessValue
         this.targetRXY = targetRXY;
 
     }
@@ -46,6 +49,7 @@ public class RungeKutta2 extends Physics{
      * @param endY
      * @return
      */
+
     public double getEuclideanDistance(double x1, double y1, double endX, double endY)
     {
         double distance = Integer.MAX_VALUE;
@@ -60,6 +64,8 @@ public class RungeKutta2 extends Physics{
      * @param step
      * @return
      */
+
+
     public double[] coordinatesAndVelocityUntilStop(double step){
 
         double tempvelx1;
@@ -76,6 +82,12 @@ public class RungeKutta2 extends Physics{
 
         while(!hasBallStopped(coordinatesAndVelocity, sFriction, terrain, stepsize, kFriction))
         {
+                
+                // System.out.println("xvel: "+ coordinatesAndVelocity[2]);
+                // System.out.println("yvel: "+ coordinatesAndVelocity[3]);
+                // System.out.println("xcoor: "+ coordinatesAndVelocity[0]);
+                // System.out.println("ycoor: "+ coordinatesAndVelocity[1]);
+                //System.out.println();
                 tempvelx1 = accelerationrungeX(coordinatesAndVelocity[0],coordinatesAndVelocity[1],coordinatesAndVelocity[2],coordinatesAndVelocity[3] , terrain, kFriction)*step;        //getting x-velocity using midpoint
                 tempvelx2 = coordinatesAndVelocity[2] + 0.5*tempvelx1;
                 tempcoorx1 = coordinatesAndVelocity[0] + tempvelx2*step*0.5;
@@ -85,12 +97,32 @@ public class RungeKutta2 extends Physics{
                 tempvely2 = coordinatesAndVelocity[3] + 0.5*tempvely1;
                 tempcoory1 = coordinatesAndVelocity[1] + tempvely2*step*0.5;
                 tempvely3 = accelerationrungeY(coordinatesAndVelocity[0],tempcoory1,coordinatesAndVelocity[2],coordinatesAndVelocity[3],terrain,kFriction)*step;
+
+
+                
+                // try {
+                //     Thread.sleep(1000);
+                // } catch (InterruptedException e) {
+
+                // }
+                // System.out.println("k"+kFriction);
+                // System.out.println("s"+sFriction);
+                // System.out.println(coordinatesAndVelocity[2]);
+                // System.out.println(coordinatesAndVelocity[3]);
+                // System.out.println("xACC: " + 0.5*(tempvelx1+tempvelx3));
                 
                 coordinatesAndVelocity[2] += 0.5*(tempvelx1+tempvelx3);
+                //System.out.println("yACC: " + 0.5*(tempvely1+tempvely3));
+
                 coordinatesAndVelocity[3] += 0.5*(tempvely1+tempvely3);
+
                 coordinatesAndVelocity[0] += coordinatesAndVelocity[2]*step;
                 coordinatesAndVelocity[1] += coordinatesAndVelocity[3]*step;
 
+
+                
+                
+                
                 if(switcher)
                 {
                     if(coordinatesAndVelocity[0] < targetRXY[1]+targetRXY[0] && coordinatesAndVelocity[0] > targetRXY[1]-targetRXY[0] && coordinatesAndVelocity[1] < targetRXY[2]+targetRXY[0] && coordinatesAndVelocity[1] > targetRXY[2]-targetRXY[0] && coordinatesAndVelocity[2] <= 2.5 && coordinatesAndVelocity[3] <= 2.5)
@@ -112,7 +144,18 @@ public class RungeKutta2 extends Physics{
                         }
                     }
                 }
+
+                
+            
+
+
+
+
+            
         }
+
+
+        
         if(switcher && counter > 0)
         {
             return tempcoordinatesAndVelocity;
@@ -123,4 +166,28 @@ public class RungeKutta2 extends Physics{
         }
         
     }
+
+    
+
+    
+
+   public static void main(String[] args) 
+   { 
+       double[] coordinatesAndVelocity = {3.0572986735408163,1.4420925491515144,2, 0.1, 768};
+       double stepsize = 0.001;
+       double kfriction = 0.15;
+       double staticFriction = 0.3;
+       BiFunction<Double,Double,Double> terrain = (x,y)->0.5*(Math.sin((x+y)/10))+1;          //
+       double[] targetRXY = {1,4,1};
+       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
+      //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
+      //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
+
+       RungeKutta2 e = new RungeKutta2(terrain, coordinatesAndVelocity, kfriction, staticFriction, stepsize, targetRXY, false);
+//        for (int i = 0; i < 100; i++) {
+           System.out.println(stepsize +", " + e.coordinatesAndVelocityUntilStop(stepsize)[0] + ", "+ e.coordinatesAndVelocityUntilStop(stepsize)[1]+", ");
+           //step = step + 0.001;
+      //}
+
+   }
 }

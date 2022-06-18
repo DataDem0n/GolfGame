@@ -1,8 +1,9 @@
 package com.mygdx.game.main;
 
-import Bots.AI;
-import Bots.AdjacencyField;
-import Bots.SlopeField;
+import AStarBot.AI;
+import AStarBot.AdjacencyField;
+import AStarBot.SlopeField;
+
 import BruteForce.BruteStart;
 import HillClimbingAI.HillClimbing;
 import HillClimbingAI.HillClimbingBot;
@@ -11,6 +12,7 @@ import solvers.RungeKutta4;
 import solvers.Solver;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +45,13 @@ public class WindowMain{
     JButton pushButton = new JButton("PUTT!");
 
     //initialising bot elements
-        SlopeField b = new SlopeField(1,DataField.terrain);
-    AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]}, b);
 
-    AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY);
 
+
+
+
+    //solver label
+    //JLabel selectedSolver = new JLabel("Solver: ");   will be used in phase 3
     WindowMain(){
         pathBot = new JButton("Start Path Finding Bot");
         bruteBotButton = new JButton("Start Brute Force Bot");
@@ -84,7 +88,9 @@ public class WindowMain{
             DataField.aiRunning = true;
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
-
+            SlopeField b = new SlopeField(1,DataField.terrain);
+            AdjacencyField a = new AdjacencyField(1, DataField.targetRXY[1], DataField.targetRXY[2], 0, DataField.terrain, new double[]{DataField.gameForest.getForest().get(0).getCoordX()}, new double[]{DataField.gameForest.getForest().get(0).getCoordY()}, 2, new double[]{DataField.sandPit[0]}, new double[]{DataField.sandPit[2]}, new double[]{DataField.sandPit[1]}, new double[]{DataField.sandPit[3]}, b);
+            AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY);
             List<List> vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
 
             ArrayList<Double> xVelocities = (ArrayList<Double>) vel.get(0);
@@ -92,10 +98,41 @@ public class WindowMain{
 
             DataField.velocityX = xVelocities;
             DataField.velocityY = yVelocities;
+//            for(int i = 0; i < DataField.velocityX.size(); i++)
+//            {
+//                System.out.println("xvel: "+DataField.velocityX.get(i));
+//                System.out.println("yvel: "+DataField.velocityY.get(i));
+//            }
+//            System.out.println();
+//            System.out.println();
+//            try
+//            {
+//                Thread.sleep(1000);
+//            }
+//            catch (InterruptedException ex)
+//            {
+//
+//            }
 
-            while(!DataField.velocityX.isEmpty()) {
+            //while(!DataField.velocityX.isEmpty()) {
+                //System.out.println("testing");
                 DataField.GUI = false;
-            }
+//                for(int i = 0; i < DataField.velocityX.size(); i++)
+//                {
+//                    System.out.println("xvel: "+DataField.velocityX.get(i));
+//                    System.out.println("yvel: "+DataField.velocityY.get(i));
+//                }
+//                System.out.println();
+//                System.out.println();
+//                try
+//                {
+//                    Thread.sleep(1000);
+//                }
+//                catch (InterruptedException ex)
+//                {
+//
+//                }
+//            }
 
             Timer t = new Timer(100, e1 -> {
                 DataField.GUI = true;
@@ -253,7 +290,7 @@ public class WindowMain{
 
         //This adds the label for Elevation Depiction
         gc.gridx = 0;
-        gc.gridy = 6;
+        gc.gridy = 5;
         gc.fill=GridBagConstraints.CENTER;
         gc.anchor = GridBagConstraints.CENTER;
         gc.gridwidth = 2;

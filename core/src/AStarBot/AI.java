@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import Noise.RandomNoise;
 
@@ -19,7 +19,22 @@ public class AI
     double sFriction;
     double kFriction;
 
+    double totalIterations = 0;
+
     RandomNoise noise;
+
+    /**TODO
+     *
+     * @param terrain
+     * @param interval
+     * @param adjacency
+     * @param slope
+     * @param ballCoorX
+     * @param ballCoorY
+     * @param sFriction
+     * @param kFriction
+     * @param targetRXY
+     */
     
     public AI(BiFunction<Double, Double, Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction, double[] targetRXY)
     {
@@ -32,9 +47,16 @@ public class AI
         this.ballCoorY = ballCoorY;
         this.sFriction = sFriction;
         this.kFriction = kFriction;
-        noise = new RandomNoise(0.9, 1.1);
+        noise = new RandomNoise(1.0, 1.0);
 
     }
+
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballcoorY1
+     * @return
+     */
 
     public boolean endReached(double ballCoorX1, double ballcoorY1)
     {
@@ -44,7 +66,13 @@ public class AI
         }
         return false;
     }
-    
+
+    /**TODO
+     *
+     * @param ballCoorX1
+     * @param ballcoorY1
+     * @return
+     */
 
     public List<List> getAllVelocities(double ballCoorX1, double ballcoorY1)
     {
@@ -85,6 +113,7 @@ public class AI
                 correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, true);              //changed correctpos to bestshot
                 double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
                 usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
+                totalIterations += correctVel.iteration;
 
             }
             else
@@ -93,6 +122,7 @@ public class AI
                 correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, false);              //changed correctpos to bestshot
                 double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
                 usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
+                totalIterations += correctVel.iteration;
             }
 
             // System.out.println("x: "+ correctVel.coordinatesAndVelocity[0]);
@@ -131,6 +161,15 @@ public class AI
             newVelocities.get(0).add(new Double(allVelocities.get(0).get(i).toString())*random.get(i));
             newVelocities.get(1).add(new Double(allVelocities.get(1).get(i).toString())*random.get(i));
         }
+        System.out.println("amount of iterations: "+totalIterations);
+        System.out.println("xVel: "+newVelocities.get(0).get(0));
+        System.out.println("yVel: "+newVelocities.get(1).get(0));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         return newVelocities;
     }
 

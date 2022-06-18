@@ -1,4 +1,4 @@
-package Bots;
+package AStarBot;
 
 import java.util.function.BiFunction;
 
@@ -97,5 +97,22 @@ public class Physics{
                     && staticFriction > Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))
                     + Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
         }
+    }
+
+
+
+    public static void main(String[] args) {
+        double[] coords = {0,0};
+        double[] velocity = {0,0};
+        double staticFriction = 0.9;
+//      BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5 * ( Math.sin(x+y) / 7  + 0.9 + y ) );
+        BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
+        System.out.println(derivativeYValue(terrain,1,1));
+//      BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.sin(x + y));
+        Physics p = new Physics();
+//      System.out.println(p.hasBallStopped(coords, velocity[0], velocity[1], staticFriction, terrain));
+//      System.out.println(p.derivativeXValue(terrain, 1,1));
+//      System.out.println(p.derivativeYValue(terrain, 1,1));
+//      System.out.println(p.accelerationX(coords,1,1, terrain, 0.15));
     }
 }
