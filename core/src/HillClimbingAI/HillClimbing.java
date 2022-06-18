@@ -30,7 +30,7 @@ public class HillClimbing {
     /**
      * Method that gets the best direction that gives the shortest euclidean distance from the ball to the hole
      * @param coordsAndVel state vector of the ball holding initial position and velocity
-     * @return two velocities in array that are the best direction of all for a given simulation
+     * @return two velocities in array that are the best direction of all the performed simulations
      */
     public double[] getInitialDirection(double [] coordsAndVel) {
 
@@ -70,11 +70,11 @@ public class HillClimbing {
     }
 
 
-    /**TODO: LIWIA CAN YOU CHECK THIS
-     *
+    /**
+     * Method that rotates a vector (array) by a given angle
      * @param angle double that is an angle in degrees that the vector will be rotated by
      * @param array array that holds two compose vectors that will be rotated
-     * @return array of doubles representing a vector (array) thta is rotated by an angle
+     * @return array of doubles representing a vector (array) that is rotated by an angle
      */
     public double[] rotateVector(double angle, double[] array){
         double cos = Math.cos(Math.toRadians(angle));
@@ -85,8 +85,8 @@ public class HillClimbing {
         return result;
     }
 
-    /** TODO LIWIA PLS CHECK
-     *
+    /**
+     * Method that calculates the magnitude of a vector
      * @param array array that holds two compose vectors
      * @return returns a magnitude vector of the vector (array)
      */
@@ -95,24 +95,26 @@ public class HillClimbing {
     }
 
     /**
-     *
-     * @param array
-     * @return
+     * Method that converts a certain vector to a unit vector and scales it by a factor lower than maximum velocity
+     * @param array an array representing a vector to be converted to a unit vector, and later multiplied by a random magnitude
+     *              lower than 5, as it is the maximum velocity
+     * @return an array of the same direction but with a random magnitude between 0 and 5
      */
     public double[] convertRandomUnit(double[] array){
         double magnitude = magnitude(array);
         if (magnitude == 0 ){
             return bestVelocity;
         }
-        return new double[]{ Math.random()*5.0 * array[0] / magnitude , Math.random()*5.0 * array[1] / magnitude};
+        double random = Math.random()*5.0;
+        return new double[]{ random * array[0] / magnitude , random * array[1] / magnitude};
     }
 
     /**
-     *
-     * @param coordsAndVel
-     * @param kFriction
-     * @param sFriction
-     * @return
+     * Method that performs hill-climbing given an initial velocity, and aware of the physics model
+     * @param coordsAndVel an array holding the initial position of the ball from which hill-climbing should start, and initial velocities
+     * @param kFriction the kinetic friction of physics model
+     * @param sFriction the static friction of physics model
+     * @return the best velocities for the shot found by hill-climbing algorithm
      */
     public double[] hillClimbing(double [] coordsAndVel, double kFriction, double sFriction) {
         int counter = 0;
@@ -154,11 +156,11 @@ public class HillClimbing {
                 currFitness[i] = closestPoint;
                 if(testShot.getDidGoThroughWater()){
                     currFitness[i]+=500;
-                    System.out.println("in waterrr");
+                    //System.out.println("in waterrr");
                 }
 
                 if (testShot.getFinalFitness() <= DataField.targetRXY[0] && !testShot.getDidGoThroughWater()) {
-                    System.out.println("win");
+                    //System.out.println("win");
                     bestVelocity = testVelocity;
                     break outer;
                 }

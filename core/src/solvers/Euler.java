@@ -195,24 +195,45 @@ public class Euler implements Solver {
     @Override
     public double getYCoord() { return this.coordinatesAndVelocity[1]; }
 
+    /**
+     * A getter for x-Velocity vector of the ball
+     * @return x-Velocity vector of the ball
+     */
     @Override
     public double getXVelocity() {
         return coordinatesAndVelocity[2];
     }
 
+
+    /**
+     * A getter for y-Velocity vector of the ball
+     * @return y-Velocity vector of the ball
+     */
     @Override
     public double getYVelocity() {
         return coordinatesAndVelocity[3];
     }
 
+    /**
+     * A getter for boolean that represents whether the ball has gone through water during simulation
+     * @return oolean that represents whether the ball has gone through water during simulation
+     */
     @Override
     public boolean getDidGoThroughWater() {
         return didGoThroughWater;
     }
 
+    /**
+     * A getter for the best Euclidean distance from ball to target throughout the shot
+     * @return best Euclidean distance from ball to target throughout the shot
+     */
     @Override
     public double getBestDistance(){return bestDistance;}
 
+    /**
+     * A getter for the Euclidean distance from ball to target when the ball stops
+     * @return the Euclidean distance from ball to target when the ball stops
+     */
     @Override
     public double getBestFinalDistance() {
         return bestFinalDistance;
