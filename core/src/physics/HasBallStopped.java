@@ -14,7 +14,6 @@ public class HasBallStopped {
      * @param terrain the function of two variables describing the terrain surface
      * @return true if the ball has stopped, false if not
      */
-
     public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction<Double, Double, Double> terrain, double step) {
 
         double scalingSlope = 0.0008;
@@ -33,28 +32,4 @@ public class HasBallStopped {
                     + Math.pow(derivative.derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
         }
     }
-
-//    public boolean hasBallStopped(double [] coordinatesAndVelocity, double staticFriction, BiFunction<Double, Double, Double> terrain, double step, double kFriction) {
-//
-//        double scalingSlope = 0.0008;
-//
-//
-//        if (Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, kFriction)) &&
-//                Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, kFriction))
-//                && (derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < Math.abs(scalingSlope))
-//                && (derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < Math.abs(scalingSlope))) {
-//            return true;
-//        } else {
-//            return Math.abs(coordinatesAndVelocity[2]) < step * Math.abs(accelerationX(coordinatesAndVelocity, terrain, kFriction))
-//                    && Math.abs(coordinatesAndVelocity[3]) < step * Math.abs(accelerationY(coordinatesAndVelocity, terrain, kFriction))
-//                    && ((derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) >= Math.abs(scalingSlope)
-//                    || derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]) >= Math.abs(scalingSlope)))
-//                    && staticFriction > Math.sqrt((Math.pow(derivativeXValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2))
-//                    + Math.pow(derivativeYValue(terrain, coordinatesAndVelocity[0], coordinatesAndVelocity[1]), 2));
-//        }
-//    }
-
-
-
-
 }

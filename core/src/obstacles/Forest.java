@@ -6,17 +6,24 @@ import java.util.Random;
 public class Forest implements Obstacles{
 
     ArrayList<Tree> forest = new ArrayList<>();
+
+    /** constructor for the forest creates a forest of a given size with random tree postions
+     *
+     * @param amountOfTrees the amount of trees in the forest.
+     */
     public Forest(int amountOfTrees){
         Random r = new Random();
         for (int i = 0;i<amountOfTrees;i++) {
             double x = (r.nextDouble()*50)-25;
             double y = (r.nextDouble()*50)-25;
             forest.add(new Tree(x,y));
-
         }
-
     }
 
+    /** getter for the list of trees in the forest.
+     *
+     * @return returns the list of trees
+     */
     public ArrayList<Tree> getForest() {
         return forest;
     }

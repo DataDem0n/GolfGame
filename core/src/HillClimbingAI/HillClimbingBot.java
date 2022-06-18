@@ -22,7 +22,12 @@ public class HillClimbingBot {
     private RandomNoise random;
     private ArrayList<Double> seed;
 
-
+    /**
+     * Constructor for a class HillClimbingBot
+     * @param hc HillClimbing object holding  the solver used
+     * @param coords initial coordinates of the ball
+     * @param solver Solver that will be used by the bot
+     */
     public HillClimbingBot(HillClimbing hc, double [] coords, Solver solver){
         this.coordsAndVel=new double[]{coords[0],coords[1], 0,0};
         this.terrain=DataField.terrain;
@@ -34,6 +39,10 @@ public class HillClimbingBot {
         this.seed = random.generateSeed();
     }
 
+    /**
+     * Algorithm that simulates all the shots until the game is over (win)
+     * @return array list of all shots needed to win the game
+     */
     public ArrayList<ArrayList<Double>> hillClimbingBot(){
         ArrayList<Double> xVelocities = new ArrayList<>();
         ArrayList<Double> yVelocities = new ArrayList<>();
@@ -62,20 +71,12 @@ public class HillClimbingBot {
             coordsAndVel[3]=0.001;
             counter++;
         }
-        System.out.println("counter of bot    "+counter);
-        System.out.println("Hill Climbing xVel: " + xVelocities);
-        System.out.println("Hill Climbing yVel: " + yVelocities);
+        //System.out.println("counter of bot    "+counter);
+        //System.out.println("Hill Climbing xVel: " + xVelocities);
+        //System.out.println("Hill Climbing yVel: " + yVelocities);
         ArrayList<ArrayList<Double>> velocitiesOutput = new ArrayList<>();
         velocitiesOutput.add(xVelocities);
         velocitiesOutput.add(yVelocities);
         return velocitiesOutput;
-    }
-
-    public static void main(String[] args) {
-        double [] coordsAndVel = {0.0, 0.0,0.1,0.1};
-        Solver solver = new RungeKutta4(DataField.terrain, coordsAndVel, DataField.kFriction,DataField.sFriction,  DataField.targetRXY);
-        HillClimbing h = new HillClimbing(solver);
-        HillClimbingBot hcb = new HillClimbingBot(h,new double []{coordsAndVel[0],coordsAndVel[1]}, solver);
-        hcb.hillClimbingBot();
     }
 }

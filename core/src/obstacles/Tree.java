@@ -7,6 +7,11 @@ public class Tree implements Obstacles {
     private double coordY;
     private final double radius = 1.5;
 
+    /**
+     * Tree class constructor
+     * @param coordX x coordinate of the center of the tree
+     * @param coordY y coordinate of the center of the tree
+     */
     public Tree(double coordX, double coordY) {
         this.coordX = coordX;
         this.coordY = coordY;

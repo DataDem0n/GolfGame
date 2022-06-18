@@ -36,6 +36,5 @@ public class SandPits implements DifferentTerrain {
                 DataField.kFriction = tempKinetic;
             }
         }
-
     }
 }

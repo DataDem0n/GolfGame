@@ -6,6 +6,12 @@ public class Wall implements Obstacles {
     private double coordX;
     private double coordY;
 
+    /**
+     *Constructor for the Wall class walls willl have boundries
+     * boundries of the wall (-coodX<= x <= coodX, -coodY<=y<=coodX)
+     * @param coordX X coordinate that is upper bound for the wall
+     * @param coordY Y coordinate that is upper bound for the wall
+     */
     public Wall(double coordX, double coordY){
         this.coordX = coordX;
         this.coordY = coordY;

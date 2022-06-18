@@ -12,7 +12,6 @@ public class Derive {
      * @param yValue the y-coordinate of the point in which the derivative is calculated
      * @return the result of plugging in (x,y) coordinates in the X-derivative
      */
-    //returns result of plugging in function values to a partial derivative with respect to X
     static double derivativeXValue(BiFunction<Double, Double, Double> terrain, double xValue, double yValue) {
         BiFunction<Double,Double,Double> result = (x,y)->
                 (terrain.apply(x + 0.0000000001, y) - terrain.apply(x, y)) / 0.0000000001;
@@ -26,7 +25,6 @@ public class Derive {
      * @param yValue the y-coordinate of the point in which the derivative is calculated
      * @return the result of plugging in (x,y) coordinates in the Y-derivative
      */
-    //returns result of plugging in function values to a partial derivative with respect to Y
     static double derivativeYValue(BiFunction<Double, Double, Double> terrain, double xValue, double yValue) {
         BiFunction<Double,Double,Double> result = (x,y)->
                 (terrain.apply(x , y+ 0.0000000001) - terrain.apply(x, y)) / 0.0000000001;

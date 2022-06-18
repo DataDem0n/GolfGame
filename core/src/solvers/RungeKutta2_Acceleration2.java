@@ -30,8 +30,6 @@ public class RungeKutta2_Acceleration2 implements Solver{
     private double bestDistance =100;
     private double bestFinalDistance = 100;
     private boolean didGoThroughWater;
-    //private Tree tree = DataField.gameForest.getForest().get(0);
-
 
     // Overview of what is stored in the coordinatedAndVelocity array:
     // [0] - coordinateX
@@ -109,7 +107,6 @@ public class RungeKutta2_Acceleration2 implements Solver{
             }
 
             if(DataField.terrain.apply(coordinatesAndVelocity[0], coordinatesAndVelocity[1]) < 0){
-                //System.out.println("did go trhough water");
                 didGoThroughWater = true;
             }
 
@@ -127,8 +124,6 @@ public class RungeKutta2_Acceleration2 implements Solver{
             if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-           // tree.collide(coordinatesAndVelocity, tempCoordinates);
-//            DataField.gameForest.collide(coordinatesAndVelocity, tempCoordinates);
         }
 
 

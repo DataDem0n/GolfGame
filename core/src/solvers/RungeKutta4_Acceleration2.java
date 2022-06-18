@@ -29,7 +29,6 @@ public class RungeKutta4_Acceleration2 implements Solver {
     private Wall wall = new Wall(25,25);
     private SandPits sandPits = new SandPits(DataField.sandPit, 0.7, 0.8);
     private Water water = new Water();
-   // private Tree tree = DataField.gameForest.getForest().get(0);
     private double bestDistance =100;
     private double bestFinalDistance = 100;
     private boolean didGoThroughWater;
@@ -126,16 +125,14 @@ public class RungeKutta4_Acceleration2 implements Solver {
             if(update) water.collide(coordinatesAndVelocity, tempCoordinates);
             wall.collide(coordinatesAndVelocity, new double[0]);
             sandPits.change(coordinatesAndVelocity);
-            //tree.collide(coordinatesAndVelocity, tempCoordinates);
-
         }
 
         double FINALDist = Math.sqrt((Math.pow( DataField.targetRXY[1]-coordinatesAndVelocity[0] , 2) + ( Math.pow( DataField.targetRXY[2]- coordinatesAndVelocity[1], 2))));
         bestFinalDistance = FINALDist;
 
 //        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//        System.out.println("velx: " + coordinatesAndVelocity[2]);
-//        System.out.println("vely: " + coordinatesAndVelocity[3]);
+          System.out.println("velx: " + coordinatesAndVelocity[2]);
+          System.out.println("vely: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }
@@ -149,9 +146,7 @@ public class RungeKutta4_Acceleration2 implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-
         DataField.kFriction = kFriction;
-
     };
 
     /**
@@ -240,7 +235,5 @@ public class RungeKutta4_Acceleration2 implements Solver {
     public boolean getDidGoThroughWater(){
         return didGoThroughWater;
     }
-
-
 
 }

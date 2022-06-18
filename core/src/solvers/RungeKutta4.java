@@ -99,7 +99,6 @@ public class RungeKutta4 implements Solver {
                 double[] k4_acceleration = {acceleration.accelerationrungeX(k4_coords[0],k4_coords[1],k4_velocities[0],k4_velocities[1] , terrain, DataField.kFriction),
                         acceleration.accelerationrungeY(k4_coords[0],k4_coords[1],k4_velocities[0],k4_velocities[1] , terrain, DataField.kFriction)};;
 
-
                 double x_coor = coordinatesAndVelocity[0] + step*(1.0/6.0)*(k1_velocities[0] + 2.0*k2_velocities[0] + 2.0*k3_velocities[0] + k4_velocities[0]);
                 double y_coor = coordinatesAndVelocity[1] + step*(1.0/6.0)*(k1_velocities[1] + 2.0*k2_velocities[1] + 2.0*k3_velocities[1] + k4_velocities[1]);
                 double x_vel = coordinatesAndVelocity[2] + step*(1.0/6.0)*(k1_acceleration[0] + 2.0*k2_acceleration[0] + 2.0*k3_acceleration[0] + k4_acceleration[0]);
@@ -133,8 +132,8 @@ public class RungeKutta4 implements Solver {
         bestFinalDistance = FINALDist;
 
 //        System.out.println("x: "+coordinatesAndVelocity[0] +" y: "+ coordinatesAndVelocity[1]);
-//        System.out.println("velx: " + coordinatesAndVelocity[2]);
-//        System.out.println("vely: " + coordinatesAndVelocity[3]);
+          System.out.println("velx: " + coordinatesAndVelocity[2]);
+          System.out.println("vely: " + coordinatesAndVelocity[3]);
 
         return coordinatesAndVelocity;
     }
@@ -148,9 +147,7 @@ public class RungeKutta4 implements Solver {
      */
     @Override
     public void setkFriction(double kFriction){
-
             DataField.kFriction = kFriction;
-
     };
 
     /**
@@ -238,10 +235,6 @@ public class RungeKutta4 implements Solver {
 
     public boolean getDidGoThroughWater(){
         return didGoThroughWater;
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }
