@@ -48,7 +48,6 @@ public class WindowMain{
 
 
     AI newtonSlave = new AI(DataField.terrain, 1, a, b, DataField.x, DataField.y, DataField.sFriction, DataField.kFriction, DataField.targetRXY);
-    List<List> vel;
 
     //solver label
     //JLabel selectedSolver = new JLabel("Solver: ");   will be used in phase 3
@@ -89,17 +88,16 @@ public class WindowMain{
             DataField.velocityX = new ArrayList<>();
             DataField.velocityY = new ArrayList<>();
 
-            vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
+            List<List> vel = newtonSlave.getAllVelocities(DataField.x, DataField.y);
 
-            DataField.velocityX = (ArrayList<Double>) vel.get(0);
-            DataField.velocityY = (ArrayList<Double>) vel.get(1);
+            ArrayList<Double> xVelocities = (ArrayList<Double>) vel.get(0);
+            ArrayList<Double> yVelocities = (ArrayList<Double>) vel.get(1);
+
+            DataField.velocityX = xVelocities;
+            DataField.velocityY = yVelocities;
 
             while(!DataField.velocityX.isEmpty()) {
                 DataField.GUI = false;
-            }
-
-            if (DataField.velocityX.isEmpty()){
-                DataField.GUI = true;
             }
 
             Timer t = new Timer(100, e1 -> {
