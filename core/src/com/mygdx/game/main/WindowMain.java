@@ -1,18 +1,17 @@
 package com.mygdx.game.main;
 
-import AStarBot.AI;
-import AStarBot.AdjacencyField;
-import AStarBot.SlopeField;
+import pathfindingbot.AI;
+import pathfindingbot.AdjacencyField;
+import pathfindingbot.SlopeField;
 
-import BruteForce.BruteStart;
-import HillClimbingAI.HillClimbing;
-import HillClimbingAI.HillClimbingBot;
-import Music.MusicControls;
+import bruteforcebot.BruteStart;
+import hillclimbingbot.HillClimbing;
+import hillclimbingbot.HillClimbingBot;
+import music.MusicControls;
 import solvers.RungeKutta4;
 import solvers.Solver;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -216,7 +215,7 @@ public class WindowMain{
         control.setVisible(false);
 
         //"Extras" tab buttons
-        JMenuItem music = new JMenuItem("Music");
+        JMenuItem music = new JMenuItem("music");
         extrasTab.add(music);
             music.addActionListener(e -> {
                 if(e.getSource()==music){

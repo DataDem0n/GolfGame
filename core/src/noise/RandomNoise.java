@@ -1,7 +1,6 @@
-package Noise;
+package noise;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class RandomNoise {
     private double lowerBound;

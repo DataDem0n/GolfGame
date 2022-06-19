@@ -1,11 +1,7 @@
-package AStarBot;
+package pathfindingbot;
 
 import java.util.function.BiFunction;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Plot extends PathCalculator
 {
@@ -883,7 +879,7 @@ public class Plot extends PathCalculator
         SlopeField b = new SlopeField(interval,terrain);  
 
         
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, b);           
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, b);
         double[] targetRXY = {1,4,1};
 
 

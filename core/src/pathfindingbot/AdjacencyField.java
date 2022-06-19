@@ -1,15 +1,14 @@
-package AStarBot;
+package pathfindingbot;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.function.BiFunction;
 
 /**
  * AdjacencyField
  */
-public class AdjacencyField 
+public class AdjacencyField
 {
     public double interval;
     public double[] holeCoordinates = new double[2];
@@ -458,7 +457,7 @@ public class AdjacencyField
         int sandpitResentment = 1;                         //the higher this value, the less likely the ai takes a route through a sandpit
         SlopeField slope = new SlopeField(interval, terrain);
 
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);                                                        
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);
         int[][] testing = a.floodFillUpdateBall(4,4);
         //System.out.println(a.queueSize);
     

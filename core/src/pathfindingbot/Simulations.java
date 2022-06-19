@@ -1,4 +1,4 @@
-package AStarBot;
+package pathfindingbot;
 
 import java.util.function.BiFunction;
 
@@ -301,8 +301,8 @@ public class Simulations extends Plot
 
             coordinatesAndVelocity[0] = beginX;
             coordinatesAndVelocity[1] = beginY;
-            coordinatesAndVelocity[2] = -i/2.0;
-            coordinatesAndVelocity[3] = i;
+            coordinatesAndVelocity[2] = -i;
+            coordinatesAndVelocity[3] = i/2.0;
             System.out.println();
             System.out.println("xvel: "+  coordinatesAndVelocity[2] + "yvel: "+  coordinatesAndVelocity[3]);
             test = new RungeKutta2(terrain, coordinatesAndVelocity, kFriction, sFriction, step, targerRXY, endHole);  
@@ -853,7 +853,7 @@ public class Simulations extends Plot
         int sandpitResentment = 0;
             
         SlopeField b = new SlopeField(interval,terrain);  
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, b);       
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, b);
 
         double scaler = 40;
         //2.6979688828108785

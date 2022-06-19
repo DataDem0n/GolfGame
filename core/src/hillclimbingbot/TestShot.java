@@ -1,11 +1,9 @@
-package HillClimbingAI;
+package hillclimbingbot;
 
 import com.mygdx.game.main.DataField;
-import solvers.RungeKutta2;
 import solvers.RungeKutta4;
 import solvers.Solver;
 
-import java.io.PrintStream;
 import java.util.function.BiFunction;
 
 

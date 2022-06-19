@@ -1,8 +1,8 @@
-package BruteForce;
+package bruteforcebot;
 
 import com.mygdx.game.main.DataField;
 import solvers.RungeKutta4;
-import Noise.RandomNoise;
+import noise.RandomNoise;
 import javax.swing.*;
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package AStarBot;
+package pathfindingbot;
 
-import Noise.RandomNoise;
+import noise.RandomNoise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,7 +206,7 @@ public class AI
         double[] endY = {};                       //end y-coordinates for the sandpits
         int sandpitResentment = 0;
         SlopeField slope = new SlopeField(interval, terrain);
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);           
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);
         SlopeField b = new SlopeField(interval,terrain);  
 
         

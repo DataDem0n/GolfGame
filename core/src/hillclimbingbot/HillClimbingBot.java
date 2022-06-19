@@ -1,13 +1,10 @@
-package HillClimbingAI;
+package hillclimbingbot;
 
-import Noise.RandomNoise;
-import com.badlogic.gdx.utils.JsonValue;
+import noise.RandomNoise;
 import com.mygdx.game.main.DataField;
 
-import solvers.RungeKutta4;
 import solvers.Solver;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public class HillClimbingBot {

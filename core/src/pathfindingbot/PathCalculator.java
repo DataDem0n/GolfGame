@@ -1,16 +1,9 @@
-package AStarBot;
+package pathfindingbot;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.BiFunction;
-
-import javax.naming.ldap.PagedResultsControl;
 
 public class PathCalculator {
     
@@ -447,7 +440,7 @@ public class PathCalculator {
         int sandpitResentment = 0;                         //the higher this value, the less likely the ai takes a route through a sandpit
         SlopeField slope = new SlopeField(interval, terrain);
 
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);        
+        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);
         SlopeField b = new SlopeField(interval,terrain);   
         PathCalculator path = new PathCalculator(a, b, ballCoorX, ballCoorY);
 

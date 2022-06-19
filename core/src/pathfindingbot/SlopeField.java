@@ -1,4 +1,4 @@
-package AStarBot;
+package pathfindingbot;
 
 import java.util.function.BiFunction;
 
