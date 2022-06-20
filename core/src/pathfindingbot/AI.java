@@ -23,17 +23,17 @@ public class AI
 
     RandomNoise noise;
 
-    /**TODO
-     *
-     * @param terrain
-     * @param interval
-     * @param adjacency
-     * @param slope
-     * @param ballCoorX
-     * @param ballCoorY
-     * @param sFriction
-     * @param kFriction
-     * @param targetRXY
+    /**
+     * constructor
+     * @param terrain: this is the function that the adjacency field is build from
+     * @param interval: this determines how big each tile is in for the adjacency field
+     * @param adjacency: the adjacency field
+     * @param slope: the slope field
+     * @param ballCoorX: x-coordinate of the ball
+     * @param ballCoorY: y-coordinate of the ball
+     * @param sFriction: the static friction that is being used
+     * @param kFriction: the kinetic friction that is being used
+     * @param targetRXY: an array containing the radius, x-coordinate and y-coordinate of the hole
      */
     
     public AI(BiFunction<Double, Double, Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double sFriction, double kFriction, double[] targetRXY)
@@ -51,13 +51,12 @@ public class AI
 
     }
 
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballcoorY1
-     * @return
+    /**
+     * this method checks if the ball has reached the hole
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballcoorY1: y-coordinate of the ball
+     * @return: a boolean value
      */
-
     public boolean endReached(double ballCoorX1, double ballcoorY1)
     {
         if((ballCoorX1 < targetRXY[1]+targetRXY[0] && ballCoorX1 > targetRXY[1]-targetRXY[0]) && (ballcoorY1 < targetRXY[2]+targetRXY[0] && ballcoorY1 > targetRXY[2]-targetRXY[0]))
@@ -67,36 +66,20 @@ public class AI
         return false;
     }
 
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballcoorY1
-     * @return
+    /**
+     * This method calculates all the shots needed from the current ball position to the hole
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballcoorY1: y-coordinate of the ball
+     * @return: a list containing all the velocities needed to reach the hole
      */
-
     public List<List> getAllVelocities(double ballCoorX1, double ballcoorY1)
     {
         ArrayList<List> allVelocities = new ArrayList<List>();
         allVelocities.add(new ArrayList<Double>());
         allVelocities.add(new ArrayList<Double>());
-
-
-
          
         while(!endReached(ballCoorX1,ballcoorY1))
-        {            
-            System.out.println("ballcoorX: " + ballCoorX1);
-            System.out.println("ballcoorY: " + ballcoorY1);
-            // try 
-            // {
-            //     Thread.sleep(2000);
-            // } 
-            // catch (InterruptedException e) 
-            // {
-
-            // }
-            
-            
+        {
             Plot check = new Plot(terrain, interval, adjacency, slope, ballCoorX, ballCoorY, sFriction, kFriction, targetRXY);
 
             double[] save = check.slopeCompensator(ballCoorX1, ballcoorY1);
@@ -110,8 +93,8 @@ public class AI
             if(save[0] > targetRXY[1]-1 && save[0] < targetRXY[1]+1 && save[1] > targetRXY[2]-1 && save[1] < targetRXY[2]+1)
             {
 
-                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, true);              //changed correctpos to bestshot
-                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
+                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, true);
+                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);
                 usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
                 totalIterations += correctVel.iteration;
 
@@ -119,32 +102,17 @@ public class AI
             else
             {
 
-                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, false);              //changed correctpos to bestshot
-                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);                                                                                            //________________________________________________________________________
+                correctVel = new Simulations(terrain, interval, adjacency, slope, ballCoorX1, ballcoorY1, sFriction, kFriction, targetRXY, false);
+                double[] gIV = correctVel.getInitialVel(ballCoorX1, ballcoorY1, 7);
                 usedVelocity = correctVel.simulate(gIV[0], gIV[1],ballCoorX1, ballcoorY1, 0, 20, 2.5, 0);
                 totalIterations += correctVel.iteration;
             }
-
-            // System.out.println("x: "+ correctVel.coordinatesAndVelocity[0]);
-            // System.out.println("y: "+ correctVel.coordinatesAndVelocity[1]);
             
             allVelocities.get(0).add(usedVelocity[0]);
             allVelocities.get(1).add(usedVelocity[1]);
             
-            
-            
             ballCoorX1 = usedVelocity[2];
             ballcoorY1 = usedVelocity[3];
-            System.out.println(ballCoorX1+"clomX");
-            System.out.println(ballcoorY1+"clomY");
-            // try 
-            // {
-            //     Thread.sleep(2000);
-            // } 
-            // catch (InterruptedException e) 
-            // {
-
-            // }
 
         }
 
@@ -160,14 +128,6 @@ public class AI
         {
             newVelocities.get(0).add(new Double(allVelocities.get(0).get(i).toString())*random.get(i));
             newVelocities.get(1).add(new Double(allVelocities.get(1).get(i).toString())*random.get(i));
-        }
-        System.out.println("amount of iterations: "+totalIterations);
-        System.out.println("xVel: "+newVelocities.get(0).get(0));
-        System.out.println("yVel: "+newVelocities.get(1).get(0));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
 
         return newVelocities;

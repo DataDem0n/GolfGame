@@ -21,21 +21,21 @@ public class Plot extends PathCalculator
     double[] targerRXY;
     double[] parameters;
 
-    /**TODO
-     *
-     * @param terrain
-     * @param interval
-     * @param adjacency
-     * @param slope
-     * @param ballCoorX
-     * @param ballCoorY
-     * @param staticFriction
-     * @param kineticFriction
-     * @param targerRXY
+    /**
+     * constructor
+     * @param terrain: this is the function that the adjacency field is build from
+     * @param interval: this determines how big each tile is in for the adjacency field
+     * @param adjacency: the adjacency field
+     * @param slope: the slope field
+     * @param ballCoorX: x-coordinate of the ball
+     * @param ballCoorY: y-coordinate of the ball
+     * @param staticFriction: the static friction that is being used
+     * @param kineticFriction: the kinectic friction that is being used
+     * @param targerRXY: an array containing the radius, x-coordinate and y-coordinate of the hole
      */
 
 
-    public Plot(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double staticFriction, double kineticFriction, double[] targerRXY)        //change slopeField back to slope after testing
+    public Plot(BiFunction<Double,Double,Double> terrain, double interval, AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY, double staticFriction, double kineticFriction, double[] targerRXY)
     {
 
         super(adjacency, slope, ballCoorX, ballCoorY);
@@ -64,25 +64,15 @@ public class Plot extends PathCalculator
         pathMX = getpathMixed.get(0);
         pathMY = getpathMixed.get(1);
         parameters = parameters();
-
-
-        
-
-        
-        //System.out.println(pathX.toString());
-        
-
-       
     }
 
-    /**TODO
-     *
-     * @param parameters
-     * @param results
-     * @return
+    /**
+     * This method checks of the results are a new minimum coordinates, or maximum coordinates
+     * @param parameters: current minumum and maximum coordinates
+     * @param results: the coordinates that are being checked
+     * @return: returns the updated minima and maxima
      */
-
-    public double[] checker(double[] parameters, double[] results)                              //valid
+    public double[] checker(double[] parameters, double[] results)
     {   
         if(parameters[0] > results[0])
         {
@@ -103,11 +93,11 @@ public class Plot extends PathCalculator
         return parameters;
     }
 
-    /**TODO
-     *
-     * @return
+    /**
+     * this method calculates what the range of the shot is with the max speed limit
+     * @return: returns a radius in which the bot can take the shot with the max speed limit
      */
-    public double[] parameters()                                                                 //valid
+    public double[] parameters()
     {
       
         double minX = Integer.MAX_VALUE;
@@ -214,19 +204,18 @@ public class Plot extends PathCalculator
 
     }
 
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @param endPathX
-     * @param endPathY
-     * @return
+    /**
+     * This method calculates the difference between the x-coordinates and y-coordinates
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballCoorY1: y-coordinate of the ball
+     * @param endPathX: the x-coordinate the bot is trying to reach
+     * @param endPathY: the y-coordinate the bot is trying to reach
+     * @return: an array containing the difference between the x-coordinates and y-coordinates
      */
     
 
-    public double[] differenceCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)                                                        //calculates the dx and dy of the shot        (valid)
+    public double[] differenceCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)
     {
-        //pathCalculator(getBallPosition()[0], getBallPosition()[1]);
         double[] difference = new double[2];
         double x0 = ballCoorX1;
         double x1 = endPathX;
@@ -239,20 +228,18 @@ public class Plot extends PathCalculator
 
     }
 
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @param endPathX
-     * @param endPathY
-     * @return
+    /**
+     * This method calculates the relative difference between the x-length and y-length of the shot (to get the direction of the shot)
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballCoorY1: y-coordinate of the ball
+     * @param endPathX: the x-coordinate the bot is trying to reach
+     * @param endPathY the y-coordinate the bot is trying to reach
+     * @return: an unit vector giving the direction of the shot
      */
-
-    public double unitCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)                                                          //valid                              
+    public double unitCalc(double ballCoorX1, double ballCoorY1, double endPathX, double endPathY)
     {
         double[] difference = differenceCalc(ballCoorX1,ballCoorY1,endPathX,endPathY);
         double differenceX = difference[0];
-        //System.out.println(differenceX);
         double differenceY = difference[1];
         if(differenceX <= 0.1)
         {
@@ -260,18 +247,17 @@ public class Plot extends PathCalculator
         }
         System.out.println("differenceX: "+differenceX);
         System.out.println("differenceY: "+differenceY);
-        double unit = (differenceY/differenceX);                            //fucks up if X is very small
-        //System.out.println(unit);
+        double unit = (differenceY/differenceX);
         return unit;
     }
-    /**TODO
-     *
-     * @param currentX
-     * @param currentY
-     * @return
-     */
 
-    public boolean checkWaterOrTree(double currentX, double currentY)                           //no changes since phase 2
+    /**
+     * This method checks if there are any obstacles at the current x and y position
+     * @param currentX: current x-position
+     * @param currentY: current y-position
+     * @return: a boolean value
+     */
+    public boolean checkWaterOrTree(double currentX, double currentY)
     {
         double vX = currentX;
         double vY = currentY;
@@ -297,10 +283,6 @@ public class Plot extends PathCalculator
         }
         vX /= interval;
         vY /= interval;
-        // System.out.println("vX: " + (int)vX);
-        // System.out.println("vY: " + (int)vY);
-        
-
        
         if(plain[(int) vX][(int) vY] < 0)            
         {
@@ -310,42 +292,31 @@ public class Plot extends PathCalculator
         
         
     }
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @param endpathX
-     * @param endpathY
-     * @return
+
+    /**
+     *  This method checks if there are any obstacles between the ball-coordinates and the coordinates the bot is trying to reach (plots the shot)
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballCoorY1: y-coordinate of the ball
+     * @param endpathX: the x-coordinate the bot is trying to reach
+     * @param endpathY: the y-coordinate the bot is trying to reach
+     * @return: a boolean value
      */
-
-
-    public boolean shotPlottable(double ballCoorX1, double ballCoorY1, double endpathX, double endpathY)                                    //all changes made in phase 3 are valid (doesnt mean it is valid)                                                                              
+    public boolean shotPlottable(double ballCoorX1, double ballCoorY1, double endpathX, double endpathY)
     {
         double currentX = ballCoorX1;
         double currentY = ballCoorY1;
-        System.out.println();
-        System.out.println();
-        System.out.println("currentX: "+currentX);
-        System.out.println("currentY: "+currentY);
 
         double xcoor = endpathX;
         double ycoor = endpathY;
-        System.out.println("endX: "+xcoor);
-        System.out.println("endY: "+ycoor);
-
-    //pathConverter((int) pathY.get(pathY.size()-1))
         
         double unitVec = unitCalc(ballCoorX1, ballCoorY1,endpathX,endpathY);
-        System.out.println("unitcalc: "+unitVec);
 
-        if(xcoor < parameters[0] || xcoor > parameters[1] || ycoor < parameters[2] || ycoor > parameters[3])                    //valid
+        if(xcoor < parameters[0] || xcoor > parameters[1] || ycoor < parameters[2] || ycoor > parameters[3])
         {
             return false;
         }
-        
-        
-        if(unitVec == -666 && currentY < ycoor)                                        //valid
+
+        if(unitVec == -666 && currentY < ycoor)
         {
 
             System.out.println("col1");
@@ -356,27 +327,15 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
                     currentX += 0;
                     currentY += step;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
 
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        if(unitVec == -666 && currentY > ycoor)                                         //valid
+
+        if(unitVec == -666 && currentY > ycoor)
         {
-            System.out.println("col2");
             while(currentY > ycoor)
             {
                             
@@ -384,29 +343,15 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
                     currentX += 0;
                     currentY -= step;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
 
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        //coor = endcoor
+
         if(currentX < xcoor && currentY <= ycoor)
         {
-            System.out.println("col3");
-            // System.out.println("pathX: " + pathX.get(pathX.size()-1));
-            // System.out.println("pathY: " + pathY.get(pathY.size()-1));
             while(currentX < xcoor || currentY < ycoor)
             {
                             
@@ -414,48 +359,28 @@ public class Plot extends PathCalculator
                     {
                         return false;
                     }
-                    System.out.println("trackX: "+currentX);
-                    System.out.println("trackY: "+currentY);
                     currentX += step;
                     currentY += step*unitVec;
-                    // System.out.println("currentX: "+currentX);
-                    // System.out.println("currentY: "+currentY);
-                    System.out.println("EXX: "+xcoor);
-
             }
             return true;
         }
 
         if(currentX < xcoor && currentY > ycoor)
         {
-            System.out.println("col4");
             while(currentX < xcoor || currentY > ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
                 {
                     return false;
                 }
-                System.out.println("trackX: "+currentX);
-                System.out.println("trackY: "+currentY);
                 currentX += step;
                 currentY -= step*unitVec;
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         if(currentX > xcoor && currentY > ycoor)
         {
-            System.out.println("col5");
             while(currentX > xcoor || currentY > ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
@@ -467,20 +392,9 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         if(currentX > xcoor && currentY <= ycoor)
         {
-            System.out.println("col6");
             while(currentX > xcoor || currentY < ycoor)
             {
                 if(checkWaterOrTree(currentX, currentY))
@@ -492,30 +406,19 @@ public class Plot extends PathCalculator
             }
             return true;
         }
-        
-        
-        
-        
-        
-        
-        
-        
 
-        
        return true;
     }
 
-    /**TODO
-     *
-     * @param pathXX
-     * @param pathXY
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @return
+    /**
+     * This method keeps backtracking in the path calculated by the A* pathfinding algorithm until the shot is plottable (no obstacles along the way)
+     * @param pathXX: a list with the x-positions of the calculated path
+     * @param pathXY: a list with the y-positions of the calculated path
+     * @param ballCoorX1: x-coordinates of the ball
+     * @param ballCoorY1: x-coordinates of the ball
+     * @return: an array containing the best position the ball can reach without encountering any obstacles
      */
-
-    
-    public int[] getCorrectShotX(List pathXX, List pathXY, double ballCoorX1, double ballCoorY1)                //the getcorrectshot seems correct (test with a scenario, where they arent similar)
+    public int[] getCorrectShotX(List pathXX, List pathXY, double ballCoorX1, double ballCoorY1)
     {
         int counter = 0;
         int[] correctPos = new int[3];
@@ -525,14 +428,6 @@ public class Plot extends PathCalculator
         
         while(!shotPlottable(ballCoorX1,ballCoorY1,endX,endY))
         {
-            System.out.println("not plotted");                                                              //________________________________not reached
-            System.out.println(counter);
-            // try {
-            //     Thread.sleep(1000);
-            // } catch (InterruptedException e) {
-            //     // TODO Auto-generated catch block
-            //     e.printStackTrace();
-            // }
             
             List completePath = decreasePath(pathXX, pathXY);
             pathXX = (List)completePath.get(0);
@@ -546,33 +441,22 @@ public class Plot extends PathCalculator
             correctPos[0] =  (int) pathXX.get(pathXX.size()-1);
             correctPos[1] =  (int) pathXY.get(pathXY.size()-1);
             correctPos[2] = counter;
-            System.out.println(correctPos[2]+"counter");
-            // try {
-            //     Thread.sleep(1000);
-            // } catch (InterruptedException e) {
-            //     // TODO Auto-generated catch block
-            //     e.printStackTrace();
-            // }
-          
-        // System.out.println("correctX: "+ correctPos[0]);
-        // System.out.println("correctY: "+ correctPos[1]);
+
         return correctPos;
         
     }
 
-    /**TODO
-     *
-     * @param pathYX
-     * @param pathYY
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @return
+
+
+
+    /**
+     * This method keeps backtracking in the alternative path calculated by the A* pathfinding algorithm until the shot is plottable (no obstacles along the way)
+     * @param pathYX: a list with the x-positions of the calculated path
+     * @param pathYY: a list with the y-positions of the calculated path
+     * @param ballCoorX1: x-coordinates of the ball
+     * @param ballCoorY1: x-coordinates of the ball
+     * @return: an array containing the best position the ball can reach without encountering any obstacles
      */
-    
-    
-    
-    
-    
     public int[] getCorrectShotY(List pathYX, List pathYY, double ballCoorX1, double ballCoorY1)
     {
         int counter = 0;
@@ -582,7 +466,6 @@ public class Plot extends PathCalculator
         
         while(!shotPlottable(ballCoorX1,ballCoorY1,endX,endY))
         {
-            System.out.println("not plotted");  
             List completePath = decreasePath(pathYX, pathYY);                                                      
             pathYX = (List) completePath.get(0);
             pathYY = (List) completePath.get(1);
@@ -609,57 +492,59 @@ public class Plot extends PathCalculator
      * @param neighbourY
      * @return
      */
-    public int[] getCorrectShotM(List pathMX, List pathMY, double ballCoorX1, double ballCoorY1)
-    {
-        int counter = 0;
-        int[] correctPos = new int[3];
-        double endX = pathConverter((int) pathMX.get(pathMX.size()-1));
-        double endY = pathConverter((int) pathMY.get(pathMY.size()-1));
-
-        while(!shotPlottable(ballCoorX1,ballCoorY1,endX,endY))
-        {
-            System.out.println("not plotted");   
-            List completePath = decreasePath(pathYX, pathYY);                                                           
-            pathMX = (List) completePath.get(0);
-            pathMY = (List) completePath.get(1);
-             endX = pathConverter((int) pathMX.get(pathMX.size()-1));
-             endY = pathConverter((int) pathMY.get(pathMY.size()-1));
-            counter++;
-        }
-
-            correctPos[0] =  (int) pathMX.get(pathMX.size()-1);
-            correctPos[1] =  (int) pathMY.get(pathMY.size()-1);
-            correctPos[2] = counter;
-          
-        // System.out.println("correctX: "+ correctPos[0]);
-        // System.out.println("correctY: "+ correctPos[1]);
-        return correctPos;
-        
-    }
-
-
+//    public int[] getCorrectShotM(List pathMX, List pathMY, double ballCoorX1, double ballCoorY1)
+//    {
+//        int counter = 0;
+//        int[] correctPos = new int[3];
+//        double endX = pathConverter((int) pathMX.get(pathMX.size()-1));
+//        double endY = pathConverter((int) pathMY.get(pathMY.size()-1));
+//
+//        while(!shotPlottable(ballCoorX1,ballCoorY1,endX,endY))
+//        {
+//            System.out.println("not plotted");
+//            List completePath = decreasePath(pathYX, pathYY);
+//            pathMX = (List) completePath.get(0);
+//            pathMY = (List) completePath.get(1);
+//             endX = pathConverter((int) pathMX.get(pathMX.size()-1));
+//             endY = pathConverter((int) pathMY.get(pathMY.size()-1));
+//            counter++;
+//        }
+//
+//            correctPos[0] =  (int) pathMX.get(pathMX.size()-1);
+//            correctPos[1] =  (int) pathMY.get(pathMY.size()-1);
+//            correctPos[2] = counter;
+//
+//        // System.out.println("correctX: "+ correctPos[0]);
+//        // System.out.println("correctY: "+ correctPos[1]);
+//        return correctPos;
+//
+//    }
 
 
 
-    public boolean container(List<int[]> container, int neighbourX, int neighbourY)
-    {
-        for(int i = 0; i < container.size(); i++)
-        {
-            if(neighbourX == container.get(i)[0] && neighbourY == container.get(i)[1])
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    /**TODO
-     *
-     * @param ballCoorX1
-     * @param ballCoorY1
-     * @return
+
+
+//    public boolean container(List<int[]> container, int neighbourX, int neighbourY)
+//    {
+//        for(int i = 0; i < container.size(); i++)
+//        {
+//            if(neighbourX == container.get(i)[0] && neighbourY == container.get(i)[1])
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+
+
+
+    /**
+     * This method checks if the ball can stop on the calculated postion (so the slope is not too steep), else it picks another position to reach
+     * @param ballCoorX1: x-coordinate of the ball
+     * @param ballCoorY1: y-coordinate of the ball
+     * @return: an array containing the position where the ball can come to a stop
      */
-
-
     public double[] slopeCompensator(double ballCoorX1, double ballCoorY1)
     {
        int[] correctPos;
@@ -680,13 +565,11 @@ public class Plot extends PathCalculator
        {
            min = correctPosY[2];
            correctPos = correctPosY;
-           System.out.println("chosen for pathY");
        }
        if(correctPosM[2] < min)
        {
            min = correctPosM[2];
            correctPos = correctPosM;
-           System.out.println("chosen for pathM");
 
        }
 
@@ -754,17 +637,8 @@ public class Plot extends PathCalculator
             return slopeComp;
         }
        }
-       
 
 
-
-
-
-
-       
-
-       
-       
        if(Math.sqrt(Math.pow(slopeFieldX[correctPos[0]][correctPos[1]], 2)  +   Math.pow(slopeFieldY[correctPos[0]][correctPos[1]], 2)) > staticFriction && plain[correctPos[0]][correctPos[1]] != 0)
        {
 
@@ -803,26 +677,21 @@ public class Plot extends PathCalculator
 
 
     }
-    /**TODO
-     *
-     * @param path
-     * @return
+
+
+
+
+
+
+
+
+
+
+    /**
+     *  converts a position on the adjaceny field back to a coordinate on the terrain
+     * @param path: a position on the adjaceny field
+     * @return: a coordinate on the terrain
      */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public double pathConverter(int path)
     {
         if(path*1.0*interval > 25)

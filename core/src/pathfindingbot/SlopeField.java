@@ -10,23 +10,23 @@ public class SlopeField
     double interval;
     BiFunction<Double,Double,Double> terrain;
 
-    /**TODO
-     *
-     * @param interval
-     * @param terrain
+
+    /**
+     * constructor
+     * @param interval: this determines how big each tile is in for the slope field
+     * @param terrain: terrain function used to calculate the slope for each interval
      */
-    
-    public SlopeField(double interval, BiFunction<Double,Double,Double> terrain)     //interval = trade-off between accuracy and speed.
+    public SlopeField(double interval, BiFunction<Double,Double,Double> terrain)
     {
         this.terrain = terrain;
         this.interval = interval;
         
     }
-    /**TODO
-     *
-     * @return
-     */
 
+    /**
+     * This creates a basic field which will be used to store the slopes in.
+     * @return: an array that is a basic field which is used to store the slopes in
+     */
     public double[][] Field()
     {
        
@@ -43,9 +43,9 @@ public class SlopeField
     }
 
 
-    /**TODO
-     *
-     * @return
+    /**
+     *  This method calculates the x-slope of the terrain on each interval
+     * @return: an array containing the x-slope of the terrain on each interval
      */
     public double[][] slopeXCalculator()
     {
@@ -61,16 +61,13 @@ public class SlopeField
             }
             
         }
-        field[25][27] = 1.9;                                                                                  //________________________________________________________________         used to manipulate slope at 1 point
-        field[24][23] = 1.9;
-        field[25][28] = 1.9;
-        field[23][22] = 1.9;
+
         return field;
     }
 
-    /**TODO
-     *
-     * @return
+    /**
+     *  This method calculates the y-slope of the terrain on each interval
+     * @return: an array containing the y-slope of the terrain on each interval
      */
     public double[][] slopeYCalculator()
     {
@@ -86,10 +83,7 @@ public class SlopeField
             }
             
         }
-        field[25][27] = 1.9;                                                                                  //________________________________________________________________        used to manipulate slope at 1 point
-        field[24][23] = 1.9;
-        field[25][28] = 1.9;
-        field[23][22] = 1.9;
+
         return field;                                                                       
     }
     

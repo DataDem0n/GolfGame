@@ -12,7 +12,7 @@ public class AdjacencyField
 {
     public double interval;
     public double[] holeCoordinates = new double[2];
-    public int queueSize = 0;                                                   //testing purposes
+    public int queueSize = 0;
     int sandpitResentment;
     BiFunction<Double,Double,Double> terrain;
     double[] coorTX,coorTY,beginX,endX,beginY,endY;
@@ -20,23 +20,23 @@ public class AdjacencyField
     double[][] slopeFieldX;
     double[][] slopeFieldY;
 
-    /**TODO
-     *
-     * @param interval
-     * @param holeCoorx
-     * @param holeCoory
-     * @param sandpitResentment
-     * @param terrain
-     * @param coorTX
-     * @param coorTY
-     * @param radius
-     * @param beginX
-     * @param endX
-     * @param beginY
-     * @param endY
-     * @param slope
+    /**
+     * constructor
+     * @param interval: this determines how big each tile is in for the adjacency field
+     * @param holeCoorx: this is the x-coordinate of the hole
+     * @param holeCoory: this is the y-coordinate of the hole
+     * @param sandpitResentment: this sets how big the chance is that sandpits are avoided by the bot
+     * @param terrain: this is the function that the adjacency field is build from
+     * @param coorTX: an array containing the x-coordinates of all the trees in the field
+     * @param coorTY: an array containing the y-coordinates of all the trees in the field
+     * @param radius: the radius of all trees
+     * @param beginX: an array containing all the begin x-coordinates of the sandpits
+     * @param endX: an array containing all the end x-coordinates of the sandpits
+     * @param beginY: an array containing all the begin y-coordinates of the sandpits
+     * @param endY: an array containing all the end y-coordinates of the sandpits
+     * @param slope: a field describing the slope of an interval
      */
-    public AdjacencyField(double interval, double holeCoorx, double holeCoory, int sandpitResentment, BiFunction<Double,Double,Double> terrain, double[] coorTX, double[] coorTY, double radius, double[] beginX, double[] endX, double[] beginY, double[] endY, SlopeField slope)     //interval = trade-off between accuracy and speed.
+    public AdjacencyField(double interval, double holeCoorx, double holeCoory, int sandpitResentment, BiFunction<Double,Double,Double> terrain, double[] coorTX, double[] coorTY, double radius, double[] beginX, double[] endX, double[] beginY, double[] endY, SlopeField slope)
     {
         this.slopeFieldX = slope.slopeXCalculator();
         this.slopeFieldY = slope.slopeYCalculator();
@@ -54,12 +54,11 @@ public class AdjacencyField
         this.endY = endY;
     }
 
-    /**TODO
+    /**
+     *  This method converts the hole-coordinates on the terrain to coordinates on the adjacency field
      *
-     *
-     * @return
+     * @return: returns an int array containing the hole-coordinates on the adjacency field
      */
-
     public int[] getHolePosition()
     {
         int[] arrayPosition = new int[2];
@@ -90,6 +89,11 @@ public class AdjacencyField
         return arrayPosition;
     }
 
+
+    /**
+     * This method constructs the field
+     * @return: a Field without the floodfill implementation
+     */
     public int[][] Field()
     {
         int[][] field = new int[(int)(50/interval)][(int)(50/interval)];
@@ -104,13 +108,13 @@ public class AdjacencyField
         return field;
     }
 
-    /**TODO
-     *
-     * @param neighbor
-     * @param container
-     * @return
-     */
 
+    /**
+     * This method checks if the neighbor has already been visited
+     * @param neighbor: an array containing the coordinates of the neighbor that is being checked
+     * @param container: a list containing all the previously visited neighbors (coordinates)
+     * @return: a boolean value
+     */
     public boolean Contain(int[] neighbor, ArrayList<int[]> container)
     {
         for(int i = 0; i < container.size(); i++)
@@ -125,14 +129,9 @@ public class AdjacencyField
         return false; 
     }
 
-    /**TODO
-     *
-     * @return
-     */
 
-
-    // public int[][] floodFillUpdateWater()                                                   //convergence to box fucks up, if there are 2 lakes (2 places with water)
-    // {                                                                                       //for lakes
+    // public int[][] floodFillUpdateWater()
+    // {
     //     int[][] field = Field();
     //     int maxHeight = 0;
     //     int maxWidth  = 0;
@@ -143,7 +142,7 @@ public class AdjacencyField
     //     {
     //         for(int j = 0; j < field[0].length; j++)
     //         {
-    //             if(terrain.apply(i/interval-25, j/interval-25) < 0 || terrain.apply(i/interval-24, j/interval-24) < 0  ||  terrain.apply(i/interval-26, j/interval-26) < 0)                 //made water bigger, so the error doesnt land into it
+    //             if(terrain.apply(i/interval-25, j/interval-25) < 0 || terrain.apply(i/interval-24, j/interval-24) < 0  ||  terrain.apply(i/interval-26, j/interval-26) < 0)
     //             {
     //                 field[i][j] = -1;           //10000
     //                 if(i > maxHeight)
@@ -166,7 +165,11 @@ public class AdjacencyField
     //         }
     //     }
 
-        public int[][] floodFillUpdateWater()                                                   //for rivers 
+    /**
+     * This method updates the field with negative values for the tiles that are in water.
+     * @return: the field array, containing negative values where there is water
+     */
+        public int[][] floodFillUpdateWater()
         {
             int[][] field = Field();
             
@@ -174,9 +177,9 @@ public class AdjacencyField
             {
                 for(int j = 0; j < field[0].length; j++)
                 {
-                    if(terrain.apply(i/interval-25, j/interval-25) < 0 || terrain.apply(i/interval-24, j/interval-24) < 0  ||  terrain.apply(i/interval-26, j/interval-26) < 0)                 //made water bigger, so the error doesnt land into it
+                    if(terrain.apply(i/interval-25, j/interval-25) < 0 || terrain.apply(i/interval-24, j/interval-24) < 0  ||  terrain.apply(i/interval-26, j/interval-26) < 0)
                     {
-                        field[i][j] = -1;           //10000
+                        field[i][j] = -1;
                     }
                 }
             }
@@ -184,16 +187,15 @@ public class AdjacencyField
         return field;
     }
 
-    /**TODO
-     *
-     * @return
-     */
 
-   
-   
-   
-   
-   
+
+
+
+
+    /**
+     * This method updates the field with negative values for the tiles that contain trees.
+     * @return: the field array, containing negative values where there are trees
+     */
     public int[][] floodFillUpdateTree()
     {
         int[][] field = floodFillUpdateWater();
@@ -215,11 +217,10 @@ public class AdjacencyField
     }
 
 
-    /**TODO
-     *
-     * @return
+    /**
+     * This method updates the field with negative values for the tiles where the slope is considered extreme (higher than 1.5).
+     * @return: the field array, containing negative values where the slopes are higher than 1.5
      */
-
     public int[][] floodFillUpdateSlope()
     {
         int[][] field = floodFillUpdateTree();
@@ -242,9 +243,9 @@ public class AdjacencyField
 
 
 
-    /**TODO
-     *
-     * @return
+    /**
+     * this method is the implementation of the flood fill algorithm
+     * @return: the field with the flood fill algorithm implementation
      */
     public int[][] floodFill()
     {
@@ -367,9 +368,9 @@ public class AdjacencyField
 
 
 
-    /**TODO
-     *
-     * @return
+    /**
+     * this method adds the sandpitResentment to the field tiles (as penalty), that contain snadpits.
+     * @return: an array with the updated field values.
      */
     public int[][] floodFillUpdateSandpits()
     {
@@ -393,7 +394,7 @@ public class AdjacencyField
 
 
     /**TODO
-     *
+     *  Testing purposes delete later
      * @param ballCoorX
      * @param ballCoorY
      * @return

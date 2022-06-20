@@ -18,12 +18,12 @@ public class PathCalculator {
     List<Integer> pathMX;
     List<Integer> pathMY;
 
-    /**TODO
-     *
-     * @param adjacency
-     * @param slope
-     * @param ballCoorX
-     * @param ballCoorY
+    /**
+     * constructor
+     * @param adjacency: the adjacency field
+     * @param slope: the slope field
+     * @param ballCoorX: x-coordinate of the ball
+     * @param ballCoorY: y-coordinate of the ball
      */
 
     public PathCalculator(AdjacencyField adjacency, SlopeField slope, double ballCoorX, double ballCoorY)
@@ -40,11 +40,10 @@ public class PathCalculator {
         pathMY = new LinkedList<Integer>();
     }
 
-    /**TODO
-     *
-     * @return
+    /**
+     * This method converts the x-coordinate and y-coordinate of the ball to position on the adjacency field
+     * @return: an array containing the position of the ball on the adjacency field
      */
-
     public int[] getBallPosition()
     {
         int[] arrayPosition = new int[2];
@@ -85,14 +84,14 @@ public class PathCalculator {
 
 
 
-    /**TODO
-     *
-     * @param xPos
-     * @param yPos
-     * @return
+    /**
+     *  This method implements the A* pathfinding algorithm
+     * @param xPos: the starting x-postion for the A* pathfinding algorithm (ball's x-position)
+     * @param yPos: the starting y-postion for the A* pathfinding algorithm (ball's y-position)
+     * @return: a list containing the best path to the hole
      */
 
-    public List<List> pathCalculatorX(int xPos, int yPos)                    //pathcalculator x-path priority
+    public List<List> pathCalculatorX(int xPos, int yPos)
     {
         int min = Integer.MAX_VALUE;
         int minX = 0;
@@ -143,10 +142,7 @@ public class PathCalculator {
             }
             pathXX.add(minX);
             pathXY.add(minY);
-            // System.out.println("x: "+minX);
-            // System.out.println("y: "+minY);
-            //  System.out.println(pathXX.toString());
-            //  System.out.println(pathXY.toString());
+
 
 
             xPos = minX;
@@ -162,28 +158,33 @@ public class PathCalculator {
    
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public List<List> pathCalculatorY(int xPos, int yPos)                    //pathcalculator y-path priority
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *  This method implements the A* pathfinding algorithm, (finds an alternative best path, if there is one)
+     * @param xPos: the starting x-postion for the A* pathfinding algorithm (ball's x-position)
+     * @param yPos: the starting y-postion for the A* pathfinding algorithm (ball's y-position)
+     * @return: a list containing an alternative best path to the hole (if there is one)
+     */
+    public List<List> pathCalculatorY(int xPos, int yPos)
     {
         int min = Integer.MAX_VALUE;
         int minX = 0;
@@ -238,16 +239,13 @@ public class PathCalculator {
  
             pathYX.add(minX);
             pathYY.add(minY);
-            // System.out.println("x: "+minX);
-            // System.out.println("y: "+minY);
-            //  System.out.println(pathYX.toString());
-            //  System.out.println(pathYY.toString());
+
             xPos = minX;
             yPos = minY;
         }
 
 
-        //System.out.println("PATH FOUND"); 
+
         getPath.add(pathYX);
         getPath.add(pathYY);
         return getPath;
@@ -266,7 +264,7 @@ public class PathCalculator {
     
     
     
-    public List<List> pathCalculatorMixed(int xPos, int yPos)                    //pathcalculator y-path priority
+    public List<List> pathCalculatorMixed(int xPos, int yPos)       //delete
     {
         int counter = 0;
         int min = Integer.MAX_VALUE;
@@ -369,10 +367,7 @@ public class PathCalculator {
 
             pathMX.add(minX);
             pathMY.add(minY);
-            // System.out.println("x: "+minX);
-            // System.out.println("y: "+minY);
-            //  System.out.println(pathMX.toString());
-            //  System.out.println(pathMY.toString());
+
             xPos = minX;
             yPos = minY;
 
@@ -380,9 +375,6 @@ public class PathCalculator {
 
             counter++;
         }
-
-
-        //System.out.println("PATH FOUND");
         getPath.add(pathMX);
         getPath.add(pathMY);
         return getPath;
@@ -396,16 +388,13 @@ public class PathCalculator {
 
 
 
-    // public List decreasePath(List pathX, List pathY)
-    // {
-    //     ArrayList getPath = new ArrayList<List>();
-    //     pathX.remove(pathX.size()-1);
-    //     pathY.remove(pathY.size()-1);
-    //     getPath.add(pathX);
-    //     getPath.add(pathY);
-    //     return getPath;
-    // }
 
+    /**
+     *  This method decreases the list containing the best path
+     * @param path1: a list containing the x-directions of the path
+     * @param path2: a list containing the y-directions of the path
+     * @return: a decreased list. (used for backtracking)
+     */
     public List decreasePath(List path1, List path2)
     {
         ArrayList getPath = new ArrayList<List>();
