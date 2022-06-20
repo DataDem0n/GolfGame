@@ -120,8 +120,8 @@ public class settingsMenu{
             DataField.y = 0;
             DataField.targetRXY = new double[]{0.15,-12,-8};
             DataField.gameForest = new Forest(0);
-            DataField.gameForest.getForest().add(new Tree(2,2));
-            DataField.kFriction = 0.1;
+            DataField.gameForest.getForest().add(new Tree(3,3));
+            DataField.kFriction = 0.15;          //use 0.15 for the pathfindingbot
             DataField.sFriction = 0.2;
             DataField.terrain = (x,y)->(2.0/3.0)*Math.sin(x/6.0)+0.7;
             chooseSolvers.setSelectedIndex(2);
@@ -155,7 +155,7 @@ public class settingsMenu{
             DataField.targetRXY = new double[]{0.1,18,18};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(100,100));
-            DataField.kFriction = 0.1;
+            DataField.kFriction = 0.1;          //use 0.15 for the pathfindingbot
             DataField.sFriction = 0.2;
             DataField.terrain = (x,y)->-0.1+(x*x+y*y)/1000.0;
             chooseSolvers.setSelectedIndex(2);
