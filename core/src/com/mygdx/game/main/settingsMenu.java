@@ -139,7 +139,7 @@ public class settingsMenu{
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(100,100));
             DataField.kFriction = 0.15;
-            DataField.sFriction = 0.2;//TODO: fix this with saman
+            DataField.sFriction = 0.2;
             DataField.terrain = (x,y)->0.4*(0.9-Math.exp(-((x*x+y*y)/8.0)));                                            //-0.1+(xx+yy)/1000.0  0.4(0.9-Math.exp(-((xx+yy)/8.0)))   -0.1+(xx+yy)/1000.0                               Math.exp(-Math.pow(Math.pow(x-4,2)+Math.pow(y-5,2),2)/1000)+Math.exp(-Math.pow(Math.pow(x+5,2)+Math.pow(y+4,2),2)/1000)-0.1+Math.exp(-Math.pow(Math.pow(x+10,2)-Math.pow(y+10,2),2))+0.1+Math.exp(-Math.pow(Math.pow(x-10,2)+Math.pow(y-10,2),2))chooseSolvers.setSelectedIndex(2)                 (2.0/3.0)*Math.sin(x/6.0)+0.7
             chooseSolvers.setSelectedIndex(2);
             DataField.sandPit = new double[]{40,40,40,40};
@@ -151,7 +151,7 @@ public class settingsMenu{
         //initialising preset 3
         test3.addActionListener(e ->{
             DataField.x = -15;
-            DataField.y = -15;
+            DataField.y = 15;
             DataField.targetRXY = new double[]{0.1,18,18};
             DataField.gameForest = new Forest(0);
             DataField.gameForest.getForest().add(new Tree(100,100));

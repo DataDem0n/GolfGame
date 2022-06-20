@@ -587,6 +587,7 @@ public class Simulations extends Plot
         }
         return correctVel;
     }
+
     public double[] decreaseXIncreaseY(double[] correctVel, double scaler)
     {
         if(correctVel[0] < 0)
@@ -611,59 +612,5 @@ public class Simulations extends Plot
         }
         return correctVel;
     }
-    
 
-    
-
-
-
-
-
-    public static void main(String[] args) 
-    {
-        BiFunction<Double,Double,Double> terrain = (x,y)->0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));             //-0.1+(x*x+y*y)/1000.0
-        ;
-        double[] coorTX = {};       //x-coordinates of the trees
-        double[] coorTY = {};         //y-coordinates of the trees
-        double interval = 1;
-        double holeCoorx = 4;
-        double holeCoory = 1;
-        double ballCoorX = -3;
-        double ballCoorY = 0;
-        double sFriction = 0.3;
-        double kFriction = 0.15;
-        double radius = 2;                                  //radius of all trees      
-        double[] beginX = {};                    //begin x-coordinates for the sandpits
-        double[] endX = {};                       //end x-coordinates for the sandpits
-        double[] beginY = {};                    //begin y-coordinates for the sandpits
-        double[] endY = {};                       //end y-coordinates for the sandpits
-        int sandpitResentment = 0;
-            
-        SlopeField b = new SlopeField(interval,terrain);  
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, b);
-
-        double scaler = 40;
-        //2.6979688828108785
-        //2.654208
-
-        //3.747179003903998
-        //3.6864
-
-        //3.8191843160041046
-        //3.8291917154455404
-        Simulations testing = new Simulations(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, endY, true);
-        double[] goodvel = testing.getInitialVel(ballCoorX, ballCoorY, 12);                                                                         //___________________________________________________
-        double[] correctVel = testing.simulate(goodvel[0], goodvel[1], ballCoorX, ballCoorY, 0, scaler, 2.5, 0);
-        //double[] arr = {20,12};
-         //double correctdistance = testing.getEuclideanDistance(0.0001, -0.0004, arr);
-         //System.out.println(correctdistance);
-        // //double[] realVel = testing.simulate(correctVel[0],correctVel[1]);
-        System.out.println("xVel: "+correctVel[0]);
-        System.out.println("yVel: "+correctVel[1]);
-        // System.out.println("xcoor: "+testing.coordinatesAndVelocity[0]);
-        // System.out.println("ycoor: "+testing.coordinatesAndVelocity[1]);
-        //System.out.println(testing.getEuclideanDistance(0.099, 1.706, testing.getCorrectShot(testing.pathX, testing.pathY)));         //working!!!!!!!!!!
-        
-        
-    }
 }

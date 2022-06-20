@@ -133,65 +133,6 @@ public class AI
         return newVelocities;
     }
 
-
-
-
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    public static void main(String[] args) 
-    {
-        BiFunction<Double,Double,Double> terrain = (x,y)->1.0;//-0.1+(x*x+y*y)/1000.0;             //0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0))                        //(double)0.5*(Math.sin((x+y)/10))+1            0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8))
-        double[] coorTX = {15, 15, 8};       //x-coordinates of the trees    
-        double[] coorTY = {15, 8, 15};         //y-coordinates of the trees
-        double interval = 1;
-        double[] targetRXY = {0.5,18,18};
-        double holeCoorx = 18;
-        double holeCoory = 18;
-        double ballCoorX = -15;
-        double ballCoorY = 15;
-        double sFriction = 0.2;
-        double kFriction = 0.1;
-        double radius = 2;                                  //radius of all trees      
-        double[] beginX = {};                    //begin x-coordinates for the sandpits
-        double[] endX = {};                       //end x-coordinates for the sandpits
-        double[] beginY = {};                    //begin y-coordinates for the sandpits
-        double[] endY = {};                       //end y-coordinates for the sandpits
-        int sandpitResentment = 0;
-        SlopeField slope = new SlopeField(interval, terrain);
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);
-        SlopeField b = new SlopeField(interval,terrain);  
-
-        
-        AI newtonSlave = new AI(terrain, interval, a, b, ballCoorX, ballCoorY, sFriction, kFriction, targetRXY);
-
-        List<List> endtest = newtonSlave.getAllVelocities(ballCoorX,ballCoorY);
-
-
-
-        for(int i = 0; i < endtest.get(0).size(); i++)
-        {        
-        System.out.println("velocityX"+i+":   "+endtest.get(0).get(i));
-        System.out.println("velocityY"+i+":   "+endtest.get(1).get(i));
-        }
-
-    }
 }
 
-
-
-
-
-
-
-
-
 //if the shot is towards the hole turn the boolean in the simulations true.
-//comment test

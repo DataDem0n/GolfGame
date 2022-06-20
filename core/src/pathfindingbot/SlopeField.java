@@ -86,23 +86,5 @@ public class SlopeField
 
         return field;                                                                       
     }
-    
-    public static void main(String[] args) 
-    {
-        BiFunction<Double,Double,Double> terrain = (x,y)->(double)0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0));                             //(double)(0.5*(Math.sin((x-y)/7)+0.9))
-        double interval = 1;
-        SlopeField slopes = new SlopeField(interval, terrain);
-        double[][] slopesX = slopes.slopeXCalculator();
-        double[][] slopesY = slopes.slopeYCalculator();
 
-        for(int i = 0; i<slopesX.length;i++)
-        {
-            for(int j = 0;j<slopesX[0].length; j++)
-            {
-                System.out.print(slopesX[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-    }
 }

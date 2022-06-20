@@ -167,27 +167,4 @@ public class RungeKutta2 extends Physics{
         
     }
 
-    
-
-    
-
-   public static void main(String[] args) 
-   { 
-       double[] coordinatesAndVelocity = {3.0572986735408163,1.4420925491515144,2, 0.1, 768};
-       double stepsize = 0.001;
-       double kfriction = 0.15;
-       double staticFriction = 0.3;
-       BiFunction<Double,Double,Double> terrain = (x,y)->0.5*(Math.sin((x+y)/10))+1;          //
-       double[] targetRXY = {1,4,1};
-       //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(Math.pow(Math.E, -((x*x+y*y)/40)));
-      //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-      //BiFunction<Double,Double,Double> terrain = (x,y)->(double)(0.5*(Math.sin((x-y)/7)+0.9));
-
-       RungeKutta2 e = new RungeKutta2(terrain, coordinatesAndVelocity, kfriction, staticFriction, stepsize, targetRXY, false);
-//        for (int i = 0; i < 100; i++) {
-           System.out.println(stepsize +", " + e.coordinatesAndVelocityUntilStop(stepsize)[0] + ", "+ e.coordinatesAndVelocityUntilStop(stepsize)[1]+", ");
-           //step = step + 0.001;
-      //}
-
-   }
 }

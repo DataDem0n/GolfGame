@@ -437,51 +437,5 @@ public class AdjacencyField
         return field;
     }
 
-   
-
-
-
-  
-    public static void main(String[] args) 
-    {
-        BiFunction<Double,Double,Double> terrain = (x,y)->1.0;            //the terrain (so the ai detects water)                            (double)0.5*(Math.sin((x+y)/10))                (double)0.4*(0.9-Math.exp(-1*(x*x+y*y)/8.0))
-        double[] coorTX = {15};       //x-coordinates of the trees
-        double[] coorTY = {15};         //y-coordinates of the trees
-        double interval = 1;
-        double holeCoorx = 20;
-        double holeCoory = 20;
-        double radius = 3;                                  //radius of all trees
-        double[] beginX = {};                    //begin x-coordinates for the sandpits
-        double[] endX = {};                       //end x-coordinates for the sandpits
-        double[] beginY = {};                    //begin y-coordinates for the sandpits
-        double[] endY = {};                       //end y-coordinates for the sandpits
-        int sandpitResentment = 1;                         //the higher this value, the less likely the ai takes a route through a sandpit
-        SlopeField slope = new SlopeField(interval, terrain);
-
-        AdjacencyField a = new AdjacencyField(interval, holeCoorx, holeCoory, sandpitResentment, terrain, coorTX, coorTY, radius, beginX, endX, beginY, endY, slope);
-        int[][] testing = a.floodFillUpdateBall(4,4);
-        //System.out.println(a.queueSize);
-    
-
-        for(int i = 0; i<testing.length;i++)
-        {
-            for(int j = 0;j<testing[0].length; j++)
-            {
-                System.out.print(testing[i][j] + " ");
-            }
-            System.out.println();
-        }
-        // PathCalculator path = new PathCalculator(a, b, 1, 1);
-        // path.pathCalculator(path.getBallPosition()[0], path.getBallPosition()[1]);
-        
-        // for(int j = 0;j<path.pathX.size()-1; j++)
-        // {
-        //     System.out.print("x: "+path.pathX.get(j) + "  y: "+path.pathY.get(j));
-        //     System.out.println();
-        // }
-       
-    }
-
-    
 
 }
